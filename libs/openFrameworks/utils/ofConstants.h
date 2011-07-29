@@ -25,6 +25,10 @@ enum ofLoopType{
 	#if (TARGET_OF_IPHONE_SIMULATOR) || (TARGET_OS_IPHONE) || (TARGET_IPHONE)
 		#define TARGET_OF_IPHONE
 		#define TARGET_OPENGLES
+	
+		// Andreas: this is not ideal, need a better solution for choosing between GL-ES 1.1 and 2.0 
+		#define OPENGLES_VERSION_2		
+		
 	#else
 		#define TARGET_OSX
 	#endif

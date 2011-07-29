@@ -65,6 +65,7 @@ public:
 //enable / disable the slight offset we add to ofTexture's texture coords to compensate for bad edge artifiacts
 //enabled by default
 void ofEnableTextureEdgeHack();
+bool ofGetTextureEdgeHackEnabled();
 void ofDisableTextureEdgeHack();
 
 class ofTexture : public ofBaseDraws {

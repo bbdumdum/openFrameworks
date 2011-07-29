@@ -552,6 +552,34 @@ void ofGLRenderer::rotate(float degrees){
 	glRotatef(degrees, 0, 0, 1);
 }
 
+
+//----------------------------------------------------------
+void ofGLRenderer::loadIdentityMatrix (void){
+	glLoadIdentity();
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::loadMatrix (const ofMatrix4x4 *m){
+	loadMatrix( m->getPtr() );	
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::loadMatrix (const float *m){
+	glLoadMatrixf(m);
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::multMatrix (const ofMatrix4x4 *m){
+	multMatrix( m->getPtr() );		
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::multMatrix (const float *m){
+	glMultMatrixf(m);
+}
+
+
+
 //----------------------------------------------------------
 void ofGLRenderer::setColor(const ofColor & color){
 	setColor(color.r,color.g,color.b,color.a);
@@ -1056,3 +1084,71 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 
 	glBlendFunc(blend_src, blend_dst);
 }
+
+
+
+
+//----------------------------------------------------------
+void ofGLRenderer::setLightingModel( unsigned int model ){
+	glShadeModel( model );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_enable( unsigned int capability ){
+	glEnable( capability );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_disable( unsigned int capability ){
+	glDisable( capability );	
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_lightModelfv(unsigned int pname, const float *params ){
+	
+	cout << "ofGLRenderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;	
+	
+	glLightModelfv( pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_lightf(unsigned int light, unsigned int pname, float param){
+	glLightf( light, pname, param );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_lightfv (unsigned int light, unsigned int pname, const float *params){
+	glLightfv( light, pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_getMaterialfv(unsigned int face, unsigned int pname, float *params){
+	glGetMaterialfv( face, pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_materialfv(unsigned int face, unsigned int pname, const float *params){
+	glMaterialfv( face, pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_materialf(unsigned int face, unsigned int pname, float param){
+	glMaterialf( face, pname, param );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_activeTexture( unsigned int texture ){
+	glActiveTexture( texture );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_bindTexture(unsigned int target, unsigned int texture){
+	glBindTexture( target, texture );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_texEnvf(unsigned int target, unsigned int pname, unsigned int param){
+	glTexEnvf( target, pname, param );
+}
+
+

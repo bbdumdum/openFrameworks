@@ -314,6 +314,12 @@ public:
 	virtual void rotateY(float degrees){};
 	virtual void rotateZ(float degrees){};
 	virtual void rotate(float degrees){};
+	virtual void loadIdentityMatrix (void){};
+	virtual void loadMatrix (const ofMatrix4x4 *m){};
+	virtual void loadMatrix (const float *m){};
+	virtual void multMatrix (const ofMatrix4x4 *m){};
+	virtual void multMatrix (const float *m){};	
+	
 
 	// screen coordinate things / default gl values
 	virtual void setupGraphicDefaults(){};
@@ -364,4 +370,26 @@ public:
 
 	// returns true if the renderer can render curves without decomposing them
 	virtual bool rendersPathPrimitives()=0;
+	
+	
+	// GL hooks needed to start the work on abstracting the rendering from OpenGL 1.1	
+	virtual void _enable( unsigned int capability )=0;
+	virtual void _disable( unsigned int capability )=0;
+	
+	virtual void _lightModelfv(unsigned int propertyname, const float *params )=0;
+	virtual void _lightf(unsigned int light, unsigned int pname, float param)=0;
+	virtual void _lightfv (unsigned int light, unsigned int pname, const float *params)=0;
+	
+	virtual void _getMaterialfv(unsigned int face, unsigned int pname, float *params)=0;
+	
+	virtual void _materialfv(unsigned int face, unsigned int pname, const float *params)=0;
+	virtual void _materialf(unsigned int face, unsigned int pname, float param)=0;
+	
+	virtual void _activeTexture( unsigned int texture )=0;
+	virtual void _bindTexture(unsigned int target, unsigned int texture)=0;
+	
+	virtual void _texEnvf(unsigned int target, unsigned int pname, unsigned int param)=0;
+
+	virtual void setLightingModel( unsigned int model )=0;
+	
 };

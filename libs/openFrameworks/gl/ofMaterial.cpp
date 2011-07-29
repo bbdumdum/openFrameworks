@@ -58,27 +58,28 @@ ofFloatColor ofMaterial::getEmissiveColor() {
 }
 
 void ofMaterial::begin() {
-    // save previous values, opengl es cannot use push/pop attrib
-	glGetMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,&prev_diffuse.r);
-	glGetMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,&prev_specular.r);
-	glGetMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,&prev_ambient.r);
-	glGetMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,&prev_emissive.r);
-	glGetMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shininess);
-
+	
+    // save previous values, opengl es cannot use push/pop attrib (Andreas: does not work on OPENGLES_VERSION_2 )
+	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,&prev_diffuse.r);
+	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,&prev_specular.r);
+	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,&prev_ambient.r);
+	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,&prev_emissive.r);
+	_ofGetMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shininess);
+	
     // Material colors and properties
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &diffuse.r);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &specular.r);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &ambient.r);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, &emissive.r);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &diffuse.r);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &specular.r);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &ambient.r);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, &emissive.r);
+	_ofMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 }
 
 void ofMaterial::end() {
     // Set previous material colors and properties
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &prev_diffuse.r);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &prev_specular.r);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &prev_ambient.r);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, &prev_emissive.r);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, prev_shininess);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &prev_diffuse.r);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &prev_specular.r);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &prev_ambient.r);
+	_ofMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, &prev_emissive.r);
+	_ofMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, prev_shininess);
 }
 

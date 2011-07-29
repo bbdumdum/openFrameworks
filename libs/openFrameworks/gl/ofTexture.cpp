@@ -229,6 +229,11 @@ void ofEnableTextureEdgeHack(){
 }
 
 //---------------------------------
+bool ofGetTextureEdgeHackEnabled(){
+	return bTexHackEnabled;
+}
+
+//---------------------------------
 void ofDisableTextureEdgeHack(){
 	bTexHackEnabled = false;
 }
@@ -377,7 +382,9 @@ void ofTexture::allocate(int w, int h, int internalGlDataType, bool bUseARBExten
 	glTexParameterf(texData.textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(texData.textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
+#ifndef OPENGLES_VERSION_2
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+#endif
 	
 	glDisable(texData.textureTarget);
 	
@@ -894,9 +901,9 @@ void ofTexture::draw(float x, float y, float z, float w, float h){
 	GLfloat tx1 = texData.tex_t - offsetw;
 	GLfloat ty1 = texData.tex_u - offseth;
 	
-	glPushMatrix(); 
+	ofPushMatrix(); 
 	
-	glTranslatef(x,y,z);
+	ofTranslate(x,y,z);
 	
 	GLfloat tex_coords[] = {
 		tx0,ty0,
@@ -918,7 +925,7 @@ void ofTexture::draw(float x, float y, float z, float w, float h){
 	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 	
-	glPopMatrix();
+	ofPopMatrix();
 	glDisable(texData.textureTarget);
 	
 }
@@ -967,7 +974,7 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	GLfloat tx1 = texData.tex_t - offsetw;
 	GLfloat ty1 = texData.tex_u - offseth;
 	
-	glPushMatrix(); 
+	olPushMatrix(); 
 	
 	GLfloat tex_coords[] = {
 		tx0,ty0,
@@ -989,7 +996,7 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 	
-	glPopMatrix();
+	olPopMatrix();
 	glDisable(texData.textureTarget);
 	
 	// Disable alpha channel if it was disabled

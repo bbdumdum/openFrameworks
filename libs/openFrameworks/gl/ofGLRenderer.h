@@ -63,6 +63,11 @@ public:
 	void rotateY(float degrees);
 	void rotateZ(float degrees);
 	void rotate(float degrees);
+	void loadIdentityMatrix (void);
+	void loadMatrix (const ofMatrix4x4 *m);
+	void loadMatrix (const float *m);
+	void multMatrix (const ofMatrix4x4 *m);
+	void multMatrix (const float *m);
 
 	// screen coordinate things / default gl values
 	void setupGraphicDefaults();
@@ -110,6 +115,22 @@ public:
 	void drawCircle(float x, float y, float z, float radius);
 	void drawEllipse(float x, float y, float z, float width, float height);
 	void drawString(string text, float x, float y, float z, ofDrawBitmapMode mode);
+
+	// lighting
+	void setLightingModel( unsigned int model );	
+	
+	// "Private" GL hooks needed to start the work on abstracting the rendering from OpenGL 1.1	
+	void _enable( unsigned int capability );
+	void _disable( unsigned int capability );
+	void _lightModelfv(unsigned int pname, const float *params );
+	void _lightf(unsigned int light, unsigned int pname, float param);
+	void _lightfv (unsigned int light, unsigned int pname, const float *params);
+	void _getMaterialfv(unsigned int face, unsigned int pname, float *params);
+	void _materialfv(unsigned int face, unsigned int pname, const float *params);
+	void _materialf(unsigned int face, unsigned int pname, float param);
+	void _activeTexture( unsigned int texture );
+	void _bindTexture(unsigned int target, unsigned int texture);
+	void _texEnvf(unsigned int target, unsigned int pname, unsigned int param);
 
 private:
 	void startSmoothing();
