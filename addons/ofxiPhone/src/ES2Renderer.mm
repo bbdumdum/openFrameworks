@@ -35,7 +35,7 @@ enum {
 {
     if ((self = [super init]))
     {
-		depthEnabled = true; //depth;
+		depthEnabled = depth;
 		fsaaEnabled = fsaa;
 		fsaaSamples = samples;
 		retinaEnabled = retina;

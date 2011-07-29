@@ -16,6 +16,7 @@
 #include "ofColor.h"
 #include "ofMesh.h"
 #include "ofPixels.h"
+#include "ofMatrix4x4.h"
 
 template<typename T>
 class ofImage_;

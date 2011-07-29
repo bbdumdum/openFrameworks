@@ -64,7 +64,7 @@ ofAppiPhoneWindow::ofAppiPhoneWindow() {
 	windowSize.set(NOT_INITIALIZED, NOT_INITIALIZED);
 	screenSize.set(NOT_INITIALIZED, NOT_INITIALIZED);
 	
-	depthEnabled=false;
+	depthEnabled=true;//false;			//Andreas: do we not usually want depth?
 	antiAliasingEnabled=false;
 	retinaEnabled=false;
 }

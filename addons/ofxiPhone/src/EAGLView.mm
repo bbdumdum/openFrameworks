@@ -48,7 +48,7 @@
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame andDepth:false andAA:false andNumSamples:0 andRetina:false];
+	return [self initWithFrame:frame andDepth:true andAA:false andNumSamples:0 andRetina:false];
 }
 
 - (id) initWithFrame:(CGRect)frame andDepth:(bool)depth andAA:(bool)fsaaEnabled andNumSamples:(int)samples andRetina:(bool)retinaEnabled

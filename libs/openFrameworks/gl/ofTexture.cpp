@@ -974,7 +974,7 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	GLfloat tx1 = texData.tex_t - offsetw;
 	GLfloat ty1 = texData.tex_u - offseth;
 	
-	olPushMatrix(); 
+	ofPushMatrix(); 
 	
 	GLfloat tex_coords[] = {
 		tx0,ty0,
@@ -996,7 +996,7 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 	
-	olPopMatrix();
+	ofPopMatrix();
 	glDisable(texData.textureTarget);
 	
 	// Disable alpha channel if it was disabled
