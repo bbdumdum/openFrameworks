@@ -252,7 +252,7 @@ void ofGLES2Renderer::draw(ofImage & image, float x, float y, float z, float w, 
 			gl->glEnable(texData.textureTarget);
 			
 			// bind the texture
-			glBindTexture( texData.textureTarget, (GLuint)texData.textureID );
+			gl->glBindTexture( texData.textureTarget, (GLuint)texData.textureID );
 			
 			GLfloat px0 = 0.0f;		// up to you to get the aspect ratio right
 			GLfloat py0 = 0.0f;
@@ -1098,16 +1098,23 @@ void ofGLES2Renderer::drawEllipse(float x, float y, float z, float width, float 
 
 //----------------------------------------------------------
 void ofGLES2Renderer::drawString(string textString, float x, float y, float z, ofDrawBitmapMode mode){
+	
+	
+	//cout << "bBitmapTexturePrepared " << bBitmapTexturePrepared << endl;
+	
 	// this is copied from the ofTrueTypeFont
 	//GLboolean blend_enabled =  gl->glIsEnabled(GL_BLEND); //TODO: this is not used?
 	GLint blend_src, blend_dst;
 	
-	 gl->glGetIntegerv( GL_BLEND_SRC, &blend_src );
-	 gl->glGetIntegerv( GL_BLEND_DST, &blend_dst );
+	gl->glGetIntegerv( GL_BLEND_SRC, &blend_src );
+	gl->glGetIntegerv( GL_BLEND_DST, &blend_dst );
+	
+	ofBlendMode prevBlendMode = ofGetStyle().blendingMode;
+	
+	//gl->glEnable(GL_BLEND);
+	//gl->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	 gl->glEnable(GL_BLEND);
-	 gl->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	setBlendMode( OF_BLENDMODE_ALPHA );
 
 	int len = (int)textString.length();
 	//float yOffset = 0;
@@ -1145,13 +1152,13 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 			rViewport = ofGetWindowRect();
 			ofViewport(rViewport);
 
-			 gl->glMatrixMode(GL_PROJECTION);
-			 gl->glLoadIdentity();
-			 gl->glMatrixMode(GL_MODELVIEW);
-			 gl->glLoadIdentity();
+			gl->glMatrixMode(GL_PROJECTION);
+			gl->glLoadIdentity();
+			gl->glMatrixMode(GL_MODELVIEW);
+			gl->glLoadIdentity();
 
-			 gl->glTranslatef(-1, 1, 0);
-			 gl->glScalef(2/rViewport.width, -2/rViewport.height, 1);
+			gl->glTranslatef(-1, 1, 0);
+			gl->glScalef(2/rViewport.width, -2/rViewport.height, 1);
 
 			ofTranslate(x, y, 0);
 			break;
@@ -1161,17 +1168,17 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 			rViewport = ofGetCurrentViewport();
 
 			hasProjection = true;
-			 gl->glMatrixMode(GL_PROJECTION);
-			 gl->glPushMatrix();
-			 gl->glLoadIdentity();
+			gl->glMatrixMode(GL_PROJECTION);
+			gl->glPushMatrix();
+			gl->glLoadIdentity();
 
 			hasModelView = true;
-			 gl->glMatrixMode(GL_MODELVIEW);
-			 gl->glPushMatrix();
-			 gl->glLoadIdentity();
+			gl->glMatrixMode(GL_MODELVIEW);
+			gl->glPushMatrix();
+			gl->glLoadIdentity();
 
-			 gl->glTranslatef(-1, 1, 0);
-			 gl->glScalef(2/rViewport.width, -2/rViewport.height, 1);
+			gl->glTranslatef(-1, 1, 0);
+			gl->glScalef(2/rViewport.width, -2/rViewport.height, 1);
 
 			ofTranslate(x, y, 0);
 			break;
@@ -1179,8 +1186,8 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 		case OF_BITMAPMODE_MODEL:
 
 			hasModelView = true;
-			 gl->glMatrixMode(GL_MODELVIEW);
-			 gl->glPushMatrix();
+			gl->glMatrixMode(GL_MODELVIEW);
+			gl->glPushMatrix();
 
 			ofTranslate(x, y, z);
 			ofScale(1, -1, 0);
@@ -1199,29 +1206,29 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 			GLdouble modelview[16], projection[16];
 			GLint view[4];
 			double dScreenX, dScreenY, dScreenZ;
-			 gl->glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-			 gl->glGetDoublev(GL_PROJECTION_MATRIX, projection);
-			 gl->glGetIntegerv(GL_VIEWPORT, view);
+			gl->glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+			gl->glGetDoublev(GL_PROJECTION_MATRIX, projection);
+			gl->glGetIntegerv(GL_VIEWPORT, view);
 			view[0] = 0; view[1] = 0; //we're already drawing within viewport
-			 gl->gluProject(x, y, z, modelview, projection, view, &dScreenX, &dScreenY, &dScreenZ);
+			gl->gluProject(x, y, z, modelview, projection, view, &dScreenX, &dScreenY, &dScreenZ);
 
 			rViewport = ofGetCurrentViewport();
 
 			hasProjection = true;
-			 gl->glMatrixMode(GL_PROJECTION);
-			 gl->glPushMatrix();
-			 gl->glLoadIdentity();
+			gl->glMatrixMode(GL_PROJECTION);
+			gl->glPushMatrix();
+			gl->glLoadIdentity();
 
 			hasModelView = true;
-			 gl->glMatrixMode(GL_MODELVIEW);
-			 gl->glPushMatrix();
-			 gl->glLoadIdentity();
+			gl->glMatrixMode(GL_MODELVIEW);
+			gl->glPushMatrix();
+			gl->glLoadIdentity();
 
-			 gl->glTranslatef(-1, -1, 0);
-			 gl->glScalef(2/rViewport.width, 2/rViewport.height, 1);
+			gl->glTranslatef(-1, -1, 0);
+			gl->glScalef(2/rViewport.width, 2/rViewport.height, 1);
 
-			 gl->glTranslatef(dScreenX, dScreenY, 0);
-			 gl->glScalef(1, -1, 1);
+			gl->glTranslatef(dScreenX, dScreenY, 0);
+			gl->glScalef(1, -1, 1);
 #endif
 			break;
 
@@ -1269,20 +1276,28 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 	if (hasViewport)
 		ofPopView();
 
-	 gl->glBlendFunc(blend_src, blend_dst);
+	setBlendMode( prevBlendMode );
+	//gl->glBlendFunc(blend_src, blend_dst);
 }
 
 
 //----------------------------------------------------------
 void ofGLES2Renderer::setLightingModel( unsigned int model ){
 
-	// http://code.google.com/p/gles2-bc/ glHint(GL_LIGHTING_HINT, GL_NICEST) uses per-fragment lighting if using an OpenGL ES 2.0 context	
+	
 	if( model == GL_SMOOTH ) 
 	{ 
 		gl->glShadeModel( GL_SMOOTH );
+		
+		// http://code.google.com/p/gles2-bc/ glHint(GL_LIGHTING_HINT, GL_NICEST) uses per-fragment lighting if using an OpenGL ES 2.0 context	
 		gl->glHint(GL_LIGHTING_HINT, GL_NICEST); 
 	} 
-	else if( model == GL_FLAT ) {}
+	else if( model == GL_FLAT ) 
+	{
+		// From http://www.johannesvuorinen.com/stuff/cost_efficient_development_with_various_opengles_apis_-_Johannes_Vuorinen.pdf
+		// "Flat shading is hard to implement efﬁciently in OpenGL ES 2.0. OpenGL ES 2.0 does not have an option to not interpolate varyings so the faces get always smooth shaded."
+		gl->glShadeModel( GL_FLAT ); 
+	}
 	
 }
 
@@ -1297,9 +1312,20 @@ void ofGLES2Renderer::_disable( unsigned int capability ){
 }
 
 //----------------------------------------------------------
+void ofGLES2Renderer::_matrixMode( unsigned int mode ){
+	gl->glMatrixMode( mode );
+}
+
+
+//----------------------------------------------------------
+void ofGLES2Renderer::_alphaFunc( unsigned int func, float ref ){
+	gl->glAlphaFunc( func, ref );
+}
+
+//----------------------------------------------------------
 void ofGLES2Renderer::_lightModelfv(unsigned int pname, const float *params ){
 	
-	cout << "ofGLES2Renderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;
+	//cout << "ofGLES2Renderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;
 	
 	gl->glLightModelfv( pname, params );
 }
@@ -1337,6 +1363,11 @@ void ofGLES2Renderer::_activeTexture( unsigned int texture ){
 //----------------------------------------------------------
 void ofGLES2Renderer::_bindTexture(unsigned int target, unsigned int texture){
 	gl->glBindTexture( target, texture );
+}
+
+//----------------------------------------------------------
+void ofGLES2Renderer::_texImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels ){
+	gl->glTexImage2D( target, level, internalformat, width, height, border, format, type, pixels );
 }
 
 //----------------------------------------------------------

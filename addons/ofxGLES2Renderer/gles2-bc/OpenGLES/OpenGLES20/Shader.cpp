@@ -31,6 +31,16 @@ Shader::~Shader()
 {
 }
 
+char *convertStringToChar(const std::string &str)
+{
+	char *retPtr(new char[str.length() + 1]);
+	
+	strcpy(retPtr, str.c_str());
+	
+	return retPtr;
+}
+
+
 GLuint Shader::compile() 
 {
 	id = glCreateShader(type);
@@ -72,6 +82,30 @@ GLuint Shader::compile()
 			else 
 			{
 				LOG_MESSAGE(__FILE__, __LINE__, OpenGLESString("ERROR: Compiling ") + typeString + " failed:\n" + infoLog);
+				
+				// Andreas: We have failed compiling, save the generated shader to a text file so that we can debug it,
+				// gl-es2-bc composes the shader from the different sources, so the line number won't mean very much otherwise 
+			
+				string filePath = ofToDataPath("FailedShader.txt", true );
+				
+				ofstream myfile;
+				myfile.open ( filePath.c_str() );
+
+				if ( myfile.is_open() ) 
+				{
+					ofLogError() << "Writing shader to: " << filePath << endl;	
+					
+					for (size_t i = 0; i < sources.size(); i++) 
+					{
+						myfile << convertStringToChar(sources[i]->getSource());					
+					}
+				}
+				else
+				{
+					ofLogError() << "We could not open the file " << filePath << " for writing" << endl;
+				}
+				
+				myfile.close();
 			}
 			free(infoLog);
 		}
@@ -86,18 +120,10 @@ GLuint Shader::compile()
 			return 0;
 		}
 	}
-
+	
 	return id;
 }
 
-char *convertStringToChar(const std::string &str)
-{
-	char *retPtr(new char[str.length() + 1]);
-
-	strcpy(retPtr, str.c_str());
-
-	return retPtr;
-}
 
 bool Shader::readShaderSource()
 {
@@ -116,6 +142,7 @@ bool Shader::readShaderSource()
 
 	glShaderSource(id, sources.size(), (const char **)shaderSources, NULL);
 
+	
 	for (size_t i = 0; i < sources.size(); i++)
 	{
 		free(shaderSources[i]);

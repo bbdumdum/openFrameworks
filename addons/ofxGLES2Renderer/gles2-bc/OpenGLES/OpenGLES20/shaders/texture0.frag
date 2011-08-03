@@ -117,7 +117,10 @@ void calcTexture0Environment(inout vec4 color)
 	#elif TEXTURE0_FORMAT == GL_LUMINANCE
 		color.rgb = color.rgb * texture0Color.rgb;
 	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
-		color = color * texture0Color.rgb;
+		//color = color * texture0Color.rgb;	
+		color.rgb = color.rgb * texture0Color.rgb;
+		color.a = color.a * texture0Color.a;
+		//color = vec4( 0.0, 1.0, 0.0, 1.0 );
 	#elif TEXTURE0_FORMAT == GL_RGB
 		color.rgb = color.rgb * texture0Color.rgb;
 	#elif TEXTURE0_FORMAT == GL_RGBA
@@ -157,11 +160,22 @@ void calcTexture0Environment(inout vec4 color)
 	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
 		color.a = color.a * texture0Color.a;
+		
+		//color = vec4( 1.0, 0.0, 0.0, 1.0 );
+		
 	#elif TEXTURE0_FORMAT == GL_RGB
+	
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
+		
+		//color = vec4( 1.0, 0.0, 0.0, 1.0 );
+		
 	#elif TEXTURE0_FORMAT == GL_RGBA
+	
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
 		color.a = color.a * texture0Color.a;
+
+		//color = vec4( 1.0, 0.0, 0.0, 1.0 );
+
 	#endif
 #elif TEXTURE0_ENV_MODE == GL_REPLACE
 	#if TEXTURE0_FORMAT == GL_ALPHA

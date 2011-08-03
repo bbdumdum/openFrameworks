@@ -1104,10 +1104,18 @@ void ofGLRenderer::_disable( unsigned int capability ){
 }
 
 //----------------------------------------------------------
+void ofGLRenderer::_alphaFunc( unsigned int func, float ref ){
+	glAlphaFunc( func, ref );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_matrixMode( unsigned int mode ){
+	glMatrixMode( mode );
+}
+
+//----------------------------------------------------------
 void ofGLRenderer::_lightModelfv(unsigned int pname, const float *params ){
-	
-	cout << "ofGLRenderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;	
-	
+	//cout << "ofGLRenderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;	
 	glLightModelfv( pname, params );
 }
 
@@ -1144,6 +1152,11 @@ void ofGLRenderer::_activeTexture( unsigned int texture ){
 //----------------------------------------------------------
 void ofGLRenderer::_bindTexture(unsigned int target, unsigned int texture){
 	glBindTexture( target, texture );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_texImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels ){
+	glTexImage2D( target, level, internalformat, width, height, border, format, type, pixels );
 }
 
 //----------------------------------------------------------

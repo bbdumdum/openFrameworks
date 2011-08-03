@@ -38,12 +38,11 @@ typedef int             GLclampx;
 
 /* GL types for handling large vertex buffer objects */
 
+//typedef int             GLintptr;
+//typedef int             GLsizeiptr;
 
-typedef int             GLintptr;
-typedef int             GLsizeiptr;
-
-//typedef long             GLintptr;
-//typedef long             GLsizeiptr;
+typedef long             GLintptr;
+typedef long             GLsizeiptr;
 
 /* Extensions */
 #define GL_OES_byte_coordinates           1

@@ -122,6 +122,8 @@ public:
 	// "Private" GL hooks needed to start the work on abstracting the rendering from OpenGL 1.1	
 	void _enable( unsigned int capability );
 	void _disable( unsigned int capability );
+	void _alphaFunc( unsigned int func, float ref );
+	void _matrixMode( unsigned int mode );	
 	void _lightModelfv(unsigned int pname, const float *params );
 	void _lightf(unsigned int light, unsigned int pname, float param);
 	void _lightfv (unsigned int light, unsigned int pname, const float *params);
@@ -130,6 +132,7 @@ public:
 	void _materialf(unsigned int face, unsigned int pname, float param);
 	void _activeTexture( unsigned int texture );
 	void _bindTexture(unsigned int target, unsigned int texture);
+	void _texImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels );
 	void _texEnvf(unsigned int target, unsigned int pname, unsigned int param);
 
 private:

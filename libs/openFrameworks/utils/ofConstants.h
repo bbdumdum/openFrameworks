@@ -135,9 +135,15 @@ enum ofLoopType{
 
 
 #ifdef TARGET_OF_IPHONE
-	#import <OpenGLES/ES1/gl.h>
-	#import <OpenGLES/ES1/glext.h>
-	
+
+	#ifdef OPENGLES_VERSION_2
+		#include <OpenGLES/ES2/gl.h>
+		#include <OpenGLES/ES2/glext.h>
+	#else
+		#import <OpenGLES/ES1/gl.h>
+		#import <OpenGLES/ES1/glext.h>
+	#endif
+
 	#define TARGET_LITTLE_ENDIAN		// arm cpu	
 #endif
 

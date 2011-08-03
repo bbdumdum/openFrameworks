@@ -19,6 +19,11 @@
 
 #include <OpenGLES/ES2/gl.h>
 #include <vector>
+#include <iostream>
+using namespace std;
+
+#include "ofMain.h" // we only really need ofToDataPath
+
 
 namespace OpenGLES {
 	namespace OpenGLES2 {

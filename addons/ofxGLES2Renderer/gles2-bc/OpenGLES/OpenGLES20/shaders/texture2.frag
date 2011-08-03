@@ -118,7 +118,9 @@ void calcTexture2Environment(inout vec4 color)
 	#elif TEXTURE2_FORMAT == GL_LUMINANCE
 		color.rgb = color.rgb * texture2Color.rgb;
 	#elif TEXTURE2_FORMAT == GL_LUMINANCE_ALPHA
-		color = color * texture2Color.rgb;
+		//color = color * texture2Color.rgb;
+		color.rgb = color.rgb * texture2Color.rgb;		
+		color.a = color.a * texture2Color.a;		
 	#elif TEXTURE2_FORMAT == GL_RGB
 		color.rgb = color.rgb * texture2Color.rgb;
 	#elif TEXTURE2_FORMAT == GL_RGBA

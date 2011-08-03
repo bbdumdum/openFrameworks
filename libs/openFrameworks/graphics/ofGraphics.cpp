@@ -587,7 +587,7 @@ void ofDisablePointSprites() {
 //----------------------------------------------------------
 void ofDisableBlendMode()
 {
-    glDisable(GL_BLEND);
+    _ofDisable(GL_BLEND);
 	currentStyle.blendingMode = OF_BLENDMODE_DISABLED;
 }
 
@@ -1085,9 +1085,18 @@ void _ofLightf(unsigned int light, unsigned int pname, float param){
 }
 
 //----------------------------------------
-void _ofLightfv (unsigned int light, unsigned int pname, const float *params)
-{
+void _ofLightfv (unsigned int light, unsigned int pname, const float *params){
 	renderer->_lightfv( light, pname, params );
+}
+
+//----------------------------------------
+void _ofAlphaFunc( unsigned int	func, float ref ){
+	renderer->_alphaFunc( func, ref );	
+}
+
+//----------------------------------------
+void _ofMatrixMode( unsigned int mode ){
+	renderer->_matrixMode( mode );
 }
 
 //----------------------------------------
@@ -1113,6 +1122,14 @@ void _ofActiveTexture( unsigned int texture ){
 //----------------------------------------
 void _ofBindTexture(unsigned int target, unsigned int texture){
 	renderer->_bindTexture( target, texture );
+}
+
+//----------------------------------------
+void _ofTexImage2D (unsigned int target, int level, int internalformat, 
+				    int width, int height, 
+					int border, unsigned int format, unsigned int type, const void *pixels )
+{
+	renderer->_texImage2D( target, level, internalformat, width, height, border, format, type, pixels );
 }
 
 //----------------------------------------

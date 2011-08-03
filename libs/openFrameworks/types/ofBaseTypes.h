@@ -376,6 +376,10 @@ public:
 	// GL hooks needed to start the work on abstracting the rendering from OpenGL 1.1	
 	virtual void _enable( unsigned int capability )=0;
 	virtual void _disable( unsigned int capability )=0;
+
+	virtual void _alphaFunc( unsigned int	func, float ref )=0;
+	
+	virtual void _matrixMode( unsigned int mode )=0;
 	
 	virtual void _lightModelfv(unsigned int propertyname, const float *params )=0;
 	virtual void _lightf(unsigned int light, unsigned int pname, float param)=0;
@@ -388,6 +392,8 @@ public:
 	
 	virtual void _activeTexture( unsigned int texture )=0;
 	virtual void _bindTexture(unsigned int target, unsigned int texture)=0;
+	
+	virtual void _texImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels )=0;
 	
 	virtual void _texEnvf(unsigned int target, unsigned int pname, unsigned int param)=0;
 
