@@ -8,41 +8,17 @@
 
 #include "ofGLES2Renderer.h"
 
-typedef struct {
-
-	float 	x;
-	float 	y;
-	bool 	bBeingDragged;
-	bool 	bOver;
-	float 	radius;
-	
-}	draggableVertex;
+#include "Math/AMathHelpers.h"
 
 
-typedef struct {
-	GLfloat	red;
-	GLfloat	green;
-	GLfloat	blue;
-	GLfloat alpha;
-} Color3D;
-
-typedef struct {
-	GLfloat	x;
-	GLfloat y;
-	GLfloat z;
-} Vertex3D;
-
-typedef struct {
-	GLfloat	x;
-	GLfloat y;
-	GLfloat z;
-} Vector3D;
+// Copy pasted some code from the net for sanity checking, temporarily need this.
+typedef struct { float x,y; bool bBeingDragged; bool bOver; float radius; }draggableVertex;
+typedef struct { GLfloat red, green, blue, alpha; } Color3D;
+typedef struct { GLfloat x,y,z; } Vertex3D;
+typedef struct { GLfloat x,y,z; } Vector3D;
 #define Vector3DMake(x,y,z) (Vector3D)Vertex3DMake(x, y, z)
 #define Vector3DSet(vector,x,y,z) Vertex3DSet(vector, x, y, z)
-static inline GLfloat Vector3DMagnitude(Vector3D vector)
-{
-	return sqrtf((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z)); 
-}
+static inline GLfloat Vector3DMagnitude(Vector3D vector) { return sqrtf((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z));  }
 static inline void Vector3DNormalize(Vector3D *vector)
 {
 	GLfloat vecMag = Vector3DMagnitude(*vector);
@@ -66,7 +42,6 @@ static inline Vector3D Vector3DMakeWithStartAndEndPoints(Vertex3D start, Vertex3
 	Vector3DNormalize(&ret);
 	return ret;
 }
-
 #define DEGREES_TO_RADIANS(x) (3.14159265358979323846 * x / 180.0)
 #define RANDOM_FLOAT_BETWEEN(x, y) (((float) rand() / RAND_MAX) * (y - x) + x)
 
@@ -89,9 +64,16 @@ public:
 	void touchUp(ofTouchEventArgs &touch);
 	void touchDoubleTap(ofTouchEventArgs &touch);
 
+	ofFbo testFBO;
+	
 	ofMesh testMesh;
 	
 	ofImage testImage;
+	ofImage testImage2;	
+	
+	ofImage testImageAlpha;		
+	
+	ofTrueTypeFont  franklinBook14;
 	
 	ofLight pointLight;
 	ofLight spotLight;
@@ -106,7 +88,9 @@ public:
 
 	float appIphoneScale;
 	
-	//ofxAssimpModelLoader model;
+	ofxAssimpModelLoader model;
+	
+	string typeStr;
 	
 	ofVboMesh mesh;
 	ofPoint position;

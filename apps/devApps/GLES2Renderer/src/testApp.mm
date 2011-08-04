@@ -56,6 +56,12 @@ void testApp::setup()
 	//testImage.loadImage("boy_10.tga");
 	testImage.loadImage("tdf_1972_poster.jpg");	
 	
+	ofDisableArbTex();
+	testImage2.loadImage("bikers.jpg");
+	ofEnableArbTex();
+	
+	testImageAlpha.loadImage("AlphaTest.png");
+	
 	ofSetGlobalAmbientColor( ofColor( 40.0f, 40.0f, 40.0f) );		
 	
 	pointLight.setDiffuseColor( ofColor( 0.0f, 255.0f, 0.0f) );
@@ -82,6 +88,7 @@ void testApp::setup()
 	
 	ofLightingModel(GL_SMOOTH);
 	
+	
 	/*
 	 // we need GL_TEXTURE_2D for our models coords.
 	 ofDisableArbTex();
@@ -104,17 +111,38 @@ void testApp::setup()
 	 }
 	 
 	 ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+	 */
 	 
 	 //some model / light stuff
-	 glShadeModel(GL_SMOOTH);
-	 light.enable();
-	 ofEnableSeparateSpecularLight();
-	*/ 
-	 
+	 //glShadeModel(GL_SMOOTH);
+	 //light.enable();
+	 //ofEnableSeparateSpecularLight();
+	
+	franklinBook14.loadFont("frabk.ttf", 14);
+	franklinBook14.setLineHeight(18.0f);
+	franklinBook14.setLetterSpacing(1.037);	
+	
+	typeStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?";
+	
+	
+	ofFbo::Settings tmpSettings = ofFbo::Settings(); 
+	tmpSettings.width  = 512;
+	tmpSettings.height = 512;	
+	tmpSettings.useDepth = false;
+	tmpSettings.useStencil = false;
+	tmpSettings.internalformat = GL_RGB;
+
+	testFBO.allocate( tmpSettings ); 
+
+	
 	mouseX = 400;
 	mouseY = 400;	
 	
 	counter = 0;
+	
+	//string extensions = (char*)glGetString(GL_EXTENSIONS);
+	//ofLog(OF_LOG_VERBOSE,extensions);
+	
 }
 
 
@@ -143,6 +171,26 @@ void testApp::draw(){
 
 	ofScale(appIphoneScale, appIphoneScale, 1.0);
 
+	
+	// draw into an FBO
+	ofSetColor(255,255,255, 255);
+	testFBO.begin();
+		ofClear( 190, 190, 190, 255 );
+		ofPushMatrix();
+			ofTranslate(testFBO.getWidth() / 2.0f, testFBO.getHeight() / 2.0f, 00.f);
+			ofRotate(ofGetElapsedTimef()*1.6 * RAD_TO_DEG, 1, 0, 0);
+			ofRotate(ofGetElapsedTimef()*1.8 * RAD_TO_DEG, 0, 1, 0);			
+			ofBox(0, 0, 0, 150);
+		ofPopMatrix();
+	testFBO.end();
+	
+	// draw the FBO
+	ofSetColor(255,255,255,255);	
+	testFBO.draw( 512.0f, 600.0f, testFBO.getWidth() / 3.0f, testFBO.getHeight() / 3.0f );
+
+	ofSetColor(255,0,0,255);	
+	testFBO.draw( 512.0f + testFBO.getWidth() / 3.0f, 600.0f, testFBO.getWidth() / 3.0f, testFBO.getHeight() / 3.0f );
+	
 	
 	// test
 	ofFill();	
@@ -195,8 +243,11 @@ void testApp::draw(){
 		//ofRotate( 55.0f, 1, 0, 0);
 		//ofRotate( 30.0f, 0, 1, 0);
 	
-		ofBox(0, 0, 0, 120);
-		//drawCube( 120.0f );
+		//ofBox(0, 0, 0, 120);
+	
+		//model.drawFaces();
+	
+		drawCube( 120.0f );
 		//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
 		//drawIcosahedron( 120.0f );
 	
@@ -219,12 +270,27 @@ void testApp::draw(){
 	_ofDisable( GL_DEPTH_TEST );
 		
 	
-	ofSetColor(255,255,255);	
-	testImage.draw( 890.0f, 20.0f, testImage.getWidth() / 3.0f, testImage.getHeight() / 3.0f );
+	ofEnableAlphaBlending();	
 	
-	// test make a mesh
-	//testMesh	
+	ofSetColor(255,255,255);	
+	testImage.draw( 870.0f, 20.0f, testImage.getWidth() / 3.0f, testImage.getHeight() / 3.0f );
 
+	//;
+	
+	ofSetColor(255,255,255, AMathHelpers::cosZeroToOne( ofGetElapsedTimef() ) * 255 );		
+	testImage2.draw( 870.0f, 200.0f, testImage2.getWidth() / 3.0f, testImage2.getHeight() / 3.0f );
+
+	ofSetColor(255,255,255, 255 - (AMathHelpers::cosZeroToOne( ofGetElapsedTimef() ) * 255) );
+	testImageAlpha.draw( 960.0f, 350.0f, testImageAlpha.getWidth() / 2.0f, testImageAlpha.getHeight() / 2.0f );
+	
+	ofDisableAlphaBlending();	
+	
+
+
+	ofSetColor(225);
+	franklinBook14.drawString("franklin book 14pt - ", 30, 700);
+	franklinBook14.drawString(typeStr, 30, 720);
+	
 	
 	ofFill();
 	ofSetHexColor(0xe0be21);
@@ -557,35 +623,39 @@ void testApp::draw(){
 	ofPopMatrix();
 	//-------------------------------------
 	
+
+	//ofSetHexColor(0x000000);
+	//ofDrawBitmapString("ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?", 20,300);	
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(a) star\nwinding rule odd", 20,210);
+	ofDrawBitmapString("(a) star\nwinding rule odd", 20,210);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(b) star\nwinding rule nonzero", 220,210);
+	ofDrawBitmapString("(b) star\nwinding rule nonzero", 220,210);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(c) dynamically\ncreated shape", 420,210);
+	ofDrawBitmapString("(c) dynamically\ncreated shape", 420,210);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(d) random points\npoly", 670,210);
+	ofDrawBitmapString("(d) random points\npoly", 670,210);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(e) fun with sin/cos", 20,410);
+	ofDrawBitmapString("(e) fun with sin/cos", 20,410);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(f) ofCurveVertex\nuses catmull rom\nto make curved shapes", 220,410);
+	ofDrawBitmapString("(f) ofCurveVertex\nuses catmull rom\nto make curved shapes", 220,410);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(g) ofBezierVertex\nuses bezier to draw curves", 460,410);
+	ofDrawBitmapString("(g) ofBezierVertex\nuses bezier to draw curves", 460,410);
 	
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(h) ofNextContour\nallows for holes", 20,610);
+	ofDrawBitmapString("(h) ofNextContour\nallows for holes", 20,610);
 	
 	ofSetHexColor(0x000000);
-//	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);
-		
+	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);
+	
+	 
 	
 //	debugDraw();
 	
