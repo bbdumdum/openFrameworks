@@ -1,7 +1,5 @@
 #pragma once
 
-#define ANDROID
-
 //-------------------------------
 #define OF_VERSION	7
 #define OF_VERSION_MINOR 0
