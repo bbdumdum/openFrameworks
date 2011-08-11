@@ -14,34 +14,28 @@
  limitations under the License.
  */
 
-#ifndef Shader_H_
-#define Shader_H_
+#ifndef ShaderFile_H_
+#define ShaderFile_H_
 
-#include <OpenGLES/ES2/gl.h>
-#include <vector>
-#include <iostream>
-using namespace std;
 
-#include "ofMain.h" // we only really need ofToDataPath
-
+#if TARGET_OS_IPHONE
+	#include <OpenGLES/ES2/gl.h>
+#elif __ANDROID__
+	#include <GLES2/gl2.h>
+#endif
+#include <string>
+#include "../OpenGLESFile.h"
 
 namespace OpenGLES {
 	namespace OpenGLES2 {
 		
-		class ShaderSource;
-		
-		class Shader {
+		class ShaderFile : public OpenGLESFile {
 		public:
-			Shader(GLenum type, std::vector<ShaderSource *> &sources);
-			~Shader();
-			
-			GLuint compile();
+			ShaderFile(GLenum type, std::string name);
+			GLenum getType();
+			void setType(GLenum type);
 		private:
-			bool readShaderSource();
-			
 			GLenum type;
-			std::vector<ShaderSource *> &sources;
-			GLuint id;
 		};
 	}
 }

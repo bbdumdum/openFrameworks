@@ -1,5 +1,7 @@
 #pragma once
 
+#define ANDROID
+
 //-------------------------------
 #define OF_VERSION	7
 #define OF_VERSION_MINOR 0
@@ -35,6 +37,8 @@ enum ofLoopType{
 #elif defined (ANDROID)
 	#define TARGET_ANDROID
 	#define TARGET_OPENGLES
+
+	#define OPENGLES_VERSION_2
 #else
 	#define TARGET_LINUX
 #endif
@@ -150,8 +154,14 @@ enum ofLoopType{
 
 #ifdef TARGET_ANDROID
 	#include <unistd.h>
+
+#ifdef OPENGLES_VERSION_2
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+#else
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
+#endif
 
 	#define TARGET_LITTLE_ENDIAN
 #endif
@@ -159,16 +169,14 @@ enum ofLoopType{
 
 #if defined( TARGET_OPENGLES )  && !defined(OPENGLES_VERSION_2)
 	#include "glu.h"
-	//typedef GLushort ofIndexType ;
-#else
-	//typedef GLuint ofIndexType;
 #endif
 
 #ifdef OPENGLES_VERSION_2
 	#include "OpenGLES/OpenGLESDefines.h"
 
-	#import <OpenGLES/ES1/gl.h> // Andreas: added only n the interest of getting this to compile
-
+	#ifdef TARGET_OF_IPHONE
+		#import <OpenGLES/ES1/gl.h> // Andreas: added only n the interest of getting this to compile
+	#endif
 #endif
 
 

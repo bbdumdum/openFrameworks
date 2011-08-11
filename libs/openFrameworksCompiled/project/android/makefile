@@ -79,6 +79,7 @@ INCLUDES_FLAGS += -I../../../poco/include
 ifeq ($(ARCH),android)
 	INCLUDES_FLAGS += -I../../../glu/include_android
  	INCLUDES_FLAGS += -I../../../../addons/ofxAndroid/src
+ 	INCLUDES_FLAGS += -I../../../../addons/ofxGLES2Renderer/src
 else
  	INCLUDES_FLAGS += -I../../../glu/include
 endif

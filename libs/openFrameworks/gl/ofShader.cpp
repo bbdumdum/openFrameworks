@@ -1,17 +1,11 @@
 #include "ofShader.h"
 #include "ofUtils.h"
 #include "ofFileUtils.h"
+#include "ofGraphics.h"
 #include <map>
 
 //#ifndef TARGET_OPENGLES
-#if (defined (TARGET_OPENGLES) && defined (OPENGLES_VERSION_2)) || ! defined (TARGET_OPENGLES)
-
-
-#ifdef OPENGLES_VERSION_2
-
-#else
-
-#endif 
+#if !defined (TARGET_OPENGLES) || defined (OPENGLES_VERSION_2)
 
 
 
@@ -295,14 +289,22 @@ void ofShader::unload() {
 
 //--------------------------------------------------------------
 void ofShader::begin() {
+#ifndef OPENGLES_VERSION_2
 	if (bLoaded == true)
 		glUseProgram(program);
+#else
+	ofGetGLES2Renderer()->beginCustomShader(this);
+#endif
 }
 
 //--------------------------------------------------------------
 void ofShader::end() {
+#ifndef OPENGLES_VERSION_2
 	if (bLoaded == true)
 		glUseProgram(0);
+#else
+	ofGetGLES2Renderer()->endCustomShader();
+#endif
 }
 
 //--------------------------------------------------------------
@@ -314,12 +316,21 @@ void ofShader::setUniformTexture(const char* name, ofBaseHasTexture& img, int te
 void ofShader::setUniformTexture(const char* name, ofTexture& tex, int textureLocation) {
 	if(bLoaded) {
 		ofTextureData texData = tex.getTextureData();
-		_ofActiveTexture(GL_TEXTURE0 + textureLocation);
-		_ofEnable(texData.textureTarget);
-		_ofBindTexture(texData.textureTarget, texData.textureID);
-		_ofDisable(texData.textureTarget);
+#ifndef OPENGLES_VERSION_2
+		glActiveTexture(GL_TEXTURE0 + textureLocation);
+		glEnable(texData.textureTarget);
+		glBindTexture(texData.textureTarget, texData.textureID);
+		glDisable(texData.textureTarget);
 		setUniform1i(name, textureLocation);
-		_ofActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
+#else
+		ofGetGLES2Context()->glActiveTexture(GL_TEXTURE0 + textureLocation);
+		ofGetGLES2Context()->glEnable(texData.textureTarget);
+		ofGetGLES2Context()->glBindTexture(texData.textureTarget, texData.textureID);
+		ofGetGLES2Context()->glDisable(texData.textureTarget);
+		setUniform1i(name, textureLocation);
+		ofGetGLES2Context()->glActiveTexture(GL_TEXTURE0);
+#endif
 	}
 }
 
