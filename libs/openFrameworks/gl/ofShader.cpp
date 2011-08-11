@@ -190,12 +190,19 @@ bool ofShader::checkShaderLinkStatus(GLuint shader, GLenum type) {
 void ofShader::checkShaderInfoLog(GLuint shader, GLenum type) {
 	GLsizei infoLength;
 	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLength);
+
+#ifndef TARGET_ANDROID
 	if (infoLength > 1) {
 		GLchar* infoBuffer = new GLchar[infoLength];
 		glGetShaderInfoLog(shader, infoLength, &infoLength, infoBuffer);
 		ofLog(OF_LOG_ERROR, nameForType(type) + " shader reports:\n" + infoBuffer);
 		delete [] infoBuffer;
 	}
+#else
+	GLchar infoBuffer[4096];
+	glGetShaderInfoLog(shader, 4096, &infoLength, infoBuffer);
+	ofLog(OF_LOG_ERROR, nameForType(type) + " shader reports:\n" + infoBuffer);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -302,7 +309,7 @@ void ofShader::end() {
 	if (bLoaded == true)
 		glUseProgram(0);
     
-#ifndef OPENGLES_VERSION_2
+#ifdef OPENGLES_VERSION_2
 	ofGetGLES2Renderer()->endCustomShader();
 #endif
 }
