@@ -322,10 +322,13 @@ static const unsigned char* bmpChar_8x13_Map[] = {	bmpChar_8x13_000,bmpChar_8x13
 
 
 #include "ofTexture.h"
+#include "ofMesh.h"
 
 static bool		bBitmapTexturePrepared = false;
 ofTexture		glesBitmappedFontTexture;
 unsigned char	myLetterPixels[16*16 * 16*16 * 2];			// letter size:8x14pixels, texture size:16x8letters, gl_luminance_alpha: 2bytes/1pixel
+
+ofMesh scratchMesh;
 
 #ifdef TARGET_ANDROID
 //---------------------------------------------------------------------
@@ -340,8 +343,8 @@ static float widthTex = 8.0f/256.0f;
 static float heightTex = 14.0f/256.0f;
 
 //TODO: make this bigger - or re-port back to vector?
-vector <GLfloat> coords;
-vector <GLfloat> verts;
+//vector <GLfloat> coords;
+//vector <GLfloat> verts;
 
 static int vC = 0;
 
@@ -382,7 +385,7 @@ void  ofDrawBitmapCharacter(int character, int x , int y){
 	if(!bBitmapTexturePrepared){
 		prepareBitmapTexture();
 	}
-		
+			
 	if (character < 128) {		
 		//TODO: look into a better fix. 
 		//old ofDrawBitmapString was 3 pixels higher, so this version renders text in a different position. 
@@ -391,36 +394,57 @@ void  ofDrawBitmapCharacter(int character, int x , int y){
 
 		float posTexW = (float)(character % 16)/16.0f;
 		float posTexH = ((int)(character / 16.0f))/16.0f;
-				
-		coords[vC]		= posTexW;
-		coords[vC+1]	= posTexH;
-		coords[vC+2]	= posTexW + widthTex;
-		coords[vC+3]	= posTexH;
-		coords[vC+4]	= posTexW+widthTex;
-		coords[vC+5]	= posTexH+heightTex;
-		
 
-		coords[vC+6]	= posTexW + widthTex;
-		coords[vC+7]	= posTexH+heightTex;
-		coords[vC+8]	= posTexW;
-		coords[vC+9]	= posTexH+heightTex;
-		coords[vC+10]	= posTexW;
-		coords[vC+11]	= posTexH;
+		scratchMesh.addTexCoord( ofVec2f(posTexW, posTexH) );
+		scratchMesh.addTexCoord( ofVec2f(posTexW + widthTex, posTexH) );
+		scratchMesh.addTexCoord( ofVec2f(posTexW + widthTex, posTexH + heightTex) );
 		
-		verts[vC]	= x;
-		verts[vC+1]	= y;
-		verts[vC+2]	= x+8;
-		verts[vC+3]	= y;
-		verts[vC+4]	= x+8;
-		verts[vC+5]	= y+14;
-				
-		verts[vC+6]	= x+8;
-		verts[vC+7]	= y+14;
-		verts[vC+8] = x;
-		verts[vC+9] = y+14;
-		verts[vC+10] = x;
-		verts[vC+11] = y;
-			
+		scratchMesh.addTexCoord( ofVec2f(posTexW + widthTex, posTexH + heightTex) );
+		scratchMesh.addTexCoord( ofVec2f(posTexW, posTexH + heightTex) );
+		scratchMesh.addTexCoord( ofVec2f(posTexW, posTexH) );		
+
+		
+		scratchMesh.addVertex( ofVec3f( x,     y     ) );
+		scratchMesh.addVertex( ofVec3f( x + 8, y     ) );
+		scratchMesh.addVertex( ofVec3f( x + 8, y + 14) );
+
+		scratchMesh.addVertex( ofVec3f( x + 8, y + 14) );
+		scratchMesh.addVertex( ofVec3f( x,     y + 14) );
+		scratchMesh.addVertex( ofVec3f( x,     y     ) );		
+		
+	/*
+	 
+	 coords[vC]		= posTexW;
+	 coords[vC+1]	= posTexH;
+	 coords[vC+2]	= posTexW + widthTex;
+	 coords[vC+3]	= posTexH;
+	 coords[vC+4]	= posTexW + widthTex;
+	 coords[vC+5]	= posTexH + heightTex;
+	 
+	 
+	 coords[vC+6]	= posTexW + widthTex;
+	 coords[vC+7]	= posTexH + heightTex;
+	 coords[vC+8]	= posTexW;
+	 coords[vC+9]	= posTexH + heightTex;
+	 coords[vC+10]	= posTexW;
+	 coords[vC+11]	= posTexH;
+	 
+	 verts[vC]	    = x;
+	 verts[vC+1]	= y;
+	 verts[vC+2]	= x+8;
+	 verts[vC+3]	= y;
+	 verts[vC+4]	= x+8;
+	 verts[vC+5]	= y+14;
+	 
+	 verts[vC+6]	= x+8;
+	 verts[vC+7]	= y+14;
+	 verts[vC+8]    = x;
+	 verts[vC+9]    = y+14;
+	 verts[vC+10]   = x;
+	 verts[vC+11]   = y;
+	 
+	*/ 
+		
 		vC += 12;
 	}	
 }
@@ -428,12 +452,8 @@ void  ofDrawBitmapCharacter(int character, int x , int y){
 //---------------------------------------------------------------------
 void ofDrawBitmapCharacterStart(int stringLength){
 
-	verts.clear();
-	coords.clear();
+	scratchMesh.clear();	
 	
-	verts.assign(12 * (stringLength+1), 0);
-	coords.assign(12 * (stringLength+1), 0);
-
 	if(!bBitmapTexturePrepared){
 		prepareBitmapTexture();
 	}
@@ -444,12 +464,14 @@ void ofDrawBitmapCharacterStart(int stringLength){
 	// this temporarily enables alpha testing,
 	// which discards pixels unless their alpha is 1.0f
 	glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_EQUAL, 1.0f);
+
+#else
+
 #endif
 
-	glEnableClientState(GL_VERTEX_ARRAY);		
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+//	_ofEnable(GL_ALPHA_TEST);
+//	_ofAlphaFunc(GL_EQUAL, 1.0f); // Andreas: this was giving me grief and doesn't seem to be needed, will go back an investigate
+	//ofEnableAlphaBlending();
 	
 	glTexParameterf(glesBitmappedFontTexture.getTextureData().textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	vC = 0;
@@ -457,15 +479,19 @@ void ofDrawBitmapCharacterStart(int stringLength){
 
 //---------------------------------------------------------------------
 void ofDrawBitmapCharacterEnd(){
+	
 	if( vC > 0 ){
-		glTexCoordPointer(2, GL_FLOAT, 0, &coords[0] );
-		glVertexPointer(2, GL_FLOAT, 0, &verts[0] );
-		glDrawArrays(GL_TRIANGLES, 0, vC/2 );
+		scratchMesh.drawFaces();
 	}
 
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	//_ofDisable(GL_ALPHA_TEST);	
+	//ofDisableAlphaBlending();	
+	
+	//glDisableClientState( GL_TEXTURE_COORD_ARRAY );
 #ifndef TARGET_OPENGLES
 	glPopAttrib();
+#else
+
 #endif
 	glesBitmappedFontTexture.unbind();
 }

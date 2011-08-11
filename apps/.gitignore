@@ -30,3 +30,4 @@ Application.mk
 Android.mk
 */*/.*project
 !androidExamples/*/.*project
+

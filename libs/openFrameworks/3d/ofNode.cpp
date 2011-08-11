@@ -385,13 +385,13 @@ void ofNode::draw() {
 
 //----------------------------------------
 void ofNode::transformGL() const {
-	glPushMatrix();
-	glMultMatrixf(getGlobalTransformMatrix().getPtr());
+	ofPushMatrix();
+	ofMultMatrix(getGlobalTransformMatrix().getPtr());
 }
 
 //----------------------------------------
 void ofNode::restoreTransformGL() const {
-	glPopMatrix();
+	ofPopMatrix();
 }
 
 //----------------------------------------

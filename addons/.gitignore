@@ -29,3 +29,5 @@
 !ofxAssimpModelLoader/**
 ofxAndroid/ofAndroidLib/bin
 ofxAndroid/ofAndroidLib/gen
+!ofxGLES2Renderer
+!ofxGLES2Renderer/**

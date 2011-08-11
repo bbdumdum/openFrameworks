@@ -368,6 +368,31 @@ void ofRotate(float degrees){
 	renderer->rotate(degrees);
 }
 
+//----------------------------------------------------------
+void ofLoadIdentityMatrix (void){
+	renderer->loadIdentityMatrix();
+}
+
+//----------------------------------------------------------
+void ofLoadMatrix (const ofMatrix4x4 *m){
+	renderer->loadMatrix(m);
+}
+
+//----------------------------------------------------------
+void ofLoadMatrix (const float *m){
+	renderer->loadMatrix(m);
+}
+
+//----------------------------------------------------------
+void ofMultMatrix (const ofMatrix4x4 *m){
+	renderer->multMatrix(m);
+}
+
+//----------------------------------------------------------
+void ofMultMatrix (const float *m){
+	renderer->multMatrix(m);
+}
+
 // end transformation matrix related functions
 //----------------------------------------------------------
 
@@ -562,7 +587,7 @@ void ofDisablePointSprites() {
 //----------------------------------------------------------
 void ofDisableBlendMode()
 {
-    glDisable(GL_BLEND);
+    _ofDisable(GL_BLEND);
 	currentStyle.blendingMode = OF_BLENDMODE_DISABLED;
 }
 
@@ -1033,3 +1058,90 @@ void ofDrawBitmapString(string textString, float x, float y, float z){
 
 // end text
 //--------------------------------------------------
+
+
+
+//---------------------------------------------------
+// Private GL hooks needed by the renderer
+
+//----------------------------------------
+void _ofEnable( unsigned int capability ){
+	renderer->_enable( capability );
+}
+
+//----------------------------------------
+void _ofDisable( unsigned int capability ){
+	renderer->_disable( capability );
+}
+
+//----------------------------------------
+void _ofLightModelfv(unsigned int propertyname, const float *params ){
+	renderer->_lightModelfv( propertyname, params );
+}
+
+//----------------------------------------
+void _ofLightf(unsigned int light, unsigned int pname, float param){
+	renderer->_lightf( light, pname, param );
+}
+
+//----------------------------------------
+void _ofLightfv (unsigned int light, unsigned int pname, const float *params){
+	renderer->_lightfv( light, pname, params );
+}
+
+//----------------------------------------
+void _ofAlphaFunc( unsigned int	func, float ref ){
+	renderer->_alphaFunc( func, ref );	
+}
+
+//----------------------------------------
+void _ofMatrixMode( unsigned int mode ){
+	renderer->_matrixMode( mode );
+}
+
+//----------------------------------------
+void _ofGetMaterialfv(unsigned int face, unsigned int pname, float *params){
+	renderer->_getMaterialfv( face, pname, params );
+}
+
+//----------------------------------------
+void _ofMaterialfv(unsigned int face, unsigned int pname, const float *params){
+	renderer->_materialfv( face, pname, params );
+}
+
+//----------------------------------------
+void _ofMaterialf(unsigned int face, unsigned int pname, float param){
+	renderer->_materialf( face, pname, param );
+}
+
+//----------------------------------------
+void _ofActiveTexture( unsigned int texture ){
+	renderer->_activeTexture( texture );
+}
+
+//----------------------------------------
+void _ofBindTexture(unsigned int target, unsigned int texture){
+	renderer->_bindTexture( target, texture );
+}
+
+//----------------------------------------
+void _ofTexImage2D (unsigned int target, int level, int internalformat, 
+				    int width, int height, 
+					int border, unsigned int format, unsigned int type, const void *pixels )
+{
+	renderer->_texImage2D( target, level, internalformat, width, height, border, format, type, pixels );
+}
+
+//----------------------------------------
+void _ofTexEnvf(unsigned int target, unsigned int pname, unsigned int param){
+	renderer->_texEnvf( target, pname, param );
+}
+
+//----------------------------------------
+void ofLightingModel( unsigned int model ){
+	renderer->setLightingModel( model );
+}
+
+
+// end private GL hooks needed by the renderer
+//---------------------------------------------------

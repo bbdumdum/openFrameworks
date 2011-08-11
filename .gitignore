@@ -103,3 +103,6 @@ apps/*/*/test link
 apps/*/*/obj
 apps/*/*/bin
 .csettings
+
+!devApps/GLES2Renderer
+!devApps/GLES2Renderer/**

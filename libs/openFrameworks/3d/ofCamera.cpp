@@ -71,8 +71,8 @@ void ofCamera::begin(ofRectangle viewport) {
 	// autocalculate near/far clip planes if not set by user
 	calcClipPlanes(viewport);
 	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	_ofMatrixMode(GL_PROJECTION);
+	ofLoadIdentityMatrix();
 	if(isOrtho) {
 		//			if(vFlip) glOrtho(0, width, height, 0, nearDist, farDist);
 		//			else 
@@ -81,14 +81,19 @@ void ofCamera::begin(ofRectangle viewport) {
 #else
 		ofMatrix4x4 ortho;
 		ortho.makeOrthoMatrix(0, viewport.width, 0, viewport.height, nearClip, farClip);
-		glLoadMatrixf(ortho.getPtr());
+		ofLoadMatrix(ortho.getPtr());
 #endif		
 	} else {
-		gluPerspective(fov, viewport.width/viewport.height, nearClip, farClip);
+		
+		//gluPerspective(fov, viewport.width/viewport.height, nearClip, farClip);		
+		
+		ofMatrix4x4 persp;
+		persp.makePerspectiveMatrix( fov, viewport.width/viewport.height, nearClip, farClip );
+		ofLoadMatrix(persp.getPtr());
 	}
 	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(ofMatrix4x4::getInverseOf(getGlobalTransformMatrix()).getPtr());
+	_ofMatrixMode(GL_MODELVIEW);
+	ofLoadMatrix(ofMatrix4x4::getInverseOf(getGlobalTransformMatrix()).getPtr());
 	ofViewport(viewport);
 	
 	//store current matrices

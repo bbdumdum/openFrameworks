@@ -79,6 +79,12 @@ void ofRotateX(float degrees);
 void ofRotateY(float degrees);
 void ofRotateZ(float degrees);
 void ofRotate(float degrees);
+void ofLoadIdentityMatrix (void);
+void ofLoadMatrix (const ofMatrix4x4 *m);   // Andreas: I've included both a ofMatrix4x4* and a float* version here, 
+void ofLoadMatrix (const float *m);			// ideally we would always use ofMatrix4x4, but right now would result 
+void ofMultMatrix (const ofMatrix4x4 *m);	// in a lot of temporary ofMatrix4x4 objects just to pass in a matrix to old code
+void ofMultMatrix (const float *m);
+
 
 // screen coordinate things / default gl values
 void ofSetupGraphicDefaults();
@@ -168,6 +174,39 @@ bool 	ofbClearBg();
 // end background
 //---------------------------------------------------
 
+
+void ofLightingModel( unsigned int model );
+
+
+//---------------------------------------------------
+// "Private" GL hooks needed to start the work on 
+// abstracting the rendering from OpenGL 1.1	
+
+void _ofEnable( unsigned int capability );
+void _ofDisable( unsigned int capability );
+
+void _ofAlphaFunc( unsigned int func, float ref );
+
+void _ofMatrixMode( unsigned int mode );
+
+void _ofLightModelfv(unsigned int propertyname, const float *params );
+void _ofLightf(unsigned int light, unsigned int pname, float param);
+void _ofLightfv (unsigned int light, unsigned int pname, const float *params);
+
+void _ofGetMaterialfv(unsigned int face, unsigned int pname, float *params);
+
+void _ofMaterialfv(unsigned int face, unsigned int pname, const float *params);
+void _ofMaterialf(unsigned int face, unsigned int pname, float param);
+
+void _ofActiveTexture( unsigned int texture );
+void _ofBindTexture(unsigned int target, unsigned int texture);
+
+void _ofTexImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels );
+
+void _ofTexEnvf(unsigned int target, unsigned int pname, unsigned int param);
+
+// end private GL hooks needed by the renderer
+//---------------------------------------------------
 
 
 

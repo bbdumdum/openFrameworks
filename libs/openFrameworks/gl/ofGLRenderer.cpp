@@ -331,11 +331,19 @@ void ofGLRenderer::setupScreenPerspective(float width, float height, ofOrientati
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(fov, aspect, nearDist, farDist);
+	
+	ofMatrix4x4 persp;
+	persp.makePerspectiveMatrix(fov, aspect, nearDist, farDist);
+	ofLoadMatrix( &persp );
+	//gluPerspective(fov, aspect, nearDist, farDist);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0, 0, 1, 0);
+	
+	ofMatrix4x4 lookAt;
+	lookAt.makeLookAtViewMatrix( ofVec3f(eyeX, eyeY, dist),  ofVec3f(eyeX, eyeY, 0),  ofVec3f(0, 1, 0) );
+	ofLoadMatrix( &lookAt );	
+	//gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0, 0, 1, 0);
 
 	//note - theo checked this on iPhone and Desktop for both vFlip = false and true
 	if(ofDoesHWOrientation()){
@@ -551,6 +559,34 @@ void ofGLRenderer::rotateZ(float degrees){
 void ofGLRenderer::rotate(float degrees){
 	glRotatef(degrees, 0, 0, 1);
 }
+
+
+//----------------------------------------------------------
+void ofGLRenderer::loadIdentityMatrix (void){
+	glLoadIdentity();
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::loadMatrix (const ofMatrix4x4 *m){
+	loadMatrix( m->getPtr() );	
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::loadMatrix (const float *m){
+	glLoadMatrixf(m);
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::multMatrix (const ofMatrix4x4 *m){
+	multMatrix( m->getPtr() );		
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::multMatrix (const float *m){
+	glMultMatrixf(m);
+}
+
+
 
 //----------------------------------------------------------
 void ofGLRenderer::setColor(const ofColor & color){
@@ -1056,3 +1092,84 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 
 	glBlendFunc(blend_src, blend_dst);
 }
+
+
+
+
+//----------------------------------------------------------
+void ofGLRenderer::setLightingModel( unsigned int model ){
+	glShadeModel( model );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_enable( unsigned int capability ){
+	glEnable( capability );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_disable( unsigned int capability ){
+	glDisable( capability );	
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_alphaFunc( unsigned int func, float ref ){
+	glAlphaFunc( func, ref );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_matrixMode( unsigned int mode ){
+	glMatrixMode( mode );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_lightModelfv(unsigned int pname, const float *params ){
+	//cout << "ofGLRenderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;	
+	glLightModelfv( pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_lightf(unsigned int light, unsigned int pname, float param){
+	glLightf( light, pname, param );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_lightfv (unsigned int light, unsigned int pname, const float *params){
+	glLightfv( light, pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_getMaterialfv(unsigned int face, unsigned int pname, float *params){
+	glGetMaterialfv( face, pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_materialfv(unsigned int face, unsigned int pname, const float *params){
+	glMaterialfv( face, pname, params );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_materialf(unsigned int face, unsigned int pname, float param){
+	glMaterialf( face, pname, param );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_activeTexture( unsigned int texture ){
+	glActiveTexture( texture );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_bindTexture(unsigned int target, unsigned int texture){
+	glBindTexture( target, texture );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_texImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels ){
+	glTexImage2D( target, level, internalformat, width, height, border, format, type, pixels );
+}
+
+//----------------------------------------------------------
+void ofGLRenderer::_texEnvf(unsigned int target, unsigned int pname, unsigned int param){
+	glTexEnvf( target, pname, param );
+}
+
+

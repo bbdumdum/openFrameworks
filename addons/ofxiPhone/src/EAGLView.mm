@@ -48,7 +48,7 @@
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame andDepth:false andAA:false andNumSamples:0 andRetina:false];
+	return [self initWithFrame:frame andDepth:true andAA:false andNumSamples:0 andRetina:false];
 }
 
 - (id) initWithFrame:(CGRect)frame andDepth:(bool)depth andAA:(bool)fsaaEnabled andNumSamples:(int)samples andRetina:(bool)retinaEnabled
@@ -73,8 +73,11 @@
 			}
 		}
 		
-		// TODO: add initSettings to override ES2Renderer even if available
-        renderer = [[ES2Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
+		
+		#ifdef OPENGLES_VERSION_2
+			// TODO: add initSettings to override ES2Renderer even if available
+			renderer = [[ES2Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
+		#endif
 		
         if (!renderer) {
             renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];

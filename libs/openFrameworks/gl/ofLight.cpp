@@ -16,16 +16,16 @@
 
 //----------------------------------------
 void ofEnableLighting() {
-	glEnable(GL_LIGHTING);
+	_ofEnable(GL_LIGHTING);
 #ifndef TARGET_OPENGLES  //TODO: fix this
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 #endif
-	glEnable(GL_COLOR_MATERIAL);
+	_ofEnable(GL_COLOR_MATERIAL);
 }
 
 //----------------------------------------
 void ofDisableLighting() {
-	glDisable(GL_LIGHTING);
+	_ofDisable(GL_LIGHTING);
 }
 
 //----------------------------------------
@@ -49,14 +49,14 @@ bool ofGetLightingEnabled() {
 
 //----------------------------------------
 void ofSetSmoothLighting(bool b) {
-	if (b) glShadeModel(GL_SMOOTH);
-	else glShadeModel(GL_FLAT);
+	if (b) ofLightingModel(GL_SMOOTH);
+	else ofLightingModel(GL_FLAT);
 }
 
 //----------------------------------------
 void ofSetGlobalAmbientColor(const ofColor& c) {
-	GLfloat cc[] = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, cc);
+	GLfloat cc[] = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};	
+	_ofLightModelfv(GL_LIGHT_MODEL_AMBIENT, cc);
 }
 
 //----------------------------------------
@@ -113,7 +113,7 @@ static void release(ofLight & light){
 			light.setSpecularColor(ofColor(255,255,255,255));
 		}
 		GLfloat cc[] = {0,0,1, 0};
-		glLightfv(GL_LIGHT0 + id, GL_POSITION, cc);
+		_ofLightfv(GL_LIGHT0 + id, GL_POSITION, cc);
 
 		light.disable();
 		getActiveLights()[id] = false;
@@ -186,7 +186,7 @@ void ofLight::enable() {
 	}
 	
 	ofEnableLighting();
-	glEnable(GL_LIGHT0 + glIndex);
+	_ofEnable(GL_LIGHT0 + glIndex);
 }
 
 //----------------------------------------
@@ -234,12 +234,12 @@ bool ofLight::getIsSpotlight() {
 
 //----------------------------------------
 void ofLight::setSpotlightCutOff( float spotCutOff ) {
-	glLightf(GL_LIGHT0 + glIndex, GL_SPOT_CUTOFF, CLAMP(spotCutOff, 0, 90) );
+	_ofLightf(GL_LIGHT0 + glIndex, GL_SPOT_CUTOFF, CLAMP(spotCutOff, 0, 90) );
 }
 
 //----------------------------------------
 void ofLight::setSpotConcentration( float exponent ) {
-	glLightf(GL_LIGHT0 + glIndex, GL_SPOT_EXPONENT, exponent);
+	_ofLightf(GL_LIGHT0 + glIndex, GL_SPOT_EXPONENT, exponent);
 }
 
 //----------------------------------------
@@ -256,9 +256,9 @@ bool ofLight::getIsPointLight() {
 
 //----------------------------------------
 void ofLight::setAttenuation( float constant, float linear, float quadratic ) {
-	glLightf(GL_LIGHT0 + glIndex, GL_CONSTANT_ATTENUATION, constant);
-	glLightf(GL_LIGHT0 + glIndex, GL_LINEAR_ATTENUATION, linear);
-	glLightf(GL_LIGHT0 + glIndex, GL_QUADRATIC_ATTENUATION, quadratic);
+	_ofLightf(GL_LIGHT0 + glIndex, GL_CONSTANT_ATTENUATION, constant);
+	_ofLightf(GL_LIGHT0 + glIndex, GL_LINEAR_ATTENUATION, linear);
+	_ofLightf(GL_LIGHT0 + glIndex, GL_QUADRATIC_ATTENUATION, quadratic);
 }
 
 //----------------------------------------
@@ -270,21 +270,21 @@ int ofLight::getType() {
 void ofLight::setAmbientColor(const ofFloatColor& c) {
 	if(glIndex==-1) return;
 	ambientColor = c;
-	glLightfv(GL_LIGHT0 + glIndex, GL_AMBIENT, &ambientColor.r);
+	_ofLightfv(GL_LIGHT0 + glIndex, GL_AMBIENT, &ambientColor.r);
 }
 
 //----------------------------------------
 void ofLight::setDiffuseColor(const ofFloatColor& c) {
 	if(glIndex==-1) return;
 	diffuseColor = c;
-	glLightfv(GL_LIGHT0 + glIndex, GL_DIFFUSE, &diffuseColor.r);
+	_ofLightfv(GL_LIGHT0 + glIndex, GL_DIFFUSE, &diffuseColor.r);
 }
 
 //----------------------------------------
 void ofLight::setSpecularColor(const ofFloatColor& c) {
 	if(glIndex==-1) return;
 	specularColor = c;
-	glLightfv(GL_LIGHT0 + glIndex, GL_SPECULAR, &specularColor.r);
+	_ofLightfv(GL_LIGHT0 + glIndex, GL_SPECULAR, &specularColor.r);
 }
 
 //----------------------------------------
@@ -309,7 +309,7 @@ void ofLight::onPositionChanged() {
 	// if we are a positional light and not directional, update light position
 	if(isDirectional == false) {
 		GLfloat cc[] = {getPosition().x, getPosition().y, getPosition().z, 1};
-		glLightfv(GL_LIGHT0 + glIndex, GL_POSITION, cc);
+		_ofLightfv(GL_LIGHT0 + glIndex, GL_POSITION, cc);
 	}
 }
 
@@ -319,12 +319,12 @@ void ofLight::onOrientationChanged() {
 	// if we are a directional light and not positional, update light position (direction)
 	if(isDirectional == true) {
 		GLfloat cc[] = {getLookAtDir().x, getLookAtDir().y, getLookAtDir().z, 0};
-		glLightfv(GL_LIGHT0 + glIndex, GL_POSITION, cc);
+		_ofLightfv(GL_LIGHT0 + glIndex, GL_POSITION, cc);
 	} else {
 		if(isSpotlight) {
 			// determines the axis of the cone light //
 			GLfloat spot_direction[] = { getLookAtDir().x, getLookAtDir().y, getLookAtDir().z, 1.0 };
-			glLightfv(GL_LIGHT0 + glIndex, GL_SPOT_DIRECTION, spot_direction);
+			_ofLightfv(GL_LIGHT0 + glIndex, GL_SPOT_DIRECTION, spot_direction);
 		}
 	}
 }

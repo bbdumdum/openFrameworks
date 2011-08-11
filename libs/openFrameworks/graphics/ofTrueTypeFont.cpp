@@ -14,6 +14,7 @@
 
 static bool printVectorInfo = false;
 static int ttfGlobalDpi = 96;
+ofBlendMode savedBlendingMode;
 
 //--------------------------------------------------------
 void ofTrueTypeFont::setGlobalDpi(int newDpi){
@@ -466,6 +467,7 @@ bool ofTrueTypeFont::loadFont(string filename, int fontsize, bool _bAntiAliased,
 	// ------------- close the library and typeface
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
+ 
   	bLoadedOk = true;
 	return true;
 }
@@ -761,6 +763,7 @@ void ofTrueTypeFont::drawString(string c, float x, float y) {
 
 }
 
+
 //-----------------------------------------------------------
 void ofTrueTypeFont::bind(){
 	if(!binded){
@@ -782,14 +785,19 @@ void ofTrueTypeFont::bind(){
 		#else
 			blend_enabled = glIsEnabled(GL_BLEND);
 			texture_2d_enabled = glIsEnabled(GL_TEXTURE_2D);
+		
 			glGetIntegerv( GL_BLEND_SRC, &blend_src );
 			glGetIntegerv( GL_BLEND_DST, &blend_dst );
 		#endif
 
+		savedBlendingMode = ofGetStyle().blendingMode;
+		
 	    // (b) enable our regular ALPHA blending!
-	    glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	    _ofEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//ofGetCurrentRenderer()->setBlendMode( OF_BLENDMODE_ALPHA );
+		ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+		
 		texAtlas.bind();
 		stringQuads.clear();
 		binded = true;
@@ -805,12 +813,17 @@ void ofTrueTypeFont::unbind(){
 		#ifndef TARGET_OPENGLES
 			glPopAttrib();
 		#else
+		
+			ofEnableBlendMode( savedBlendingMode );
+		
 			if( !blend_enabled )
-				glDisable(GL_BLEND);
+				_ofDisable(GL_BLEND);
 			if( !texture_2d_enabled )
-				glDisable(GL_TEXTURE_2D);
-			glBlendFunc( blend_src, blend_dst );
+				_ofDisable(GL_TEXTURE_2D);
+			
+			//glBlendFunc( blend_src, blend_dst ); 
 		#endif
+		
 		binded = false;
 	}
 }

@@ -5,6 +5,9 @@
 #include "ofGLRenderer.h"
 #include <map>
 
+
+//#include <OpenGLES/ES2/gl.h>
+
 //#ifndef TARGET_OPENGLES
 
 
@@ -61,41 +64,48 @@
 	#endif //TARGET_WIN32
 */
 #else
-	#define glGenFramebuffers								glGenFramebuffersOES
-	#define glGenRenderbuffers								glGenRenderbuffersOES
-	#define	glDeleteFramebuffers							glDeleteFramebuffersOES
-	#define	glDeleteRenderbuffers							glDeleteRenderbuffersOES
-	#define	glBindFramebuffer								glBindFramebufferOES
-	#define	glBindRenderbuffer								glBindRenderbufferOES
-	#define glRenderbufferStorage							glRenderbufferStorageOES
-	#define glFramebufferRenderbuffer						glFramebufferRenderbufferOES
-	#define glRenderbufferStorageMultisample				glRenderbufferStorageMultisampleOES
-	#define glFramebufferTexture2D							glFramebufferTexture2DOES
-	#define glCheckFramebufferStatus						glCheckFramebufferStatusOES
-	#define GL_FRAMEBUFFER									GL_FRAMEBUFFER_OES
-	#define GL_RENDERBUFFER									GL_RENDERBUFFER_OES
-	#define GL_DEPTH_ATTACHMENT								GL_DEPTH_ATTACHMENT_OES
-	#define GL_STENCIL_ATTACHMENT							GL_STENCIL_ATTACHMENT_OES
-	//#define GL_DEPTH_STENCIL_ATTACHMENT						GL_DEPTH_STENCIL_ATTACHMENT_OES
-	#define GL_DEPTH_STENCIL								GL_DEPTH24_STENCIL8_OES
-	#define GL_DEPTH_COMPONENT								GL_DEPTH_COMPONENT16_OES
-	#define GL_STENCIL_INDEX								GL_STENCIL_INDEX8_OES
-	#define GL_FRAMEBUFFER_BINDING							GL_FRAMEBUFFER_BINDING_OES
-	#define GL_MAX_COLOR_ATTACHMENTS						GL_MAX_COLOR_ATTACHMENTS_OES
-	#define GL_MAX_SAMPLES									GL_MAX_SAMPLES_OES
-	#define GL_READ_FRAMEBUFFER								GL_READ_FRAMEBUFFER_OES
-	#define GL_DRAW_FRAMEBUFFER								GL_DRAW_FRAMEBUFFER_OES
-	#define GL_WRITE_FRAMEBUFFER							GL_WRITE_FRAMEBUFFER_OES
-	#define GL_FRAMEBUFFER_COMPLETE							GL_FRAMEBUFFER_COMPLETE_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT			GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT	GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS			GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_FORMATS				GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER			GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER			GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES
-	#define GL_FRAMEBUFFER_UNSUPPORTED						GL_FRAMEBUFFER_UNSUPPORTED_OES
-	#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE			GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_OES
-	#define GL_COLOR_ATTACHMENT0							GL_COLOR_ATTACHMENT0_OES
+
+	#ifdef OPENGLES_VERSION_2
+
+	#else
+
+		#define glGenFramebuffers								glGenFramebuffersOES
+		#define glGenRenderbuffers								glGenRenderbuffersOES
+		#define	glDeleteFramebuffers							glDeleteFramebuffersOES
+		#define	glDeleteRenderbuffers							glDeleteRenderbuffersOES
+		#define	glBindFramebuffer								glBindFramebufferOES
+		#define	glBindRenderbuffer								glBindRenderbufferOES
+		#define glRenderbufferStorage							glRenderbufferStorageOES
+		#define glFramebufferRenderbuffer						glFramebufferRenderbufferOES
+		#define glRenderbufferStorageMultisample				glRenderbufferStorageMultisampleOES
+		#define glFramebufferTexture2D							glFramebufferTexture2DOES
+		#define glCheckFramebufferStatus						glCheckFramebufferStatusOES
+		#define GL_FRAMEBUFFER									GL_FRAMEBUFFER_OES
+		#define GL_RENDERBUFFER									GL_RENDERBUFFER_OES
+		#define GL_DEPTH_ATTACHMENT								GL_DEPTH_ATTACHMENT_OES
+		#define GL_STENCIL_ATTACHMENT							GL_STENCIL_ATTACHMENT_OES
+		//#define GL_DEPTH_STENCIL_ATTACHMENT						GL_DEPTH_STENCIL_ATTACHMENT_OES
+		#define GL_DEPTH_STENCIL								GL_DEPTH24_STENCIL8_OES
+		#define GL_DEPTH_COMPONENT								GL_DEPTH_COMPONENT16_OES
+		#define GL_STENCIL_INDEX								GL_STENCIL_INDEX8_OES
+		#define GL_FRAMEBUFFER_BINDING							GL_FRAMEBUFFER_BINDING_OES
+		#define GL_MAX_COLOR_ATTACHMENTS						GL_MAX_COLOR_ATTACHMENTS_OES
+		#define GL_MAX_SAMPLES									GL_MAX_SAMPLES_OES
+		#define GL_READ_FRAMEBUFFER								GL_READ_FRAMEBUFFER_OES
+		#define GL_DRAW_FRAMEBUFFER								GL_DRAW_FRAMEBUFFER_OES
+		#define GL_WRITE_FRAMEBUFFER							GL_WRITE_FRAMEBUFFER_OES
+		#define GL_FRAMEBUFFER_COMPLETE							GL_FRAMEBUFFER_COMPLETE_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT			GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT	GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS			GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_FORMATS				GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER			GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER			GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES
+		#define GL_FRAMEBUFFER_UNSUPPORTED						GL_FRAMEBUFFER_UNSUPPORTED_OES
+		#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE			GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_OES
+		#define GL_COLOR_ATTACHMENT0							GL_COLOR_ATTACHMENT0_OES
+
+	#endif
 
 #endif
 
@@ -337,14 +347,20 @@ bool ofFbo::checkGLSupport() {
 		  );
 #else
 
-	if(CheckExtension("GL_OES_framebuffer_object")){
-		ofLog(OF_LOG_VERBOSE,"FBO supported");
-	}else{
-		ofLog(OF_LOG_ERROR, "FBO not supported by this graphics card");
-		return false;
-	}
-	string extensions = (char*)glGetString(GL_EXTENSIONS);
-	ofLog(OF_LOG_VERBOSE,extensions);
+	#ifdef OPENGLES_VERSION_2
+		// Andreas: In ES 2.0 framebuffer objects are not an extension, returns true further down
+	#else
+		if(CheckExtension( "GL_OES_framebuffer_object") ){
+			ofLog(OF_LOG_VERBOSE,"FBO supported");
+		}else{
+			ofLog(OF_LOG_ERROR, "FBO not supported by this graphics card");
+			return false;
+		}
+		string extensions = (char*)glGetString(GL_EXTENSIONS);
+		ofLog(OF_LOG_VERBOSE,extensions);
+	#endif
+	
+
 #endif
 
 	return true;
@@ -702,9 +718,12 @@ bool ofFbo::checkStatus() {
 		case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS:
 			ofLog(OF_LOG_ERROR, "FRAMEBUFFER_INCOMPLETE_DIMENSIONS");
 			break;
+			
+#ifndef OPENGLES_VERSION_2		// Andreas: can't get this one to compile, will investigate
 		case GL_FRAMEBUFFER_INCOMPLETE_FORMATS:
 			ofLog(OF_LOG_ERROR, "FRAMEBUFFER_INCOMPLETE_FORMATS");
 			break;
+#endif			
 		case GL_FRAMEBUFFER_UNSUPPORTED:
 			ofLog(OF_LOG_ERROR, "FRAMEBUFFER_UNSUPPORTED");
 			break;

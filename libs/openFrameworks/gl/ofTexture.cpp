@@ -1,11 +1,14 @@
 #include "ofTexture.h"
 #include "ofUtils.h"		// for nextPow2()
 #include "ofAppRunner.h"	// for getWidth()
+#include "ofMesh.h"
 #include "ofGraphics.h"
 #include "ofPixels.h"
 #include <map>
 
 static bool bTexHackEnabled = true;
+
+ofMesh texScratchMesh;
 
 //---------------------------------
 template <class T>
@@ -229,6 +232,11 @@ void ofEnableTextureEdgeHack(){
 }
 
 //---------------------------------
+bool ofGetTextureEdgeHackEnabled(){
+	return bTexHackEnabled;
+}
+
+//---------------------------------
 void ofDisableTextureEdgeHack(){
 	bTexHackEnabled = false;
 }
@@ -358,9 +366,9 @@ void ofTexture::allocate(int w, int h, int internalGlDataType, bool bUseARBExten
 	glGenTextures(1, (GLuint *)&texData.textureID);   // could be more then one, but for now, just one
 	retain(texData.textureID);
 	
-	glEnable(texData.textureTarget);
+	_ofEnable(texData.textureTarget);
 	
-	glBindTexture(texData.textureTarget, (GLuint)texData.textureID);
+	_ofBindTexture(texData.textureTarget, (GLuint)texData.textureID);
 #ifndef TARGET_OPENGLES
 	// can't do this on OpenGL ES: on full-blown OpenGL, 
 	// glInternalFormat and glFormat (GL_LUMINANCE below)
@@ -368,7 +376,7 @@ void ofTexture::allocate(int w, int h, int internalGlDataType, bool bUseARBExten
 	//		glTexImage2D(texData.textureTarget, 0, texData.glTypeInternal, (GLint)texData.tex_w, (GLint)texData.tex_h, 0, GL_LUMINANCE, PIXEL_TYPE, 0);  // init to black...
 	glTexImage2D(texData.textureTarget, 0, texData.glTypeInternal, (GLint)texData.tex_w, (GLint)texData.tex_h, 0, texData.glType, texData.pixelType, 0);  // init to black...
 #else
-	glTexImage2D(texData.textureTarget, 0, texData.glTypeInternal, texData.tex_w, texData.tex_h, 0, texData.glTypeInternal, texData.pixelType, 0);
+	_ofTexImage2D(texData.textureTarget, 0, texData.glTypeInternal, texData.tex_w, texData.tex_h, 0, texData.glTypeInternal, texData.pixelType, 0);
 #endif
 	
 	
@@ -377,9 +385,11 @@ void ofTexture::allocate(int w, int h, int internalGlDataType, bool bUseARBExten
 	glTexParameterf(texData.textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(texData.textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
+#ifndef OPENGLES_VERSION_2
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+#endif
 	
-	glDisable(texData.textureTarget);
+	_ofDisable(texData.textureTarget);
 	
 	texData.width = w;
 	texData.height = h;
@@ -693,33 +703,33 @@ void ofTexture::resetAnchor(){
 //----------------------------------------------------------
 void ofTexture::bind(){
 	//we could check if it has been allocated - but we don't do that in draw() 
-	glEnable(texData.textureTarget);
-	glBindTexture( texData.textureTarget, (GLuint)texData.textureID);
+	_ofEnable(texData.textureTarget);
+	_ofBindTexture( texData.textureTarget, (GLuint)texData.textureID);
 	
 	if(ofGetUsingNormalizedTexCoords()) {
-		glMatrixMode(GL_TEXTURE);
-		glPushMatrix();
-		glLoadIdentity();
+		_ofMatrixMode(GL_TEXTURE);
+		ofPushMatrix();
+		ofLoadIdentityMatrix();
 		
 #ifndef TARGET_OPENGLES	
 		if(texData.textureTarget == GL_TEXTURE_RECTANGLE_ARB)
-			glScalef(texData.width, texData.height, 1.0f);
+			ofScale(texData.width, texData.height, 1.0f);
 		else 
 #endif			
-			glScalef(texData.width / texData.tex_w, texData.height / texData.tex_h, 1.0f);
+			ofScale(texData.width / texData.tex_w, texData.height / texData.tex_h, 1.0f);
 		
-		glMatrixMode(GL_MODELVIEW);  		
+		_ofMatrixMode(GL_MODELVIEW);  		
 	}
 }
 
 //----------------------------------------------------------
 void ofTexture::unbind(){
-	glDisable(texData.textureTarget);
+	_ofDisable(texData.textureTarget);
 	
 	if(ofGetUsingNormalizedTexCoords()) {
-		glMatrixMode(GL_TEXTURE);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW); 
+		_ofMatrixMode(GL_TEXTURE);
+		ofPopMatrix();
+		_ofMatrixMode(GL_MODELVIEW); 
 	}
 }
 
@@ -825,13 +835,13 @@ void ofTexture::draw(float x, float y, float z, float w, float h){
 	// make sure we are on unit 0 - we may change this when setting shader samplers
 	// before glEnable or else the shader gets confused
 	/// ps: maybe if bUsingArbTex is enabled we should use glActiveTextureARB?
-	glActiveTexture(GL_TEXTURE0);
+	_ofActiveTexture(GL_TEXTURE0);
 	
 	// Enable texturing
-	glEnable(texData.textureTarget);
+	_ofEnable(texData.textureTarget);
 	
 	// bind the texture
-	glBindTexture( texData.textureTarget, (GLuint)texData.textureID );
+	_ofBindTexture( texData.textureTarget, (GLuint)texData.textureID );
 	
 	GLfloat px0 = 0.0f;		// up to you to get the aspect ratio right
 	GLfloat py0 = 0.0f;
@@ -894,10 +904,26 @@ void ofTexture::draw(float x, float y, float z, float w, float h){
 	GLfloat tx1 = texData.tex_t - offsetw;
 	GLfloat ty1 = texData.tex_u - offseth;
 	
-	glPushMatrix(); 
+	ofPushMatrix(); 
 	
-	glTranslatef(x,y,z);
+	ofTranslate(x,y,z);
 	
+	texScratchMesh.clear();
+	texScratchMesh.setMode( OF_PRIMITIVE_TRIANGLE_FAN );
+	
+	texScratchMesh.addTexCoord( ofVec2f(tx0,ty0) );
+	texScratchMesh.addTexCoord( ofVec2f(tx1,ty0) );
+	texScratchMesh.addTexCoord( ofVec2f(tx1,ty1) );
+	texScratchMesh.addTexCoord( ofVec2f(tx0,ty1) );	
+	
+	texScratchMesh.addVertex( ofVec3f(px0,py0,0.0f) );
+	texScratchMesh.addVertex( ofVec3f(px1,py0,0.0f) );
+	texScratchMesh.addVertex( ofVec3f(px1,py1,0.0f) );
+	texScratchMesh.addVertex( ofVec3f(px0,py1,0.0f) );	
+	
+	ofGetCurrentRenderer()->draw( texScratchMesh );
+	
+	/*
 	GLfloat tex_coords[] = {
 		tx0,ty0,
 		tx1,ty0,
@@ -917,9 +943,10 @@ void ofTexture::draw(float x, float y, float z, float w, float h){
 	glVertexPointer(2, GL_FLOAT, 0, verts );
 	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-	
-	glPopMatrix();
-	glDisable(texData.textureTarget);
+	*/
+	 
+	ofPopMatrix();
+	_ofDisable(texData.textureTarget);
 	
 }
 
@@ -937,13 +964,13 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	// make sure we are on unit 0 - we may change this when setting shader samplers
 	// before glEnable or else the shader gets confused
 	/// ps: maybe if bUsingArbTex is enabled we should use glActiveTextureARB?
-	glActiveTexture(GL_TEXTURE0);
+	_ofActiveTexture(GL_TEXTURE0);
 	
 	// Enable texturing
-	glEnable(texData.textureTarget);
+	_ofEnable(texData.textureTarget);
 	
 	// bind the texture
-	glBindTexture( texData.textureTarget, (GLuint)texData.textureID );
+	_ofBindTexture( texData.textureTarget, (GLuint)texData.textureID );
 	
 	// -------------------------------------------------
 	// complete hack to remove border artifacts.
@@ -967,8 +994,24 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	GLfloat tx1 = texData.tex_t - offsetw;
 	GLfloat ty1 = texData.tex_u - offseth;
 	
-	glPushMatrix(); 
+	ofPushMatrix(); 
 	
+	texScratchMesh.clear();
+	texScratchMesh.setMode( OF_PRIMITIVE_TRIANGLE_FAN );
+	
+	texScratchMesh.addTexCoord( ofVec2f(tx0,ty0) );
+	texScratchMesh.addTexCoord( ofVec2f(tx1,ty0) );
+	texScratchMesh.addTexCoord( ofVec2f(tx1,ty1) );
+	texScratchMesh.addTexCoord( ofVec2f(tx0,ty1) );	
+	
+	texScratchMesh.addVertex( ofVec3f(p1.x, p1.y,0.0f) );
+	texScratchMesh.addVertex( ofVec3f(p2.x, p2.y,0.0f) );
+	texScratchMesh.addVertex( ofVec3f(p3.x, p3.y,0.0f) );
+	texScratchMesh.addVertex( ofVec3f(p4.x, p4.y,0.0f) );	
+	
+	ofGetCurrentRenderer()->draw( texScratchMesh );
+
+	/*
 	GLfloat tex_coords[] = {
 		tx0,ty0,
 		tx1,ty0,
@@ -988,9 +1031,10 @@ void ofTexture::draw(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
 	glVertexPointer(2, GL_FLOAT, 0, verts );
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-	
-	glPopMatrix();
-	glDisable(texData.textureTarget);
+	*/
+	 
+	ofPopMatrix();
+	_ofDisable(texData.textureTarget);
 	
 	// Disable alpha channel if it was disabled
 	if (texData.glType == GL_RGBA && blending == OF_BLENDMODE_DISABLED) {

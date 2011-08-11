@@ -1,4 +1,5 @@
 #pragma once
+#include "ofGraphics.h"
 #include "ofColor.h"
 
 /**
