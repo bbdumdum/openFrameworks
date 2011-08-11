@@ -5,8 +5,7 @@
 void testApp::setup()
 {
 	//ofSetLogLevel( OF_LOG_NOTICE );
-	ofSetLogLevel( OF_LOG_VERBOSE );	
-	ofRegisterTouchEvents(this);
+	ofSetLogLevel( OF_LOG_VERBOSE );
 		
 	int overrideGLVersion = 2;
 #ifndef OPENGLES_VERSION_2

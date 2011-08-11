@@ -18,10 +18,10 @@
 #define ShaderFile_H_
 
 
-#if TARGET_OS_IPHONE
-	#include <OpenGLES/ES2/gl.h>
-#elif __ANDROID__
-	#include <GLES2/gl2.h>
+#ifndef __ANDROID__
+#include <OpenGLES/ES2/gl.h>
+#else
+#include <GLES2/gl2.h>
 #endif
 #include <string>
 #include "../OpenGLESFile.h"
