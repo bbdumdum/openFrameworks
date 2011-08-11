@@ -137,8 +137,8 @@ void testApp::setup()
 	
 	ofFbo::Settings tmpScreenFBOSettings = ofFbo::Settings(); 
 	tmpScreenFBOSettings.width  = 1024;
-	tmpScreenFBOSettings.height = 768;	
-	tmpScreenFBOSettings.useDepth = false;
+	tmpScreenFBOSettings.height = 1024;	// Andreas: For now FBO dimensions have to be a power of two, investigating
+	tmpScreenFBOSettings.useDepth = true;
 	tmpScreenFBOSettings.useStencil = false;
 	tmpScreenFBOSettings.internalformat = GL_RGB;
 	
@@ -190,13 +190,12 @@ void testApp::draw()
 {
 	ofScale(appIphoneScale, appIphoneScale, 1.0);
 
-	
+	/*
 	screenFBO.begin();	
 	
 	ofClear( 100.0f, 100.0f, 100.0f, 255.0f );
 	
 	drawScene();
-	
 	
 	// Try a shader
 	gles2Renderer->beginCustomShader( &testShader );
@@ -216,11 +215,26 @@ void testApp::draw()
 	gles2Renderer->endCustomShader();
 	
 	screenFBO.end();
+	 
+	 ofPushMatrix();
+		 ofRotate( 90.0f );
+	 	screenFBO.draw(0.0f, -768, 1024, 1024 ); // this is completely wrong, 1024 in height, have a look at this..
+	 ofPopMatrix(); 
+	 */
 	
+	
+	screenFBO.begin();	
+	ofClear( 100.0f, 100.0f, 100.0f, 255.0f );
+	drawScene();
+	screenFBO.end();
+	
+	gles2Renderer->beginCustomShader( &testShader );
+	testShader.setUniform1f("u_time", ofGetElapsedTimef() );
 	ofPushMatrix();
 		ofRotate( 90.0f );
-		screenFBO.draw(0.0f, -768, 1024, 1024 ); // this is completely wrong, 1024 in height, have a look at this..
-	ofPopMatrix();
+		screenFBO.draw(0.0f, -768, screenFBO.getWidth(), screenFBO.getHeight() ); 
+	ofPopMatrix(); 
+	gles2Renderer->endCustomShader();
 	
 }
 

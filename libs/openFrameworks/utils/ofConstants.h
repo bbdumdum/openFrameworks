@@ -134,6 +134,12 @@ enum ofLoopType{
 #endif
 
 
+#ifdef OPENGLES_VERSION_2
+	#include "OpenGLES/OpenGLESDefines.h"
+	#import <OpenGLES/ES1/gl.h> // Andreas: added only in the interest of getting this to compile
+#endif
+
+
 #ifdef TARGET_OF_IPHONE
 
 	#ifdef OPENGLES_VERSION_2
@@ -164,12 +170,6 @@ enum ofLoopType{
 	//typedef GLuint ofIndexType;
 #endif
 
-#ifdef OPENGLES_VERSION_2
-	#include "OpenGLES/OpenGLESDefines.h"
-
-	#import <OpenGLES/ES1/gl.h> // Andreas: added only n the interest of getting this to compile
-
-#endif
 
 
 
