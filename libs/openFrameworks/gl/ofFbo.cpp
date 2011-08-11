@@ -67,6 +67,8 @@
 
 	#ifdef OPENGLES_VERSION_2
 
+		#define GL_DEPTH_COMPONENT								GL_DEPTH_COMPONENT16
+
 	#else
 
 		#define glGenFramebuffers								glGenFramebuffersOES
@@ -407,9 +409,10 @@ void ofFbo::allocate(Settings _settings) {
 	}else
 #endif
 	{
+				
 		// if we want a depth buffer, create it, and attach to our main fbo
 		if(settings.useDepth){
-			depthBuffer = createAndAttachRenderbuffer(GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT);
+			depthBuffer = createAndAttachRenderbuffer( GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT);
 			retainRB(depthBuffer);
 		}
 
@@ -418,6 +421,7 @@ void ofFbo::allocate(Settings _settings) {
 			stencilBuffer = createAndAttachRenderbuffer(GL_STENCIL_INDEX, GL_STENCIL_ATTACHMENT);
 			retainRB(stencilBuffer);
 		}
+		
 	}
 	// if we want MSAA, create a new fbo for textures
 #ifndef TARGET_OPENGLES
