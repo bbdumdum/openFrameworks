@@ -1,6 +1,7 @@
 #pragma once
 
-#ifndef TARGET_OPENGLES
+//#ifndef TARGET_OPENGLES
+#if (defined (TARGET_OPENGLES) && defined (OPENGLES_VERSION_2)) || ! defined (TARGET_OPENGLES)
 
 /*
  todo: add support for attachment of multiple shaders
@@ -23,19 +24,21 @@ public:
 	bool load(string vertName, string fragName, string geomName="");
 	
 	
-	
+#ifndef TARGET_OPENGLES
 	// these are essential to call before linking the program with geometry shaders
 	void setGeometryInputType(GLenum type); // type: GL_POINTS, GL_LINES, GL_LINES_ADJACENCY_EXT, GL_TRIANGLES, GL_TRIANGLES_ADJACENCY_EXT
 	void setGeometryOutputType(GLenum type); // type: GL_POINTS, GL_LINE_STRIP or GL_TRIANGLE_STRIP
 	void setGeometryOutputCount(int count);	// set number of output vertices
 	
-	int getGeometryMaxOutputCount();		// returns maximum number of supported vertices
-
+	int getGeometryMaxOutputCount();		// returns maximum number of supported vertices	
+#endif
 
 	void unload();
 	
 	void begin();
 	void end();
+	
+	GLint getUniformLocation(const char* name);	
 	
 	// set a texture reference
 	void setUniformTexture(const char* name, ofBaseHasTexture& img, int textureLocation);
@@ -62,24 +65,29 @@ public:
 	void setUniform2fv(const char* name, float* v, int count = 1);
 	void setUniform3fv(const char* name, float* v, int count = 1);
 	void setUniform4fv(const char* name, float* v, int count = 1);
+
+	void setUniformMatrix4x4v(const char* name, float* v, int count = 1);	
+	void setUniformMatrix3x3v(const char* name, float* v, int count = 1);		
 	
 	// set attributes that vary per vertex (look up the location before glBegin)
 	GLint getAttributeLocation(const char* name);
 	
+	void setAttribute1f(GLint location, float v1);
+	void setAttribute2f(GLint location, float v1, float v2);
+	void setAttribute3f(GLint location, float v1, float v2, float v3);
+	void setAttribute4f(GLint location, float v1, float v2, float v3, float v4);	
+	
+#ifndef TARGET_OPENGLES	
 	void setAttribute1s(GLint location, short v1);
 	void setAttribute2s(GLint location, short v1, short v2);
 	void setAttribute3s(GLint location, short v1, short v2, short v3);
 	void setAttribute4s(GLint location, short v1, short v2, short v3, short v4);
-	
-	void setAttribute1f(GLint location, float v1);
-	void setAttribute2f(GLint location, float v1, float v2);
-	void setAttribute3f(GLint location, float v1, float v2, float v3);
-	void setAttribute4f(GLint location, float v1, float v2, float v3, float v4);
-	
+		
 	void setAttribute1d(GLint location, double v1);
 	void setAttribute2d(GLint location, double v1, double v2);
 	void setAttribute3d(GLint location, double v1, double v2, double v3);
 	void setAttribute4d(GLint location, double v1, double v2, double v3, double v4);
+#endif	
 	
 	void printActiveUniforms();
 	void printActiveAttributes();
@@ -102,9 +110,7 @@ private:
 	GLuint program;
 	map<GLenum, GLuint> shaders;
 	
-	
-	GLint getUniformLocation(const char* name);
-	
+		
 	void checkProgramInfoLog(GLuint program);
 	bool checkShaderLinkStatus(GLuint shader, GLenum type);
 	void checkShaderInfoLog(GLuint shader, GLenum type);

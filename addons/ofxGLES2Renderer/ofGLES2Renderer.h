@@ -11,10 +11,12 @@
  */
 
 
-#include "OpenGLES11Context.h"
-#include "OpenGLES20Context.h"
+#include "OpenGLES/OpenGLES11/OpenGLES11Context.h"
+#include "OpenGLES/OpenGLES20/OpenGLES20Context.h"
 
 #include "ofVectorMath.h"
+
+#include "ofShader.h"
 
 #include "ofBaseTypes.h"
 #include "ofPolyline.h"
@@ -22,7 +24,7 @@
 class ofShapeTessellation;
 class ofMesh;
 class ofFbo;
-
+class ofShader;
 
 class ofGLES2Renderer: public ofBaseRenderer{
 public:
@@ -48,8 +50,9 @@ public:
 		return false;
 	}
 
-
-
+	void beginCustomShader( ofShader* _shader );
+	void endCustomShader();
+	
 	//--------------------------------------------
 	// transformations
 	void pushView();

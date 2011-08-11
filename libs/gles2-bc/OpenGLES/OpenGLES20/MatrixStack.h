@@ -17,7 +17,7 @@
 #ifndef MatrixStack_H_
 #define MatrixStack_H_
 
-#include "OpenGLESMath.h"
+#include "../OpenGLESMath.h"
 #include <vector>
 
 namespace OpenGLES {

@@ -70,6 +70,14 @@ void Attribute::upload(ShaderProgram *program)
 	}
 }
 
+
+void Attribute::setVertexAttribPointer( GLint _otherLocation ){
+	
+	glEnableVertexAttribArray(_otherLocation);
+	glVertexAttribPointer(_otherLocation, size, type, normalized, stride, pointer);
+}			
+
+
 void Attribute::setValues( GLint s, GLenum t, GLsizei st, const void *p )
 {
 	size = s;

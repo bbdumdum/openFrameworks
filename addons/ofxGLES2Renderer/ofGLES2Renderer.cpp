@@ -34,12 +34,12 @@ ofGLES2Renderer::ofGLES2Renderer(int _glVersion){
 	if( _glVersion == 1 )
 	{
 		ofLogNotice() << "ofGLES2Renderer::ofGLES2Renderer  OpenGLES1::OpenGLES11Context() ";		
-		 gl = new OpenGLES1::OpenGLES11Context();
+		gl = new OpenGLES1::OpenGLES11Context();
 	}
 	else if ( _glVersion == 2 )
 	{
 		ofLogNotice() << "ofGLES2Renderer::ofGLES2Renderer  OpenGLES2::OpenGLES20Context() ";				
-		 gl = new OpenGLES2::OpenGLES20Context();
+		gl = new OpenGLES2::OpenGLES20Context();
 	}
 	else
 	{
@@ -57,6 +57,19 @@ ofGLES2Renderer::ofGLES2Renderer(int _glVersion){
 //----------------------------------------------------------
 void ofGLES2Renderer::update(){
 
+}
+
+//----------------------------------------------------------
+void ofGLES2Renderer::beginCustomShader( ofShader* _shader ){
+	gl->overrideShader = _shader;
+	gl->overrideShader->begin();
+}
+
+
+//----------------------------------------------------------
+void ofGLES2Renderer::endCustomShader(){
+	gl->overrideShader->end();
+	gl->overrideShader = NULL;	
 }
 
 //----------------------------------------------------------

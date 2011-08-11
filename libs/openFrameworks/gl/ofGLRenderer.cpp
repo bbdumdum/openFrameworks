@@ -331,11 +331,19 @@ void ofGLRenderer::setupScreenPerspective(float width, float height, ofOrientati
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(fov, aspect, nearDist, farDist);
+	
+	ofMatrix4x4 persp;
+	persp.makePerspectiveMatrix(fov, aspect, nearDist, farDist);
+	ofLoadMatrix( &persp );
+	//gluPerspective(fov, aspect, nearDist, farDist);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0, 0, 1, 0);
+	
+	ofMatrix4x4 lookAt;
+	lookAt.makeLookAtViewMatrix( ofVec3f(eyeX, eyeY, dist),  ofVec3f(eyeX, eyeY, 0),  ofVec3f(0, 1, 0) );
+	ofLoadMatrix( &lookAt );	
+	//gluLookAt(eyeX, eyeY, dist, eyeX, eyeY, 0, 0, 1, 0);
 
 	//note - theo checked this on iPhone and Desktop for both vFlip = false and true
 	if(ofDoesHWOrientation()){

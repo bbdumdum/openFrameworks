@@ -18,47 +18,49 @@
 		BB24DD9010DA77E000E9C588 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB24DD8D10DA77E000E9C588 /* Icon.png */; };
 		BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */; };
 		BBE5EAB80F49AD8400F28951 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */; };
+		CB13C20913F3F3D400EB6E11 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB13C1E013F3F3D400EB6E11 /* ofGLES2Renderer.cpp */; };
+		CB13C24013F4170C00EB6E11 /* alphaTest.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C22B13F4170C00EB6E11 /* alphaTest.frag */; };
+		CB13C24113F4170C00EB6E11 /* clipPlane.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C22C13F4170C00EB6E11 /* clipPlane.frag */; };
+		CB13C24213F4170C00EB6E11 /* clipPlane.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C22D13F4170C00EB6E11 /* clipPlane.vert */; };
+		CB13C24313F4170C00EB6E11 /* fog.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CB13C22E13F4170C00EB6E11 /* fog.glsl */; };
+		CB13C24413F4170C00EB6E11 /* lighting.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C22F13F4170C00EB6E11 /* lighting.frag */; };
+		CB13C24513F4170C00EB6E11 /* lighting.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23013F4170C00EB6E11 /* lighting.vert */; };
+		CB13C24613F4170C00EB6E11 /* lightingPerFragment.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23113F4170C00EB6E11 /* lightingPerFragment.frag */; };
+		CB13C24713F4170C00EB6E11 /* lightingPerFragment.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23213F4170C00EB6E11 /* lightingPerFragment.vert */; };
+		CB13C24813F4170C00EB6E11 /* lightingPerVertex.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23313F4170C00EB6E11 /* lightingPerVertex.vert */; };
+		CB13C24913F4170C00EB6E11 /* main.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23413F4170C00EB6E11 /* main.frag */; };
+		CB13C24A13F4170C00EB6E11 /* main.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23513F4170C00EB6E11 /* main.vert */; };
+		CB13C24B13F4170C00EB6E11 /* postprocess.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23613F4170C00EB6E11 /* postprocess.frag */; };
+		CB13C24C13F4170C00EB6E11 /* postprocess.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23713F4170C00EB6E11 /* postprocess.vert */; };
+		CB13C24D13F4170C00EB6E11 /* texture.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23813F4170C00EB6E11 /* texture.frag */; };
+		CB13C24E13F4170C00EB6E11 /* texture.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23913F4170C00EB6E11 /* texture.vert */; };
+		CB13C24F13F4170C00EB6E11 /* texture0.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23A13F4170C00EB6E11 /* texture0.frag */; };
+		CB13C25013F4170C00EB6E11 /* texture0.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23B13F4170C00EB6E11 /* texture0.vert */; };
+		CB13C25113F4170C00EB6E11 /* texture1.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23C13F4170C00EB6E11 /* texture1.frag */; };
+		CB13C25213F4170C00EB6E11 /* texture1.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23D13F4170C00EB6E11 /* texture1.vert */; };
+		CB13C25313F4170C00EB6E11 /* texture2.frag in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23E13F4170C00EB6E11 /* texture2.frag */; };
+		CB13C25413F4170C00EB6E11 /* texture2.vert in Sources */ = {isa = PBXBuildFile; fileRef = CB13C23F13F4170C00EB6E11 /* texture2.vert */; };
+		CB13C25513F4171800EB6E11 /* alphaTest.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C22B13F4170C00EB6E11 /* alphaTest.frag */; };
+		CB13C25613F4171800EB6E11 /* clipPlane.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C22C13F4170C00EB6E11 /* clipPlane.frag */; };
+		CB13C25713F4171800EB6E11 /* clipPlane.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C22D13F4170C00EB6E11 /* clipPlane.vert */; };
+		CB13C25813F4171800EB6E11 /* lighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C22F13F4170C00EB6E11 /* lighting.frag */; };
+		CB13C25913F4171800EB6E11 /* lighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23013F4170C00EB6E11 /* lighting.vert */; };
+		CB13C25A13F4171800EB6E11 /* lightingPerFragment.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23113F4170C00EB6E11 /* lightingPerFragment.frag */; };
+		CB13C25B13F4171800EB6E11 /* lightingPerFragment.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23213F4170C00EB6E11 /* lightingPerFragment.vert */; };
+		CB13C25C13F4171800EB6E11 /* lightingPerVertex.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23313F4170C00EB6E11 /* lightingPerVertex.vert */; };
+		CB13C25D13F4171800EB6E11 /* main.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23413F4170C00EB6E11 /* main.frag */; };
+		CB13C25E13F4171800EB6E11 /* main.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23513F4170C00EB6E11 /* main.vert */; };
+		CB13C25F13F4171800EB6E11 /* postprocess.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23613F4170C00EB6E11 /* postprocess.frag */; };
+		CB13C26013F4171800EB6E11 /* postprocess.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23713F4170C00EB6E11 /* postprocess.vert */; };
+		CB13C26113F4171800EB6E11 /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23813F4170C00EB6E11 /* texture.frag */; };
+		CB13C26213F4171800EB6E11 /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23913F4170C00EB6E11 /* texture.vert */; };
+		CB13C26313F4171800EB6E11 /* texture0.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23A13F4170C00EB6E11 /* texture0.frag */; };
+		CB13C26413F4171800EB6E11 /* texture0.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23B13F4170C00EB6E11 /* texture0.vert */; };
+		CB13C26513F4171800EB6E11 /* texture1.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23C13F4170C00EB6E11 /* texture1.frag */; };
+		CB13C26613F4171800EB6E11 /* texture1.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23D13F4170C00EB6E11 /* texture1.vert */; };
+		CB13C26713F4171800EB6E11 /* texture2.frag in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23E13F4170C00EB6E11 /* texture2.frag */; };
+		CB13C26813F4171800EB6E11 /* texture2.vert in Resources */ = {isa = PBXBuildFile; fileRef = CB13C23F13F4170C00EB6E11 /* texture2.vert */; };
 		CB836CCB13DC376C003E8700 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */; };
-		CB99556713DECF1A0074AB0E /* alphaTest.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B313DEC9B400A31004 /* alphaTest.frag */; };
-		CB99556813DECF1A0074AB0E /* clipPlane.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B413DEC9B400A31004 /* clipPlane.frag */; };
-		CB99556913DECF1A0074AB0E /* clipPlane.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B513DEC9B400A31004 /* clipPlane.vert */; };
-		CB99556A13DECF1A0074AB0E /* fog.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B613DEC9B400A31004 /* fog.glsl */; };
-		CB99556B13DECF1A0074AB0E /* lighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B713DEC9B400A31004 /* lighting.frag */; };
-		CB99556C13DECF1A0074AB0E /* lighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B813DEC9B400A31004 /* lighting.vert */; };
-		CB99556D13DECF1A0074AB0E /* lightingPerFragment.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102B913DEC9B400A31004 /* lightingPerFragment.frag */; };
-		CB99556E13DECF1A0074AB0E /* lightingPerFragment.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102BA13DEC9B400A31004 /* lightingPerFragment.vert */; };
-		CB99556F13DECF1A0074AB0E /* lightingPerVertex.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102BB13DEC9B400A31004 /* lightingPerVertex.vert */; };
-		CB99557013DECF1A0074AB0E /* main.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102BC13DEC9B400A31004 /* main.frag */; };
-		CB99557113DECF1A0074AB0E /* main.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102BD13DEC9B400A31004 /* main.vert */; };
-		CB99557213DECF1A0074AB0E /* postprocess.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102BE13DEC9B400A31004 /* postprocess.frag */; };
-		CB99557313DECF1A0074AB0E /* postprocess.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102BF13DEC9B400A31004 /* postprocess.vert */; };
-		CB99557413DECF1A0074AB0E /* texture.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C013DEC9B400A31004 /* texture.frag */; };
-		CB99557513DECF1A0074AB0E /* texture.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C113DEC9B400A31004 /* texture.vert */; };
-		CB99557613DECF1A0074AB0E /* texture0.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C213DEC9B400A31004 /* texture0.frag */; };
-		CB99557713DECF1A0074AB0E /* texture0.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C313DEC9B400A31004 /* texture0.vert */; };
-		CB99557813DECF1A0074AB0E /* texture1.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C413DEC9B400A31004 /* texture1.frag */; };
-		CB99557913DECF1A0074AB0E /* texture1.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C513DEC9B400A31004 /* texture1.vert */; };
-		CB99557A13DECF1A0074AB0E /* texture2.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C613DEC9B400A31004 /* texture2.frag */; };
-		CB99557B13DECF1A0074AB0E /* texture2.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBF102C713DEC9B400A31004 /* texture2.vert */; };
-		CBF102DB13DEC9B400A31004 /* OpenGLES11Context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF1029D13DEC9B400A31004 /* OpenGLES11Context.cpp */; };
-		CBF102DC13DEC9B400A31004 /* OpenGLES11Implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF1029F13DEC9B400A31004 /* OpenGLES11Implementation.cpp */; };
-		CBF102DD13DEC9B400A31004 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102A213DEC9B400A31004 /* Attribute.cpp */; };
-		CBF102DE13DEC9B400A31004 /* MatrixStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102A413DEC9B400A31004 /* MatrixStack.cpp */; };
-		CBF102DF13DEC9B400A31004 /* OpenGLES20Context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102A613DEC9B400A31004 /* OpenGLES20Context.cpp */; };
-		CBF102E013DEC9B400A31004 /* OpenGLES20Implementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102A813DEC9B400A31004 /* OpenGLES20Implementation.cpp */; };
-		CBF102E113DEC9B400A31004 /* OpenGLESState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102AA13DEC9B400A31004 /* OpenGLESState.cpp */; };
-		CBF102E213DEC9B400A31004 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102AC13DEC9B400A31004 /* Shader.cpp */; };
-		CBF102E313DEC9B400A31004 /* ShaderFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102AE13DEC9B400A31004 /* ShaderFile.cpp */; };
-		CBF102E413DEC9B400A31004 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102B013DEC9B400A31004 /* ShaderProgram.cpp */; };
-		CBF102FA13DEC9B400A31004 /* ShaderSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102C813DEC9B400A31004 /* ShaderSource.cpp */; };
-		CBF102FB13DEC9B400A31004 /* Uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102CA13DEC9B400A31004 /* Uniform.cpp */; };
-		CBF102FC13DEC9B400A31004 /* OpenGLESConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102CC13DEC9B400A31004 /* OpenGLESConfig.cpp */; };
-		CBF102FD13DEC9B400A31004 /* OpenGLESContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102CE13DEC9B400A31004 /* OpenGLESContext.cpp */; };
-		CBF102FE13DEC9B400A31004 /* OpenGLESFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBF102D113DEC9B400A31004 /* OpenGLESFile.mm */; };
-		CBF102FF13DEC9B400A31004 /* OpenGLESImplementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102D213DEC9B400A31004 /* OpenGLESImplementation.cpp */; };
-		CBF1030013DEC9B400A31004 /* OpenGLESString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102D513DEC9B400A31004 /* OpenGLESString.cpp */; };
-		CBF1030113DEC9B400A31004 /* OpenGLESUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102D713DEC9B400A31004 /* OpenGLESUtil.cpp */; };
-		CBF1030213DEC9B400A31004 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF102D913DEC9B400A31004 /* ofGLES2Renderer.cpp */; };
 		E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E41D3ED613B38FB500A75A5D /* Project.xcconfig */; };
 		E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */; };
 		E41D400B13B39D2100A75A5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41D400613B39D2100A75A5D /* AVFoundation.framework */; };
@@ -102,71 +104,34 @@
 		BB24DD8D10DA77E000E9C588 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ofxiphone-Info.plist"; sourceTree = "<group>"; };
 		BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		CB13C1E013F3F3D400EB6E11 /* ofGLES2Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofGLES2Renderer.cpp; sourceTree = "<group>"; };
+		CB13C1E113F3F3D400EB6E11 /* ofGLES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofGLES2Renderer.h; sourceTree = "<group>"; };
+		CB13C22B13F4170C00EB6E11 /* alphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = alphaTest.frag; sourceTree = "<group>"; };
+		CB13C22C13F4170C00EB6E11 /* clipPlane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.frag; sourceTree = "<group>"; };
+		CB13C22D13F4170C00EB6E11 /* clipPlane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.vert; sourceTree = "<group>"; };
+		CB13C22E13F4170C00EB6E11 /* fog.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fog.glsl; sourceTree = "<group>"; };
+		CB13C22F13F4170C00EB6E11 /* lighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.frag; sourceTree = "<group>"; };
+		CB13C23013F4170C00EB6E11 /* lighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vert; sourceTree = "<group>"; };
+		CB13C23113F4170C00EB6E11 /* lightingPerFragment.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lightingPerFragment.frag; sourceTree = "<group>"; };
+		CB13C23213F4170C00EB6E11 /* lightingPerFragment.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lightingPerFragment.vert; sourceTree = "<group>"; };
+		CB13C23313F4170C00EB6E11 /* lightingPerVertex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lightingPerVertex.vert; sourceTree = "<group>"; };
+		CB13C23413F4170C00EB6E11 /* main.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = main.frag; sourceTree = "<group>"; };
+		CB13C23513F4170C00EB6E11 /* main.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = main.vert; sourceTree = "<group>"; };
+		CB13C23613F4170C00EB6E11 /* postprocess.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = postprocess.frag; sourceTree = "<group>"; };
+		CB13C23713F4170C00EB6E11 /* postprocess.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = postprocess.vert; sourceTree = "<group>"; };
+		CB13C23813F4170C00EB6E11 /* texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.frag; sourceTree = "<group>"; };
+		CB13C23913F4170C00EB6E11 /* texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.vert; sourceTree = "<group>"; };
+		CB13C23A13F4170C00EB6E11 /* texture0.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture0.frag; sourceTree = "<group>"; };
+		CB13C23B13F4170C00EB6E11 /* texture0.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture0.vert; sourceTree = "<group>"; };
+		CB13C23C13F4170C00EB6E11 /* texture1.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture1.frag; sourceTree = "<group>"; };
+		CB13C23D13F4170C00EB6E11 /* texture1.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture1.vert; sourceTree = "<group>"; };
+		CB13C23E13F4170C00EB6E11 /* texture2.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.frag; sourceTree = "<group>"; };
+		CB13C23F13F4170C00EB6E11 /* texture2.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.vert; sourceTree = "<group>"; };
 		CB3F08C013E96EEC0093CE64 /* AMathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMathHelpers.h; sourceTree = "<group>"; };
 		CB836CC713DC376C003E8700 /* ofx3DBaseLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofx3DBaseLoader.h; path = ../../../addons/ofxAssimpModelLoader/src/ofx3DBaseLoader.h; sourceTree = "<group>"; };
 		CB836CC813DC376C003E8700 /* ofxAssimpMeshHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpMeshHelper.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.h; sourceTree = "<group>"; };
 		CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxAssimpModelLoader.cpp; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.cpp; sourceTree = "<group>"; };
 		CB836CCA13DC376C003E8700 /* ofxAssimpModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpModelLoader.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.h; sourceTree = "<group>"; };
-		CBF1029D13DEC9B400A31004 /* OpenGLES11Context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLES11Context.cpp; sourceTree = "<group>"; };
-		CBF1029E13DEC9B400A31004 /* OpenGLES11Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES11Context.h; sourceTree = "<group>"; };
-		CBF1029F13DEC9B400A31004 /* OpenGLES11Implementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLES11Implementation.cpp; sourceTree = "<group>"; };
-		CBF102A013DEC9B400A31004 /* OpenGLES11Implementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES11Implementation.h; sourceTree = "<group>"; };
-		CBF102A213DEC9B400A31004 /* Attribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attribute.cpp; sourceTree = "<group>"; };
-		CBF102A313DEC9B400A31004 /* Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attribute.h; sourceTree = "<group>"; };
-		CBF102A413DEC9B400A31004 /* MatrixStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MatrixStack.cpp; sourceTree = "<group>"; };
-		CBF102A513DEC9B400A31004 /* MatrixStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatrixStack.h; sourceTree = "<group>"; };
-		CBF102A613DEC9B400A31004 /* OpenGLES20Context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLES20Context.cpp; sourceTree = "<group>"; };
-		CBF102A713DEC9B400A31004 /* OpenGLES20Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES20Context.h; sourceTree = "<group>"; };
-		CBF102A813DEC9B400A31004 /* OpenGLES20Implementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLES20Implementation.cpp; sourceTree = "<group>"; };
-		CBF102A913DEC9B400A31004 /* OpenGLES20Implementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES20Implementation.h; sourceTree = "<group>"; };
-		CBF102AA13DEC9B400A31004 /* OpenGLESState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESState.cpp; sourceTree = "<group>"; };
-		CBF102AB13DEC9B400A31004 /* OpenGLESState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESState.h; sourceTree = "<group>"; };
-		CBF102AC13DEC9B400A31004 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
-		CBF102AD13DEC9B400A31004 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
-		CBF102AE13DEC9B400A31004 /* ShaderFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderFile.cpp; sourceTree = "<group>"; };
-		CBF102AF13DEC9B400A31004 /* ShaderFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderFile.h; sourceTree = "<group>"; };
-		CBF102B013DEC9B400A31004 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgram.cpp; sourceTree = "<group>"; };
-		CBF102B113DEC9B400A31004 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
-		CBF102B313DEC9B400A31004 /* alphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = alphaTest.frag; sourceTree = "<group>"; };
-		CBF102B413DEC9B400A31004 /* clipPlane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.frag; sourceTree = "<group>"; };
-		CBF102B513DEC9B400A31004 /* clipPlane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.vert; sourceTree = "<group>"; };
-		CBF102B613DEC9B400A31004 /* fog.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fog.glsl; sourceTree = "<group>"; };
-		CBF102B713DEC9B400A31004 /* lighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.frag; sourceTree = "<group>"; };
-		CBF102B813DEC9B400A31004 /* lighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vert; sourceTree = "<group>"; };
-		CBF102B913DEC9B400A31004 /* lightingPerFragment.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lightingPerFragment.frag; sourceTree = "<group>"; };
-		CBF102BA13DEC9B400A31004 /* lightingPerFragment.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lightingPerFragment.vert; sourceTree = "<group>"; };
-		CBF102BB13DEC9B400A31004 /* lightingPerVertex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lightingPerVertex.vert; sourceTree = "<group>"; };
-		CBF102BC13DEC9B400A31004 /* main.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = main.frag; sourceTree = "<group>"; };
-		CBF102BD13DEC9B400A31004 /* main.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = main.vert; sourceTree = "<group>"; };
-		CBF102BE13DEC9B400A31004 /* postprocess.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = postprocess.frag; sourceTree = "<group>"; };
-		CBF102BF13DEC9B400A31004 /* postprocess.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = postprocess.vert; sourceTree = "<group>"; };
-		CBF102C013DEC9B400A31004 /* texture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.frag; sourceTree = "<group>"; };
-		CBF102C113DEC9B400A31004 /* texture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture.vert; sourceTree = "<group>"; };
-		CBF102C213DEC9B400A31004 /* texture0.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture0.frag; sourceTree = "<group>"; };
-		CBF102C313DEC9B400A31004 /* texture0.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture0.vert; sourceTree = "<group>"; };
-		CBF102C413DEC9B400A31004 /* texture1.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture1.frag; sourceTree = "<group>"; };
-		CBF102C513DEC9B400A31004 /* texture1.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture1.vert; sourceTree = "<group>"; };
-		CBF102C613DEC9B400A31004 /* texture2.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.frag; sourceTree = "<group>"; };
-		CBF102C713DEC9B400A31004 /* texture2.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.vert; sourceTree = "<group>"; };
-		CBF102C813DEC9B400A31004 /* ShaderSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderSource.cpp; sourceTree = "<group>"; };
-		CBF102C913DEC9B400A31004 /* ShaderSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderSource.h; sourceTree = "<group>"; };
-		CBF102CA13DEC9B400A31004 /* Uniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Uniform.cpp; sourceTree = "<group>"; };
-		CBF102CB13DEC9B400A31004 /* Uniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Uniform.h; sourceTree = "<group>"; };
-		CBF102CC13DEC9B400A31004 /* OpenGLESConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESConfig.cpp; sourceTree = "<group>"; };
-		CBF102CD13DEC9B400A31004 /* OpenGLESConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESConfig.h; sourceTree = "<group>"; };
-		CBF102CE13DEC9B400A31004 /* OpenGLESContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESContext.cpp; sourceTree = "<group>"; };
-		CBF102CF13DEC9B400A31004 /* OpenGLESContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESContext.h; sourceTree = "<group>"; };
-		CBF102D013DEC9B400A31004 /* OpenGLESFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESFile.h; sourceTree = "<group>"; };
-		CBF102D113DEC9B400A31004 /* OpenGLESFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLESFile.mm; sourceTree = "<group>"; };
-		CBF102D213DEC9B400A31004 /* OpenGLESImplementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESImplementation.cpp; sourceTree = "<group>"; };
-		CBF102D313DEC9B400A31004 /* OpenGLESImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESImplementation.h; sourceTree = "<group>"; };
-		CBF102D413DEC9B400A31004 /* OpenGLESMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESMath.h; sourceTree = "<group>"; };
-		CBF102D513DEC9B400A31004 /* OpenGLESString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESString.cpp; sourceTree = "<group>"; };
-		CBF102D613DEC9B400A31004 /* OpenGLESString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESString.h; sourceTree = "<group>"; };
-		CBF102D713DEC9B400A31004 /* OpenGLESUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESUtil.cpp; sourceTree = "<group>"; };
-		CBF102D813DEC9B400A31004 /* OpenGLESUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESUtil.h; sourceTree = "<group>"; };
-		CBF102D913DEC9B400A31004 /* ofGLES2Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofGLES2Renderer.cpp; path = ../../../addons/ofxGLES2Renderer/ofGLES2Renderer.cpp; sourceTree = "<group>"; };
-		CBF102DA13DEC9B400A31004 /* ofGLES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofGLES2Renderer.h; path = ../../../addons/ofxGLES2Renderer/ofGLES2Renderer.h; sourceTree = "<group>"; };
 		E41D3ED613B38FB500A75A5D /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/iphone/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D400613B39D2100A75A5D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -292,22 +257,43 @@
 			name = core;
 			sourceTree = "<group>";
 		};
-		CB1787AA13DEC7E300BC544E /* ofxGLES2Renderer */ = {
+		CB13C1A013F3F3D300EB6E11 /* ofxGLES2Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				CB1787AB13DEC7ED00BC544E /* src */,
+				CB13C22A13F4170C00EB6E11 /* shaders */,
+				CB13C1E013F3F3D400EB6E11 /* ofGLES2Renderer.cpp */,
+				CB13C1E113F3F3D400EB6E11 /* ofGLES2Renderer.h */,
 			);
 			name = ofxGLES2Renderer;
+			path = ../../../addons/ofxGLES2Renderer;
 			sourceTree = "<group>";
 		};
-		CB1787AB13DEC7ED00BC544E /* src */ = {
+		CB13C22A13F4170C00EB6E11 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				CBF1029A13DEC9B400A31004 /* gles2-bc */,
-				CBF102D913DEC9B400A31004 /* ofGLES2Renderer.cpp */,
-				CBF102DA13DEC9B400A31004 /* ofGLES2Renderer.h */,
+				CB13C22B13F4170C00EB6E11 /* alphaTest.frag */,
+				CB13C22C13F4170C00EB6E11 /* clipPlane.frag */,
+				CB13C22D13F4170C00EB6E11 /* clipPlane.vert */,
+				CB13C22E13F4170C00EB6E11 /* fog.glsl */,
+				CB13C22F13F4170C00EB6E11 /* lighting.frag */,
+				CB13C23013F4170C00EB6E11 /* lighting.vert */,
+				CB13C23113F4170C00EB6E11 /* lightingPerFragment.frag */,
+				CB13C23213F4170C00EB6E11 /* lightingPerFragment.vert */,
+				CB13C23313F4170C00EB6E11 /* lightingPerVertex.vert */,
+				CB13C23413F4170C00EB6E11 /* main.frag */,
+				CB13C23513F4170C00EB6E11 /* main.vert */,
+				CB13C23613F4170C00EB6E11 /* postprocess.frag */,
+				CB13C23713F4170C00EB6E11 /* postprocess.vert */,
+				CB13C23813F4170C00EB6E11 /* texture.frag */,
+				CB13C23913F4170C00EB6E11 /* texture.vert */,
+				CB13C23A13F4170C00EB6E11 /* texture0.frag */,
+				CB13C23B13F4170C00EB6E11 /* texture0.vert */,
+				CB13C23C13F4170C00EB6E11 /* texture1.frag */,
+				CB13C23D13F4170C00EB6E11 /* texture1.vert */,
+				CB13C23E13F4170C00EB6E11 /* texture2.frag */,
+				CB13C23F13F4170C00EB6E11 /* texture2.vert */,
 			);
-			name = src;
+			path = shaders;
 			sourceTree = "<group>";
 		};
 		CB3F08BF13E96EEC0093CE64 /* Math */ = {
@@ -321,7 +307,7 @@
 		CB836CBB13DC371C003E8700 /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				CB1787AA13DEC7E300BC544E /* ofxGLES2Renderer */,
+				CB13C1A013F3F3D300EB6E11 /* ofxGLES2Renderer */,
 				CB836CC513DC374C003E8700 /* ofxAssimpModelLoader */,
 			);
 			name = addons;
@@ -344,104 +330,6 @@
 				CB836CCA13DC376C003E8700 /* ofxAssimpModelLoader.h */,
 			);
 			name = src;
-			sourceTree = "<group>";
-		};
-		CBF1029A13DEC9B400A31004 /* gles2-bc */ = {
-			isa = PBXGroup;
-			children = (
-				CBF1029B13DEC9B400A31004 /* OpenGLES */,
-			);
-			name = "gles2-bc";
-			path = "../../../addons/ofxGLES2Renderer/gles2-bc";
-			sourceTree = "<group>";
-		};
-		CBF1029B13DEC9B400A31004 /* OpenGLES */ = {
-			isa = PBXGroup;
-			children = (
-				CBF1029C13DEC9B400A31004 /* OpenGLES11 */,
-				CBF102A113DEC9B400A31004 /* OpenGLES20 */,
-				CBF102CC13DEC9B400A31004 /* OpenGLESConfig.cpp */,
-				CBF102CD13DEC9B400A31004 /* OpenGLESConfig.h */,
-				CBF102CE13DEC9B400A31004 /* OpenGLESContext.cpp */,
-				CBF102CF13DEC9B400A31004 /* OpenGLESContext.h */,
-				CBF102D013DEC9B400A31004 /* OpenGLESFile.h */,
-				CBF102D113DEC9B400A31004 /* OpenGLESFile.mm */,
-				CBF102D213DEC9B400A31004 /* OpenGLESImplementation.cpp */,
-				CBF102D313DEC9B400A31004 /* OpenGLESImplementation.h */,
-				CBF102D413DEC9B400A31004 /* OpenGLESMath.h */,
-				CBF102D513DEC9B400A31004 /* OpenGLESString.cpp */,
-				CBF102D613DEC9B400A31004 /* OpenGLESString.h */,
-				CBF102D713DEC9B400A31004 /* OpenGLESUtil.cpp */,
-				CBF102D813DEC9B400A31004 /* OpenGLESUtil.h */,
-			);
-			path = OpenGLES;
-			sourceTree = "<group>";
-		};
-		CBF1029C13DEC9B400A31004 /* OpenGLES11 */ = {
-			isa = PBXGroup;
-			children = (
-				CBF1029D13DEC9B400A31004 /* OpenGLES11Context.cpp */,
-				CBF1029E13DEC9B400A31004 /* OpenGLES11Context.h */,
-				CBF1029F13DEC9B400A31004 /* OpenGLES11Implementation.cpp */,
-				CBF102A013DEC9B400A31004 /* OpenGLES11Implementation.h */,
-			);
-			path = OpenGLES11;
-			sourceTree = "<group>";
-		};
-		CBF102A113DEC9B400A31004 /* OpenGLES20 */ = {
-			isa = PBXGroup;
-			children = (
-				CBF102B213DEC9B400A31004 /* shaders */,
-				CBF102A213DEC9B400A31004 /* Attribute.cpp */,
-				CBF102A313DEC9B400A31004 /* Attribute.h */,
-				CBF102A413DEC9B400A31004 /* MatrixStack.cpp */,
-				CBF102A513DEC9B400A31004 /* MatrixStack.h */,
-				CBF102A613DEC9B400A31004 /* OpenGLES20Context.cpp */,
-				CBF102A713DEC9B400A31004 /* OpenGLES20Context.h */,
-				CBF102A813DEC9B400A31004 /* OpenGLES20Implementation.cpp */,
-				CBF102A913DEC9B400A31004 /* OpenGLES20Implementation.h */,
-				CBF102AA13DEC9B400A31004 /* OpenGLESState.cpp */,
-				CBF102AB13DEC9B400A31004 /* OpenGLESState.h */,
-				CBF102AC13DEC9B400A31004 /* Shader.cpp */,
-				CBF102AD13DEC9B400A31004 /* Shader.h */,
-				CBF102AE13DEC9B400A31004 /* ShaderFile.cpp */,
-				CBF102AF13DEC9B400A31004 /* ShaderFile.h */,
-				CBF102B013DEC9B400A31004 /* ShaderProgram.cpp */,
-				CBF102B113DEC9B400A31004 /* ShaderProgram.h */,
-				CBF102C813DEC9B400A31004 /* ShaderSource.cpp */,
-				CBF102C913DEC9B400A31004 /* ShaderSource.h */,
-				CBF102CA13DEC9B400A31004 /* Uniform.cpp */,
-				CBF102CB13DEC9B400A31004 /* Uniform.h */,
-			);
-			path = OpenGLES20;
-			sourceTree = "<group>";
-		};
-		CBF102B213DEC9B400A31004 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				CBF102B313DEC9B400A31004 /* alphaTest.frag */,
-				CBF102B413DEC9B400A31004 /* clipPlane.frag */,
-				CBF102B513DEC9B400A31004 /* clipPlane.vert */,
-				CBF102B613DEC9B400A31004 /* fog.glsl */,
-				CBF102B713DEC9B400A31004 /* lighting.frag */,
-				CBF102B813DEC9B400A31004 /* lighting.vert */,
-				CBF102B913DEC9B400A31004 /* lightingPerFragment.frag */,
-				CBF102BA13DEC9B400A31004 /* lightingPerFragment.vert */,
-				CBF102BB13DEC9B400A31004 /* lightingPerVertex.vert */,
-				CBF102BC13DEC9B400A31004 /* main.frag */,
-				CBF102BD13DEC9B400A31004 /* main.vert */,
-				CBF102BE13DEC9B400A31004 /* postprocess.frag */,
-				CBF102BF13DEC9B400A31004 /* postprocess.vert */,
-				CBF102C013DEC9B400A31004 /* texture.frag */,
-				CBF102C113DEC9B400A31004 /* texture.vert */,
-				CBF102C213DEC9B400A31004 /* texture0.frag */,
-				CBF102C313DEC9B400A31004 /* texture0.vert */,
-				CBF102C413DEC9B400A31004 /* texture1.frag */,
-				CBF102C513DEC9B400A31004 /* texture1.vert */,
-				CBF102C613DEC9B400A31004 /* texture2.frag */,
-				CBF102C713DEC9B400A31004 /* texture2.vert */,
-			);
-			path = shaders;
 			sourceTree = "<group>";
 		};
 		E41D40FE13B3A0D800A75A5D /* Products */ = {
@@ -530,32 +418,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB99556713DECF1A0074AB0E /* alphaTest.frag in Resources */,
-				CB99556813DECF1A0074AB0E /* clipPlane.frag in Resources */,
-				CB99556913DECF1A0074AB0E /* clipPlane.vert in Resources */,
-				CB99556A13DECF1A0074AB0E /* fog.glsl in Resources */,
-				CB99556B13DECF1A0074AB0E /* lighting.frag in Resources */,
-				CB99556C13DECF1A0074AB0E /* lighting.vert in Resources */,
-				CB99556D13DECF1A0074AB0E /* lightingPerFragment.frag in Resources */,
-				CB99556E13DECF1A0074AB0E /* lightingPerFragment.vert in Resources */,
-				CB99556F13DECF1A0074AB0E /* lightingPerVertex.vert in Resources */,
-				CB99557013DECF1A0074AB0E /* main.frag in Resources */,
-				CB99557113DECF1A0074AB0E /* main.vert in Resources */,
-				CB99557213DECF1A0074AB0E /* postprocess.frag in Resources */,
-				CB99557313DECF1A0074AB0E /* postprocess.vert in Resources */,
-				CB99557413DECF1A0074AB0E /* texture.frag in Resources */,
-				CB99557513DECF1A0074AB0E /* texture.vert in Resources */,
-				CB99557613DECF1A0074AB0E /* texture0.frag in Resources */,
-				CB99557713DECF1A0074AB0E /* texture0.vert in Resources */,
-				CB99557813DECF1A0074AB0E /* texture1.frag in Resources */,
-				CB99557913DECF1A0074AB0E /* texture1.vert in Resources */,
-				CB99557A13DECF1A0074AB0E /* texture2.frag in Resources */,
-				CB99557B13DECF1A0074AB0E /* texture2.vert in Resources */,
+				CB13C25513F4171800EB6E11 /* alphaTest.frag in Resources */,
+				CB13C25613F4171800EB6E11 /* clipPlane.frag in Resources */,
+				CB13C25713F4171800EB6E11 /* clipPlane.vert in Resources */,
+				CB13C25813F4171800EB6E11 /* lighting.frag in Resources */,
+				CB13C25913F4171800EB6E11 /* lighting.vert in Resources */,
+				CB13C25A13F4171800EB6E11 /* lightingPerFragment.frag in Resources */,
+				CB13C25B13F4171800EB6E11 /* lightingPerFragment.vert in Resources */,
+				CB13C25C13F4171800EB6E11 /* lightingPerVertex.vert in Resources */,
+				CB13C25D13F4171800EB6E11 /* main.frag in Resources */,
+				CB13C25E13F4171800EB6E11 /* main.vert in Resources */,
+				CB13C25F13F4171800EB6E11 /* postprocess.frag in Resources */,
+				CB13C26013F4171800EB6E11 /* postprocess.vert in Resources */,
+				CB13C26113F4171800EB6E11 /* texture.frag in Resources */,
+				CB13C26213F4171800EB6E11 /* texture.vert in Resources */,
+				CB13C26313F4171800EB6E11 /* texture0.frag in Resources */,
+				CB13C26413F4171800EB6E11 /* texture0.vert in Resources */,
+				CB13C26513F4171800EB6E11 /* texture1.frag in Resources */,
+				CB13C26613F4171800EB6E11 /* texture1.vert in Resources */,
+				CB13C26713F4171800EB6E11 /* texture2.frag in Resources */,
+				CB13C26813F4171800EB6E11 /* texture2.vert in Resources */,
 				BB24DD8F10DA77E000E9C588 /* Default.png in Resources */,
 				BB24DD9010DA77E000E9C588 /* Icon.png in Resources */,
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
+				CB13C24313F4170C00EB6E11 /* fog.glsl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,25 +473,27 @@
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
 				E4D8936F11527B74007E1F53 /* testApp.mm in Sources */,
 				CB836CCB13DC376C003E8700 /* ofxAssimpModelLoader.cpp in Sources */,
-				CBF102DB13DEC9B400A31004 /* OpenGLES11Context.cpp in Sources */,
-				CBF102DC13DEC9B400A31004 /* OpenGLES11Implementation.cpp in Sources */,
-				CBF102DD13DEC9B400A31004 /* Attribute.cpp in Sources */,
-				CBF102DE13DEC9B400A31004 /* MatrixStack.cpp in Sources */,
-				CBF102DF13DEC9B400A31004 /* OpenGLES20Context.cpp in Sources */,
-				CBF102E013DEC9B400A31004 /* OpenGLES20Implementation.cpp in Sources */,
-				CBF102E113DEC9B400A31004 /* OpenGLESState.cpp in Sources */,
-				CBF102E213DEC9B400A31004 /* Shader.cpp in Sources */,
-				CBF102E313DEC9B400A31004 /* ShaderFile.cpp in Sources */,
-				CBF102E413DEC9B400A31004 /* ShaderProgram.cpp in Sources */,
-				CBF102FA13DEC9B400A31004 /* ShaderSource.cpp in Sources */,
-				CBF102FB13DEC9B400A31004 /* Uniform.cpp in Sources */,
-				CBF102FC13DEC9B400A31004 /* OpenGLESConfig.cpp in Sources */,
-				CBF102FD13DEC9B400A31004 /* OpenGLESContext.cpp in Sources */,
-				CBF102FE13DEC9B400A31004 /* OpenGLESFile.mm in Sources */,
-				CBF102FF13DEC9B400A31004 /* OpenGLESImplementation.cpp in Sources */,
-				CBF1030013DEC9B400A31004 /* OpenGLESString.cpp in Sources */,
-				CBF1030113DEC9B400A31004 /* OpenGLESUtil.cpp in Sources */,
-				CBF1030213DEC9B400A31004 /* ofGLES2Renderer.cpp in Sources */,
+				CB13C20913F3F3D400EB6E11 /* ofGLES2Renderer.cpp in Sources */,
+				CB13C24013F4170C00EB6E11 /* alphaTest.frag in Sources */,
+				CB13C24113F4170C00EB6E11 /* clipPlane.frag in Sources */,
+				CB13C24213F4170C00EB6E11 /* clipPlane.vert in Sources */,
+				CB13C24413F4170C00EB6E11 /* lighting.frag in Sources */,
+				CB13C24513F4170C00EB6E11 /* lighting.vert in Sources */,
+				CB13C24613F4170C00EB6E11 /* lightingPerFragment.frag in Sources */,
+				CB13C24713F4170C00EB6E11 /* lightingPerFragment.vert in Sources */,
+				CB13C24813F4170C00EB6E11 /* lightingPerVertex.vert in Sources */,
+				CB13C24913F4170C00EB6E11 /* main.frag in Sources */,
+				CB13C24A13F4170C00EB6E11 /* main.vert in Sources */,
+				CB13C24B13F4170C00EB6E11 /* postprocess.frag in Sources */,
+				CB13C24C13F4170C00EB6E11 /* postprocess.vert in Sources */,
+				CB13C24D13F4170C00EB6E11 /* texture.frag in Sources */,
+				CB13C24E13F4170C00EB6E11 /* texture.vert in Sources */,
+				CB13C24F13F4170C00EB6E11 /* texture0.frag in Sources */,
+				CB13C25013F4170C00EB6E11 /* texture0.vert in Sources */,
+				CB13C25113F4170C00EB6E11 /* texture1.frag in Sources */,
+				CB13C25213F4170C00EB6E11 /* texture1.vert in Sources */,
+				CB13C25313F4170C00EB6E11 /* texture2.frag in Sources */,
+				CB13C25413F4170C00EB6E11 /* texture2.vert in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

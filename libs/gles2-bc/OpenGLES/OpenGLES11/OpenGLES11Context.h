@@ -17,7 +17,7 @@
 #ifndef OpenGLES11Context_H_
 #define OpenGLES11Context_H_
 
-#include "OpenGLESContext.h"
+#include "../OpenGLESContext.h"
 
 namespace OpenGLES {
 	namespace OpenGLES1 {
@@ -278,6 +278,13 @@ namespace OpenGLES {
 			void glGetBufferPointervOES (GLenum target, GLenum pname, GLvoid **params);
 			GLvoid * glMapBufferOES (GLenum target, GLenum access);
 			GLboolean glUnmapBufferOES (GLenum target);
+			
+			GLfloat* getModelViewMatrix();
+			GLfloat* getProjectionMatrix();
+			
+		private:
+			
+			
 		};
 		
 	}

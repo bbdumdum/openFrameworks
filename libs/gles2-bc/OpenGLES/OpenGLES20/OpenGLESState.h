@@ -18,6 +18,8 @@
 #define OpenGLState_H__
 
 #include "Uniform.h"
+#include "Attribute.h"
+
 #include <vector>
 #include <map>
 
@@ -513,6 +515,9 @@ namespace OpenGLES {
 			
 			int getCachedShaderAmount();
 			
+			UniformBase *uniforms[UniformId::COUNT];
+			Attribute *attributes[AttributeId::COUNT];			
+			
 		private:
 			void setActiveUniformLocations(std::vector<UniformSimple *> *activeUniforms);
 			void setActiveAttributeLocations(std::vector<AttributeSimple *> *activeAttributes);
@@ -523,8 +528,6 @@ namespace OpenGLES {
 			void addDefineToShaderSources(std::string define, std::vector<ShaderFile *> &shaderFiles, std::vector<ShaderSource *> &vertexShaderSources, std::vector<ShaderSource * > &fragmentShaderSources );
 			unsigned int* getCopyOfCurrentState();
 			
-			UniformBase *uniforms[UniformId::COUNT];
-			Attribute *attributes[AttributeId::COUNT];
 			ShaderFile *shaders[ShaderId::COUNT];
 			std::vector<StateShaderProgram *> stateShaderPrograms;
 			StateShaderProgram *currentStateShaderProgram;

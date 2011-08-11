@@ -23,7 +23,7 @@
 #include <utility>
 #include "ShaderProgram.h"
 #include "ShaderFile.h"
-#include "OpenGLESMath.h"
+#include "../OpenGLESMath.h"
 
 namespace OpenGLES {
 	namespace OpenGLES2 {

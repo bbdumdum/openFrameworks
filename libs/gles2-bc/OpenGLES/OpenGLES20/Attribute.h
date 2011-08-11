@@ -51,17 +51,23 @@ namespace OpenGLES {
 			void setNormalized(GLboolean normalized);
 			void setStride(GLsizei stride);
 			void setPointer(const void *pointer);
+
+			void setVertexAttribPointer( GLint location );			
 			
-		private:
-			GLint location;
-			bool enabled;
-			bool uploaded;
+			bool enabled;			
 			
 			GLint size;
 			GLenum type;
 			GLboolean normalized;
 			GLsizei stride;
-			const void *pointer;
+			const void *pointer;			
+			
+		private:
+			GLint location;
+
+			bool uploaded;
+			
+
 		};
 		
 	}

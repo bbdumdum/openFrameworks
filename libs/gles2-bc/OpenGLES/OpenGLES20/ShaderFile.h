@@ -19,7 +19,7 @@
 
 #include <OpenGLES/ES2/gl.h>
 #include <string>
-#include "OpenGLESFile.h"
+#include "../OpenGLESFile.h"
 
 namespace OpenGLES {
 	namespace OpenGLES2 {

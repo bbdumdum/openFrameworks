@@ -17,9 +17,10 @@
 #ifndef OpenGLES2Context_H_
 #define OpenGLES2Context_H_
 
-#include "OpenGLESContext.h"
+#include "../OpenGLESContext.h"
 #include "MatrixStack.h"
 #include "OpenGLESState.h"
+
 
 namespace OpenGLES {
 	namespace OpenGLES2 {
@@ -285,9 +286,14 @@ namespace OpenGLES {
 			// Non-API
 			int getCachedShaderAmount();
 			
+			GLfloat* getModelViewMatrix();
+			GLfloat* getProjectionMatrix();			
+			
+			OpenGLESState openGLESState;
+			
 		private:
 			MatrixStack matrixStack;
-			OpenGLESState openGLESState;
+			
 			GLuint shaderProgramId;
 			
 			void prepareToDraw();

@@ -26,6 +26,8 @@ using namespace OpenGLES::OpenGLES2;
 
 OpenGLES20Context::OpenGLES20Context() : OpenGLESContext(2, new OpenGLES20Implementation()), matrixStack(&openGLESState, implementation), openGLESState(), shaderProgramId(0)
 {
+	overrideShader = NULL;	
+
 	implementation->init();
 	matrixStack.init();
 	openGLESState.init(implementation);
@@ -310,8 +312,70 @@ void OpenGLES20Context::prepareToDraw()
 		}
 	}
 	
-	
-	openGLESState.setCurrentProgram();
+	if( overrideShader != NULL )
+	{
+		// if we have a override shader, see if they want a modelview matrix and a projection matrix
+		
+		if( overrideShader->getUniformLocation("u_modelViewMatrix") > -1 ) {
+			overrideShader->setUniformMatrix4x4v("u_modelViewMatrix", modelViewMatrix->m );
+		}
+		
+		if( overrideShader->getUniformLocation("u_projectionMatrix") > -1 ) {
+			overrideShader->setUniformMatrix4x4v("u_projectionMatrix", projectionMatrix->m );		
+		}
+		
+		if( overrideShader->getUniformLocation("u_modelViewProjectionMatrix") > -1 ) {
+			overrideShader->setUniformMatrix4x4v("u_modelViewProjectionMatrix", mvp.m );			
+		}		
+		
+		if ( openGLESState.attributes[AttributeId::POSITION]->enabled ){
+			GLint attributeLocation = overrideShader->getAttributeLocation("a_position"); 
+			if( attributeLocation > -1 ){
+				openGLESState.attributes[AttributeId::POSITION]->setVertexAttribPointer( attributeLocation );
+			}
+		}
+		
+		if ( openGLESState.attributes[AttributeId::COLOR]->enabled ){
+			GLint attributeLocation = overrideShader->getAttributeLocation("a_color"); 
+			if( attributeLocation > -1 ){
+				openGLESState.attributes[AttributeId::COLOR]->setVertexAttribPointer( attributeLocation );
+			}
+		}
+		
+		if ( openGLESState.attributes[AttributeId::NORMAL]->enabled ){
+			GLint attributeLocation = overrideShader->getAttributeLocation("a_normal"); 
+			if( attributeLocation > -1 ){
+				openGLESState.attributes[AttributeId::NORMAL]->setVertexAttribPointer( attributeLocation );
+			}			
+		}
+		
+		
+		if ( openGLESState.attributes[AttributeId::TEXCOORD0]->enabled ){
+			GLint attributeLocation = overrideShader->getAttributeLocation("a_texCoord0"); 
+			if( attributeLocation > -1 ){
+				openGLESState.attributes[AttributeId::TEXCOORD0]->setVertexAttribPointer( attributeLocation );
+			}			
+		}		
+		
+		if ( openGLESState.attributes[AttributeId::TEXCOORD1]->enabled ){
+			GLint attributeLocation = overrideShader->getAttributeLocation("a_texCoord1"); 
+			if( attributeLocation > -1 ){
+				openGLESState.attributes[AttributeId::TEXCOORD1]->setVertexAttribPointer( attributeLocation );
+			}			
+		}		
+		
+		if ( openGLESState.attributes[AttributeId::TEXCOORD2]->enabled ){
+			GLint attributeLocation = overrideShader->getAttributeLocation("a_texCoord2"); 
+			if( attributeLocation > -1 ){
+				openGLESState.attributes[AttributeId::TEXCOORD2]->setVertexAttribPointer( attributeLocation );
+			}			
+		}				
+		
+	}
+	else
+	{
+		openGLESState.setCurrentProgram();
+	}
 }
 
 void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
@@ -1881,4 +1945,21 @@ GLboolean OpenGLES20Context::glUnmapBufferOES (GLenum target)
 int OpenGLES20Context::getCachedShaderAmount()
 {
 	return openGLESState.getCachedShaderAmount();
+}
+
+
+// Andreas: We need accessors to these matrices
+
+GLfloat* OpenGLES20Context::getModelViewMatrix(){
+	
+	Matrix4x4<GLfloat>* modelView = matrixStack.getModelViewMatrix();
+	for( int i = 0; i < 16; i++ ) { tmpModelViewMatrix[i] = modelView->m[i]; }
+	return tmpModelViewMatrix;	
+}
+
+GLfloat* OpenGLES20Context::getProjectionMatrix(){
+
+	Matrix4x4<GLfloat>* projection = matrixStack.getProjectionMatrix();
+	for( int i = 0; i < 16; i++ ) { tmpProjectionMatrix[i] = projection->m[i]; }	
+	return tmpProjectionMatrix;
 }

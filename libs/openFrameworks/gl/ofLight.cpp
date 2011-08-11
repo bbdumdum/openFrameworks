@@ -55,10 +55,7 @@ void ofSetSmoothLighting(bool b) {
 
 //----------------------------------------
 void ofSetGlobalAmbientColor(const ofColor& c) {
-	GLfloat cc[] = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
-	
-	cout << "ofSetGlobalAmbientColor " << cc[0] << ", " << cc[1] << ", " << cc[2] << ", " << cc[3] << endl; 
-	
+	GLfloat cc[] = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};	
 	_ofLightModelfv(GL_LIGHT_MODEL_AMBIENT, cc);
 }
 

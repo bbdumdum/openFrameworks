@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <OpenGLES/ES2/gl.h>
 #include <vector>
-#include "OpenGLESString.h"
+#include "../OpenGLESString.h"
 
 namespace OpenGLES {
 	namespace OpenGLES2 {

@@ -4,7 +4,7 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 
-#include "ofxAssimpModelLoader.h"
+//#include "ofxAssimpModelLoader.h"
 
 #include "ofGLES2Renderer.h"
 
@@ -47,12 +47,16 @@ static inline Vector3D Vector3DMakeWithStartAndEndPoints(Vertex3D start, Vertex3
 
 
 
-class testApp : public ofxiPhoneApp {
+
+class testApp : public ofxiPhoneApp 
+{
 	
 public:
 	void setup();
 	void update();
 	void draw();
+	
+	void drawScene();
 	
 	void debugDraw();
 	
@@ -64,7 +68,10 @@ public:
 	void touchUp(ofTouchEventArgs &touch);
 	void touchDoubleTap(ofTouchEventArgs &touch);
 
-	ofFbo testFBO;
+	ofFbo screenFBO;	
+	
+	//ofFbo testFBO;
+	ofShader testShader;
 	
 	ofMesh testMesh;
 	
@@ -88,7 +95,7 @@ public:
 
 	float appIphoneScale;
 	
-	ofxAssimpModelLoader model;
+	//ofxAssimpModelLoader model;
 	
 	string typeStr;
 	

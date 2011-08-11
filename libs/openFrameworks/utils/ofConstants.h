@@ -139,6 +139,7 @@ enum ofLoopType{
 	#ifdef OPENGLES_VERSION_2
 		#include <OpenGLES/ES2/gl.h>
 		#include <OpenGLES/ES2/glext.h>
+
 	#else
 		#import <OpenGLES/ES1/gl.h>
 		#import <OpenGLES/ES1/glext.h>
@@ -155,12 +156,22 @@ enum ofLoopType{
 	#define TARGET_LITTLE_ENDIAN
 #endif
 
-#ifdef TARGET_OPENGLES
+
+#if defined( TARGET_OPENGLES )  && !defined(OPENGLES_VERSION_2)
 	#include "glu.h"
 	//typedef GLushort ofIndexType ;
 #else
 	//typedef GLuint ofIndexType;
 #endif
+
+#ifdef OPENGLES_VERSION_2
+	#include "OpenGLES/OpenGLESDefines.h"
+
+	#import <OpenGLES/ES1/gl.h> // Andreas: added only n the interest of getting this to compile
+
+#endif
+
+
 
 #include "tesselator.h"
 typedef TESSindex ofIndexType;

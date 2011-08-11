@@ -1,6 +1,7 @@
 #pragma once
 #include "ofBaseTypes.h"
 #include "ofPolyline.h"
+#include "ofMatrix4x4.h"
 #include <stack>
 class ofShapeTessellation;
 class ofMesh;

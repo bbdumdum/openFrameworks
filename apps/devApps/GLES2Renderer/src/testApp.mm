@@ -20,12 +20,12 @@ void testApp::setup()
 	gles2Renderer = ofPtr<ofGLES2Renderer>( new ofGLES2Renderer(overrideGLVersion) );
 	ofSetCurrentRenderer( gles2Renderer );	
 	
-	ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
+	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
 	
 	//ipad doesn't need no scale ;) 
 	appIphoneScale = 1.0;
 
-	ofBackground(100,100,100);	
+	ofBackground(200,200,200);	
 	ofSetFrameRate(60);
 	
 	ofSetCircleResolution( 50 );
@@ -126,14 +126,26 @@ void testApp::setup()
 	
 	
 	ofFbo::Settings tmpSettings = ofFbo::Settings(); 
-	tmpSettings.width  = 512;
-	tmpSettings.height = 512;	
+	tmpSettings.width  = 480;
+	tmpSettings.height = 320;	
 	tmpSettings.useDepth = false;
 	tmpSettings.useStencil = false;
 	tmpSettings.internalformat = GL_RGB;
 
-	testFBO.allocate( tmpSettings ); 
+//	testFBO.allocate( tmpSettings ); 
 
+	
+	ofFbo::Settings tmpScreenFBOSettings = ofFbo::Settings(); 
+	tmpScreenFBOSettings.width  = 1024;
+	tmpScreenFBOSettings.height = 768;	
+	tmpScreenFBOSettings.useDepth = false;
+	tmpScreenFBOSettings.useStencil = false;
+	tmpScreenFBOSettings.internalformat = GL_RGB;
+	
+	screenFBO.allocate( tmpScreenFBOSettings ); 	
+	
+	
+	testShader.load("shaders/TestShader");
 	
 	mouseX = 400;
 	mouseY = 400;	
@@ -142,13 +154,20 @@ void testApp::setup()
 	
 	//string extensions = (char*)glGetString(GL_EXTENSIONS);
 	//ofLog(OF_LOG_VERBOSE,extensions);
+
+	//string glEsVersion = (char*)glGetString(GL_VERSION);
+	//ofLog(OF_LOG_VERBOSE,glEsVersion);	
+	
+	//string glslVersion = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+	//ofLog(OF_LOG_VERBOSE,glslVersion);
+	
 	
 }
 
 
 //--------------------------------------------------------------
-void testApp::update(){
-
+void testApp::update()
+{
 	counter++;
 	
 	float radius = 70.f; 
@@ -167,39 +186,80 @@ void testApp::update(){
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
-
+void testApp::draw()
+{
 	ofScale(appIphoneScale, appIphoneScale, 1.0);
 
 	
+	screenFBO.begin();	
+	
+	ofClear( 100.0f, 100.0f, 100.0f, 255.0f );
+	
+	drawScene();
+	
+	
+	// Try a shader
+	gles2Renderer->beginCustomShader( &testShader );
+	
+	testShader.setUniform1f("u_time", ofGetElapsedTimef() );	
+	
+	ofSetColor(255,255,255,255);		
+
+	float extraFrac = 0.0; //AMathHelpers::cosZeroToOne( ofGetElapsedTimef() );
+	float extraSize = 30.0f * extraFrac;
+	
+	float imageDrawWidth  =  (testImage.getWidth() / 1.0f) + ( extraFrac * (testImage.getWidth() / 4.0f));
+	float imageDrawHeight = (testImage.getHeight() / 1.0f) + ( extraFrac * (testImage.getHeight() / 4.0f));
+	
+	testImage.draw( 100.0f, 100.0f, imageDrawWidth, imageDrawHeight );
+	
+	gles2Renderer->endCustomShader();
+	
+	screenFBO.end();
+	
+	ofPushMatrix();
+		ofRotate( 90.0f );
+		screenFBO.draw(0.0f, -768, 1024, 1024 ); // this is completely wrong, 1024 in height, have a look at this..
+	ofPopMatrix();
+	
+}
+
+
+//--------------------------------------------------------------
+void testApp::drawScene()
+{
+	
+	/*
 	// draw into an FBO
 	ofSetColor(255,255,255, 255);
 	testFBO.begin();
-		ofClear( 190, 190, 190, 255 );
-		ofPushMatrix();
-			ofTranslate(testFBO.getWidth() / 2.0f, testFBO.getHeight() / 2.0f, 00.f);
-			ofRotate(ofGetElapsedTimef()*1.6 * RAD_TO_DEG, 1, 0, 0);
-			ofRotate(ofGetElapsedTimef()*1.8 * RAD_TO_DEG, 0, 1, 0);			
-			ofBox(0, 0, 0, 150);
-		ofPopMatrix();
+	ofClear( 190, 190, 190, 255 );
+	ofPushMatrix();
+	ofTranslate(testFBO.getWidth() / 2.0f, testFBO.getHeight() / 2.0f, 00.f);
+	ofRotate(ofGetElapsedTimef()*1.6 * RAD_TO_DEG, 1, 0, 0);
+	ofRotate(ofGetElapsedTimef()*1.8 * RAD_TO_DEG, 0, 1, 0);			
+	ofBox(0, 0, 0, 150);
+	ofPopMatrix();
 	testFBO.end();
 	
 	// draw the FBO
 	ofSetColor(255,255,255,255);	
 	testFBO.draw( 512.0f, 600.0f, testFBO.getWidth() / 3.0f, testFBO.getHeight() / 3.0f );
-
+	
 	ofSetColor(255,0,0,255);	
 	testFBO.draw( 512.0f + testFBO.getWidth() / 3.0f, 600.0f, testFBO.getWidth() / 3.0f, testFBO.getHeight() / 3.0f );
+	*/
 	
+	ofFill();			
 	
 	// test
 	ofFill();	
 	ofSetColor(255,0,255, 255);
-
+	
 	ofEnableAlphaBlending();
 	
 	ofCircle( 700.0f, 512.0f, 0.0f, 50.0f );
-
+	
 	ofSetColor(0,255,255, 100);	
 	ofCircle( 700.0f, 560.0f, 0.0f, 20.0f );	
 	
@@ -207,7 +267,7 @@ void testApp::draw(){
 	ofEllipse( 790.0f, 512.0f, 0.0f, 50.0f, 90.0f );	
 	
 	ofTriangle( 850.0f, 512.0f, 880.0f, 512.0f, 850.0f, 600.0f );		
-
+	
 	ofLine( 900.0f, 512.0f, 900.0f, 600.0f );			
 	
 	ofRect( 920.0f, 512.0f, 50.0f, 50.0f );	
@@ -215,7 +275,7 @@ void testApp::draw(){
 	ofDisableAlphaBlending();
 	
 	_ofEnable( GL_DEPTH_TEST );
-
+	
 	_ofEnable( GL_COLOR_MATERIAL );	
 	
 	_ofEnable( GL_NORMALIZE );	
@@ -224,69 +284,69 @@ void testApp::draw(){
 	
 	ofEnableLighting();
 	
-//	material.begin();
-
+	//	material.begin();
+	
 	if (bPointLight) pointLight.enable();	
-//	if (bSpotLight) spotLight.enable();
-//	if (bDirLight) directionalLight.enable();
-
+	//	if (bSpotLight) spotLight.enable();
+	//	if (bDirLight) directionalLight.enable();
+	
 	ofPushMatrix();
-		
-		//ofTranslate(800.0f, ofGetHeight() / 2.0f, cos(ofGetElapsedTimef()*1.4) * 50.f);
-		//ofTranslate(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f, cos(ofGetElapsedTimef()*1.4) * 50.f);	
-		ofTranslate(800.0f, ofGetHeight() / 2.0f, 00.f);
-		
 	
-		ofRotate(ofGetElapsedTimef()*.6 * RAD_TO_DEG, 1, 0, 0);
-		ofRotate(ofGetElapsedTimef()*.8 * RAD_TO_DEG, 0, 1, 0);
+	//ofTranslate(800.0f, ofGetHeight() / 2.0f, cos(ofGetElapsedTimef()*1.4) * 50.f);
+	//ofTranslate(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f, cos(ofGetElapsedTimef()*1.4) * 50.f);	
+	ofTranslate(800.0f, ofGetHeight() / 2.0f, 00.f);
 	
-		//ofRotate( 55.0f, 1, 0, 0);
-		//ofRotate( 30.0f, 0, 1, 0);
 	
-		//ofBox(0, 0, 0, 120);
+	ofRotate(ofGetElapsedTimef()*.6 * RAD_TO_DEG, 1, 0, 0);
+	ofRotate(ofGetElapsedTimef()*.8 * RAD_TO_DEG, 0, 1, 0);
 	
-		//model.drawFaces();
+	//ofRotate( 55.0f, 1, 0, 0);
+	//ofRotate( 30.0f, 0, 1, 0);
 	
-		drawCube( 120.0f );
-		//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
-		//drawIcosahedron( 120.0f );
+	//ofBox(0, 0, 0, 120);
+	
+	//model.drawFaces();
+	
+	drawCube( 120.0f );
+	//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
+	//drawIcosahedron( 120.0f );
 	
 	ofPopMatrix();
 	pointLight.disable();
-//	spotLight.disable();
-//	directionalLight.disable();
+	//	spotLight.disable();
+	//	directionalLight.disable();
 	
-//	material.end();
+	//	material.end();
 	
 	ofDisableLighting();
 	
 	ofSetColor( pointLight.getDiffuseColor() );
 	if(bPointLight) pointLight.draw();
-
-//	ofSetColor( spotLight.getDiffuseColor() );
-//	if(bSpotLight) spotLight.draw();
+	
+	//	ofSetColor( spotLight.getDiffuseColor() );
+	//	if(bSpotLight) spotLight.draw();
 	
 	_ofDisable( GL_CULL_FACE );
 	_ofDisable( GL_DEPTH_TEST );
-		
+	
 	
 	ofEnableAlphaBlending();	
 	
 	ofSetColor(255,255,255);	
 	testImage.draw( 870.0f, 20.0f, testImage.getWidth() / 3.0f, testImage.getHeight() / 3.0f );
-
+	
 	//;
 	
 	ofSetColor(255,255,255, AMathHelpers::cosZeroToOne( ofGetElapsedTimef() ) * 255 );		
 	testImage2.draw( 870.0f, 200.0f, testImage2.getWidth() / 3.0f, testImage2.getHeight() / 3.0f );
-
+	
 	ofSetColor(255,255,255, 255 - (AMathHelpers::cosZeroToOne( ofGetElapsedTimef() ) * 255) );
 	testImageAlpha.draw( 960.0f, 350.0f, testImageAlpha.getWidth() / 2.0f, testImageAlpha.getHeight() / 2.0f );
 	
 	ofDisableAlphaBlending();	
 	
-
-
+	
+	
 	ofSetColor(225);
 	franklinBook14.drawString("franklin book 14pt - ", 30, 700);
 	franklinBook14.drawString(typeStr, 30, 720);
@@ -294,7 +354,7 @@ void testApp::draw(){
 	
 	ofFill();
 	ofSetHexColor(0xe0be21);
-
+	
 	//------(a)--------------------------------------
 	// 
 	// 		draw a star
@@ -306,11 +366,11 @@ void testApp::draw(){
 	// 
 	ofSetPolyMode(OF_POLY_WINDING_ODD);	// this is the normal mode
 	ofBeginShape();
-		ofVertex(200,135);
-		ofVertex(15,135);
-		ofVertex(165,25);
-		ofVertex(105,200);
-		ofVertex(50,25);
+	ofVertex(200,135);
+	ofVertex(15,135);
+	ofVertex(165,25);
+	ofVertex(105,200);
+	ofVertex(50,25);
 	ofEndShape();
 	
 	
@@ -326,11 +386,11 @@ void testApp::draw(){
 	ofSetHexColor(0xb5de10);
 	ofSetPolyMode(OF_POLY_WINDING_NONZERO);
 	ofBeginShape();
-		ofVertex(400,135);
-		ofVertex(215,135);
-		ofVertex(365,25);
-		ofVertex(305,200);
-		ofVertex(250,25);
+	ofVertex(400,135);
+	ofVertex(215,135);
+	ofVertex(365,25);
+	ofVertex(305,200);
+	ofVertex(250,25);
 	ofEndShape();
 	//-------------------------------------
 	
@@ -395,22 +455,22 @@ void testApp::draw(){
 	// 		use sin cos and time to make some spirally shape
 	//
 	ofPushMatrix();
-		ofTranslate(100,300,0);
-		ofSetHexColor(0xff2220);
-		ofFill();
-		ofSetPolyMode(OF_POLY_WINDING_ODD);
-		ofBeginShape();
-		float angleStep 	= TWO_PI/(100.0f + sin(ofGetElapsedTimef()/5.0f) * 60); 
-		float radiusAdder 	= 0.5f;
-		float radius 		= 0;
-		for (int i = 0; i < 200; i++){
-			float anglef = (i) * angleStep;
-			float x = radius * cos(anglef);
-			float y = radius * sin(anglef); 
-			ofVertex(x,y);
-			radius 	+= radiusAdder; 
-		}
-		ofEndShape(OF_CLOSE);
+	ofTranslate(100,300,0);
+	ofSetHexColor(0xff2220);
+	ofFill();
+	ofSetPolyMode(OF_POLY_WINDING_ODD);
+	ofBeginShape();
+	float angleStep 	= TWO_PI/(100.0f + sin(ofGetElapsedTimef()/5.0f) * 60); 
+	float radiusAdder 	= 0.5f;
+	float radius 		= 0;
+	for (int i = 0; i < 200; i++){
+		float anglef = (i) * angleStep;
+		float x = radius * cos(anglef);
+		float y = radius * sin(anglef); 
+		ofVertex(x,y);
+		radius 	+= radiusAdder; 
+	}
+	ofEndShape(OF_CLOSE);
 	ofPopMatrix();
 	//-------------------------------------
 	
@@ -421,53 +481,53 @@ void testApp::draw(){
 	// 		because it uses catmul rom splines, we need to repeat the first and last 
 	// 		items so the curve actually goes through those points
 	//
-
+	
 	ofSetHexColor(0x2bdbe6);
 	ofBeginShape();
 	
-		for (int i = 0; i < nCurveVertexes; i++){
-			
-			
-			// sorry about all the if/states here, but to do catmull rom curves
-			// we need to duplicate the start and end points so the curve acutally 
-			// goes through them.
-			
-			// for i == 0, we just call the vertex twice
-			// for i == nCurveVertexes-1 (last point) we call vertex 0 twice
-			// otherwise just normal ofCurveVertex call
-			
-			if (i == 0){
-				ofCurveVertex(curveVertices[0].x, curveVertices[0].y); // we need to duplicate 0 for the curve to start at point 0
-				ofCurveVertex(curveVertices[0].x, curveVertices[0].y); // we need to duplicate 0 for the curve to start at point 0
-			} else if (i == nCurveVertexes-1){
-				ofCurveVertex(curveVertices[i].x, curveVertices[i].y);
-				ofCurveVertex(curveVertices[0].x, curveVertices[0].y);	// to draw a curve from pt 6 to pt 0
-				ofCurveVertex(curveVertices[0].x, curveVertices[0].y);	// we duplicate the first point twice
-			} else {
-				ofCurveVertex(curveVertices[i].x, curveVertices[i].y);
-			}
-		}
+	for (int i = 0; i < nCurveVertexes; i++){
 		
+		
+		// sorry about all the if/states here, but to do catmull rom curves
+		// we need to duplicate the start and end points so the curve acutally 
+		// goes through them.
+		
+		// for i == 0, we just call the vertex twice
+		// for i == nCurveVertexes-1 (last point) we call vertex 0 twice
+		// otherwise just normal ofCurveVertex call
+		
+		if (i == 0){
+			ofCurveVertex(curveVertices[0].x, curveVertices[0].y); // we need to duplicate 0 for the curve to start at point 0
+			ofCurveVertex(curveVertices[0].x, curveVertices[0].y); // we need to duplicate 0 for the curve to start at point 0
+		} else if (i == nCurveVertexes-1){
+			ofCurveVertex(curveVertices[i].x, curveVertices[i].y);
+			ofCurveVertex(curveVertices[0].x, curveVertices[0].y);	// to draw a curve from pt 6 to pt 0
+			ofCurveVertex(curveVertices[0].x, curveVertices[0].y);	// we duplicate the first point twice
+		} else {
+			ofCurveVertex(curveVertices[i].x, curveVertices[i].y);
+		}
+	}
+	
 	ofEndShape();
 	
 	
 	// show a faint the non-curve version of the same polygon:
 	ofEnableAlphaBlending();
-		ofNoFill();
-		ofSetColor(0,0,0,40);
-		ofBeginShape();
-			for (int i = 0; i < nCurveVertexes; i++){
-				ofVertex(curveVertices[i].x, curveVertices[i].y);
-			}
-		ofEndShape(true);
-		
-		
-		ofSetColor(0,0,0,80);
-		for (int i = 0; i < nCurveVertexes; i++){
-			if (curveVertices[i].bOver == true) ofFill();
-			else ofNoFill();
-			ofCircle(curveVertices[i].x, curveVertices[i].y,4);
-		}
+	ofNoFill();
+	ofSetColor(0,0,0,40);
+	ofBeginShape();
+	for (int i = 0; i < nCurveVertexes; i++){
+		ofVertex(curveVertices[i].x, curveVertices[i].y);
+	}
+	ofEndShape(true);
+	
+	
+	ofSetColor(0,0,0,80);
+	for (int i = 0; i < nCurveVertexes; i++){
+		if (curveVertices[i].bOver == true) ofFill();
+		else ofNoFill();
+		ofCircle(curveVertices[i].x, curveVertices[i].y,4);
+	}
 	ofDisableAlphaBlending();
 	//-------------------------------------
 	
@@ -501,12 +561,12 @@ void testApp::draw(){
 	
 	
 	ofEnableAlphaBlending();
-		ofFill();
-		ofSetColor(0,0,0,40);
-		ofCircle(x0,y0,4);
-		ofCircle(x1,y1,4);
-		ofCircle(x2,y2,4);
-		ofCircle(x3,y3,4);
+	ofFill();
+	ofSetColor(0,0,0,40);
+	ofCircle(x0,y0,4);
+	ofCircle(x1,y1,4);
+	ofCircle(x2,y2,4);
+	ofCircle(x3,y3,4);
 	ofDisableAlphaBlending();
 	
 	
@@ -524,17 +584,17 @@ void testApp::draw(){
 	ofSetHexColor(0xff00ff);
 	
 	ofBeginShape();
-		
-		ofVertex(100,500);
-		ofVertex(180,550);
-		ofVertex(100,600);
-		
-		ofNextContour(true);
-		
-		ofVertex(120,520);
-		ofVertex(160,550);
-		ofVertex(120,580);
-		
+	
+	ofVertex(100,500);
+	ofVertex(180,550);
+	ofVertex(100,600);
+	
+	ofNextContour(true);
+	
+	ofVertex(120,520);
+	ofVertex(160,550);
+	ofVertex(120,580);
+	
 	ofEndShape(true);
 	//-------------------------------------
 	
@@ -562,68 +622,68 @@ void testApp::draw(){
 	ofSetPolyMode(OF_POLY_WINDING_ODD);
 	
 	ofBeginShape();
-		
-		ofVertex(300,500);
-		ofVertex(380,550);
-		ofVertex(300,600);
-		
-		ofNextContour(true);
-		
-		for (int i = 0; i < 20; i++){
-			float anglef = ((float)i / 19.0f) * TWO_PI;
-			float x = 340 + 30 * cos(anglef);
-			float y = 550 + 30 * sin(anglef); 
-			ofVertex(x,y);
-			radius 	+= radiusAdder; 
-		}
-		
-
+	
+	ofVertex(300,500);
+	ofVertex(380,550);
+	ofVertex(300,600);
+	
+	ofNextContour(true);
+	
+	for (int i = 0; i < 20; i++){
+		float anglef = ((float)i / 19.0f) * TWO_PI;
+		float x = 340 + 30 * cos(anglef);
+		float y = 550 + 30 * sin(anglef); 
+		ofVertex(x,y);
+		radius 	+= radiusAdder; 
+	}
+	
+	
 	ofEndShape(true);
 	
 	ofTranslate(100,0,0);
 	
 	ofSetPolyMode(OF_POLY_WINDING_NONZERO);	
 	ofBeginShape();
-		
-		ofVertex(300,500);
-		ofVertex(380,550);
-		ofVertex(300,600);
-		
-		ofNextContour(true);
-		
-		for (int i = 0; i < 20; i++){
-			float anglef = ((float)i / 19.0f) * TWO_PI;
-			float x = 340 + 30 * cos(anglef);
-			float y = 550 + 30 * sin(anglef); 
-			ofVertex(x,y);
-			radius 	+= radiusAdder; 
-		}
-		
+	
+	ofVertex(300,500);
+	ofVertex(380,550);
+	ofVertex(300,600);
+	
+	ofNextContour(true);
+	
+	for (int i = 0; i < 20; i++){
+		float anglef = ((float)i / 19.0f) * TWO_PI;
+		float x = 340 + 30 * cos(anglef);
+		float y = 550 + 30 * sin(anglef); 
+		ofVertex(x,y);
+		radius 	+= radiusAdder; 
+	}
+	
 	ofEndShape(true);
 	
 	ofTranslate(100,0,0);
 	ofSetPolyMode(OF_POLY_WINDING_ABS_GEQ_TWO);
 	ofBeginShape();
-		ofVertex(300,500);
-		ofVertex(380,550);
-		ofVertex(300,600);
-		ofNextContour(true);
-		
-		for (int i = 0; i < 20; i++){
-			float anglef = ((float)i / 19.0f) * TWO_PI;
-			float x = 340 + 30 * cos(anglef);
-			float y = 550 + 30 * sin(anglef); 
-			ofVertex(x,y);
-			radius 	+= radiusAdder; 
-		}
-		
-		
+	ofVertex(300,500);
+	ofVertex(380,550);
+	ofVertex(300,600);
+	ofNextContour(true);
+	
+	for (int i = 0; i < 20; i++){
+		float anglef = ((float)i / 19.0f) * TWO_PI;
+		float x = 340 + 30 * cos(anglef);
+		float y = 550 + 30 * sin(anglef); 
+		ofVertex(x,y);
+		radius 	+= radiusAdder; 
+	}
+	
+	
 	ofEndShape(true);
 	
 	ofPopMatrix();
 	//-------------------------------------
 	
-
+	
 	//ofSetHexColor(0x000000);
 	//ofDrawBitmapString("ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?", 20,300);	
 	
@@ -655,14 +715,8 @@ void testApp::draw(){
 	ofSetHexColor(0x000000);
 	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);
 	
-	 
-	
-//	debugDraw();
-	
-
 	
 }
-
 
 //--------------------------------------------------------------
 void testApp::debugDraw()
