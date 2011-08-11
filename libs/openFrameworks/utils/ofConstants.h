@@ -24,7 +24,7 @@ enum ofLoopType{
 #elif defined( __APPLE_CC__)
 	#include <TargetConditionals.h>
 
-	#if (TARGET_OF_IPHONE_SIMULATOR) || (TARGET_OS_IPHONE) || (TARGET_IPHONE)
+	#if (TARGET_OS_IPHONE_SIMULATOR) || (TARGET_OS_IPHONE) || (TARGET_IPHONE)
 		#define TARGET_OF_IPHONE
 		#define TARGET_OPENGLES
 	
@@ -139,7 +139,6 @@ enum ofLoopType{
 
 
 #ifdef TARGET_OF_IPHONE
-
 	#ifdef OPENGLES_VERSION_2
 		#include <OpenGLES/ES2/gl.h>
 		#include <OpenGLES/ES2/glext.h>
@@ -155,13 +154,13 @@ enum ofLoopType{
 #ifdef TARGET_ANDROID
 	#include <unistd.h>
 
-#ifdef OPENGLES_VERSION_2
-	#include <GLES2/gl2.h>
-	#include <GLES2/gl2ext.h>
-#else
-	#include <GLES/gl.h>
-	#include <GLES/glext.h>
-#endif
+    #ifdef OPENGLES_VERSION_2
+        #include <GLES2/gl2.h>
+        #include <GLES2/gl2ext.h>
+    #else
+        #include <GLES/gl.h>
+        #include <GLES/glext.h>
+    #endif
 
 	#define TARGET_LITTLE_ENDIAN
 #endif
@@ -173,10 +172,6 @@ enum ofLoopType{
 
 #ifdef OPENGLES_VERSION_2
 	#include "OpenGLES/OpenGLESDefines.h"
-
-	#ifdef TARGET_OF_IPHONE
-		#import <OpenGLES/ES1/gl.h> // Andreas: added only n the interest of getting this to compile
-	#endif
 #endif
 
 
