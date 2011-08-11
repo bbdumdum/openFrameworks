@@ -18,7 +18,7 @@
 
 using namespace OpenGLES;
 
-#define OPENGLES_DEBUG
+
 
 const bool OpenGLESConfig::USE_ONLY_UBER_SHADER = false;
 #ifdef OPENGLES_DEBUG

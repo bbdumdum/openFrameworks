@@ -19,13 +19,18 @@
 
 #ifdef __ANDROID__
 
+#include "OpenGLESUtil.h"
+
 #include <stdio.h>
 
 using namespace OpenGLES;
 
+std::string OpenGLESFile::base_path;
+
 OpenGLESFile::OpenGLESFile(std::string n) : name()
 {
-	name = n.c_str();
+	name = (base_path+n).c_str();
+	LOG_MESSAGE("OpenGLESFile: " + name);
 }
 
 bool OpenGLESFile::open() 
@@ -62,6 +67,10 @@ void OpenGLESFile::close()
 std::string OpenGLESFile::getName()
 {
 	return name;
+}
+
+void OpenGLESFile::setBasePath(std::string path){
+	base_path = path;
 }
 
 #endif

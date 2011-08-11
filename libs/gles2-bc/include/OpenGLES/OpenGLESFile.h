@@ -27,6 +27,10 @@ namespace OpenGLES {
 	public:
 		OpenGLESFile(std::string name);
 		
+#ifdef __ANDROID__
+		static void setBasePath(std::string path);
+#endif
+
 		bool open();
 		char *gets(char * buf, int size);
 		int seek(long int offset, int origin);
@@ -37,6 +41,7 @@ namespace OpenGLES {
 		
 	private:
 		std::string name;
+		static std::string base_path;
 		FILE *fp;
 	};
 	
