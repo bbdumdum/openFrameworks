@@ -225,13 +225,13 @@ void testApp::draw()
 	drawScene();
 	screenFBO.end();
 	
-	gles2Renderer->beginCustomShader( &testShader );
+	testShader.begin();
 	testShader.setUniform1f("u_time", ofGetElapsedTimef() );
 	ofPushMatrix();
 		ofRotate( 90.0f );
 		screenFBO.draw(0.0f, -768, screenFBO.getWidth(), screenFBO.getHeight() ); 
 	ofPopMatrix(); 
-	gles2Renderer->endCustomShader();
+	testShader.end();
 	
 }
 
