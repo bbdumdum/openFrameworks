@@ -45,14 +45,12 @@ typedef int             GLclampx;
 
 /* GL types for handling large vertex buffer objects */
 
-//typedef int             GLintptr;
-//typedef int             GLsizeiptr;
+typedef int             GLintptr;
+typedef int             GLsizeiptr;
 
 // this is conflicting with GLES2/gl.h in xcode4
-#if !TARGET_OS_IPHONE
-typedef long             GLintptr;
-typedef long             GLsizeiptr;
-#endif
+//typedef long             GLintptr;
+//typedef long             GLsizeiptr;
 
 /* Extensions */
 #define GL_OES_byte_coordinates           1
