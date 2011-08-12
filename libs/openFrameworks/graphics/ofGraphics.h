@@ -19,8 +19,11 @@
 void ofSetCurrentRenderer(ofPtr<ofBaseRenderer> renderer);
 ofPtr<ofBaseRenderer> & ofGetCurrentRenderer();
 ofPtr<ofGLRenderer> ofGetGLRenderer();
+
+#ifdef OPENGLES_VERSION_2
 ofPtr<ofGLES2Renderer> ofGetGLES2Renderer();
 OpenGLES::OpenGLESContext * ofGetGLES2Context();
+#endif
 
 
 //for pdf screenshot

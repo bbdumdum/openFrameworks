@@ -22,6 +22,10 @@ extern "C"{
 #include <android/log.h>
 #include "ofFileUtils.h"
 
+#ifdef OPENGLES_VERSION_2
+	#include "OpenGLESFile.h"
+#endif
+
 static bool paused=true;
 
 
@@ -217,6 +221,9 @@ Java_cc_openframeworks_OFAndroid_setAppDataDir( JNIEnv*  env, jobject  thiz, jst
 	const char *mfile = env->GetStringUTFChars(data_dir, &iscopy);
 	__android_log_print(ANDROID_LOG_INFO,"OF",("Setting app dir name to: " + string(mfile)).c_str());
     ofSetDataPathRoot(string(mfile)+"/");
+#ifdef OPENGLES_VERSION_2
+    OpenGLES::OpenGLESFile::setBasePath(string(mfile)+"/shaders/");
+#endif
     string appname = env->GetStringUTFChars(app_name, &iscopy);
     __android_log_print(ANDROID_LOG_INFO,"OF",("app name: " + appname).c_str());
     if(appname!=""){
