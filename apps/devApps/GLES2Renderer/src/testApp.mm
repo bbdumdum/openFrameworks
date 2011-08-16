@@ -4,6 +4,8 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
 	//ofSetLogLevel( OF_LOG_NOTICE );
 	ofSetLogLevel( OF_LOG_VERBOSE );
 		
@@ -11,8 +13,8 @@ void testApp::setup()
 #ifndef OPENGLES_VERSION_2
 	overrideGLVersion = 1;
 #endif	
-	
-	//ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer(overrideGLVersion)));
+
+	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer(overrideGLVersion)));
 	
 	/*gles2Renderer = ofPtr<ofGLES2Renderer>( new ofGLES2Renderer(overrideGLVersion) );
 	ofSetCurrentRenderer( gles2Renderer );	*/
@@ -50,14 +52,18 @@ void testApp::setup()
 		curveVertices[i].radius = 4;
 	}
 
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
 	//testImage.loadImage("boy_10.tga");
 	testImage.loadImage("tdf_1972_poster.jpg");	
 	
-	ofDisableArbTex();
+	//ofDisableArbTex();
 	testImage2.loadImage("bikers.jpg");
-	ofEnableArbTex();
+	//ofEnableArbTex();
 	
 	testImageAlpha.loadImage("AlphaTest.png");
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
 	ofSetGlobalAmbientColor( ofColor( 40.0f, 40.0f, 40.0f) );		
 	
@@ -85,6 +91,7 @@ void testApp::setup()
 	
 	ofLightingModel(GL_SMOOTH);
 	
+	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
 	/*
 	 // we need GL_TEXTURE_2D for our models coords.
@@ -115,22 +122,16 @@ void testApp::setup()
 	 //light.enable();
 	 //ofEnableSeparateSpecularLight();
 	
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
 	franklinBook14.loadFont("frabk.ttf", 14);
 	franklinBook14.setLineHeight(18.0f);
 	franklinBook14.setLetterSpacing(1.037);	
 	
 	typeStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?";
 	
+	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
-	ofFbo::Settings tmpSettings = ofFbo::Settings(); 
-	tmpSettings.width  = 480;
-	tmpSettings.height = 320;	
-	tmpSettings.useDepth = false;
-	tmpSettings.useStencil = false;
-	tmpSettings.internalformat = GL_RGB;
-
-//	testFBO.allocate( tmpSettings ); 
-
 	
 	ofFbo::Settings tmpScreenFBOSettings = ofFbo::Settings(); 
 	tmpScreenFBOSettings.width  = 1024;
@@ -141,6 +142,8 @@ void testApp::setup()
 	
 	screenFBO.allocate( tmpScreenFBOSettings ); 	
 	
+	 
+	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
 	testShader.load("shaders/TestShader");
 	
@@ -160,6 +163,9 @@ void testApp::setup()
 	
 	
 }
+
+//	{ GLenum tmpError = glGetError(); if( tmpError != GL_NO_ERROR ) { cout << "GL Error: " << tmpError << " in " << __FILE__ << " at line: " << __LINE__ << endl;} }
+
 
 
 //--------------------------------------------------------------
@@ -187,50 +193,24 @@ void testApp::draw()
 {
 	ofScale(appIphoneScale, appIphoneScale, 1.0);
 
-	/*
-	screenFBO.begin();	
-	
-	ofClear( 100.0f, 100.0f, 100.0f, 255.0f );
-	
-	drawScene();
-	
-	// Try a shader
-	testShader.begin();
-	
-	testShader.setUniform1f("u_time", ofGetElapsedTimef() );	
-	
-	ofSetColor(255,255,255,255);		
 
-	float extraFrac = 0.0; //AMathHelpers::cosZeroToOne( ofGetElapsedTimef() );
-	float extraSize = 30.0f * extraFrac;
+	checkGlError( glGetError(), __FILE__, __LINE__ );
+
 	
-	float imageDrawWidth  =  (testImage.getWidth() / 1.0f) + ( extraFrac * (testImage.getWidth() / 4.0f));
-	float imageDrawHeight = (testImage.getHeight() / 1.0f) + ( extraFrac * (testImage.getHeight() / 4.0f));
-	
-	testImage.draw( 100.0f, 100.0f, imageDrawWidth, imageDrawHeight );
-	
-	testShader.end();
-	
-	screenFBO.end();
-	 
-	 ofPushMatrix();
-		 ofRotate( 90.0f );
-	 	screenFBO.draw(0.0f, -768, 1024, 1024 ); // this is completely wrong, 1024 in height, have a look at this..
-	 ofPopMatrix(); 
-	 */
-	
-	
-	screenFBO.begin();	
-	ofClear( 100.0f, 100.0f, 100.0f, 255.0f );
-	drawScene();
-	screenFBO.end();
+	screenFBO.begin();		
+		ofClear( 100.0f, 100.0f, 100.0f, 255.0f );	
+		drawScene();
+	screenFBO.end();	
+
+	ofSetColor(255,255,255, 255);
+
 	
 	testShader.begin();
 	testShader.setUniform1f("u_time", ofGetElapsedTimef() );
-	ofPushMatrix();
-		ofRotate( 90.0f );
-		screenFBO.draw(0.0f, -768, screenFBO.getWidth(), screenFBO.getHeight() ); 
-	ofPopMatrix(); 
+		ofPushMatrix();
+			ofRotate( 90.0f );
+			screenFBO.draw(0.0f, -768, 1024, 1024 ); // this is completely wrong, 1024 in height, have a look at this.. (It's to do with FBOs only working on power of two sizes with depth)
+		ofPopMatrix(); 
 	testShader.end();
 	
 }
@@ -239,31 +219,6 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::drawScene()
 {
-	
-	/*
-	// draw into an FBO
-	ofSetColor(255,255,255, 255);
-	testFBO.begin();
-	ofClear( 190, 190, 190, 255 );
-	ofPushMatrix();
-	ofTranslate(testFBO.getWidth() / 2.0f, testFBO.getHeight() / 2.0f, 00.f);
-	ofRotate(ofGetElapsedTimef()*1.6 * RAD_TO_DEG, 1, 0, 0);
-	ofRotate(ofGetElapsedTimef()*1.8 * RAD_TO_DEG, 0, 1, 0);			
-	ofBox(0, 0, 0, 150);
-	ofPopMatrix();
-	testFBO.end();
-	
-	// draw the FBO
-	ofSetColor(255,255,255,255);	
-	testFBO.draw( 512.0f, 600.0f, testFBO.getWidth() / 3.0f, testFBO.getHeight() / 3.0f );
-	
-	ofSetColor(255,0,0,255);	
-	testFBO.draw( 512.0f + testFBO.getWidth() / 3.0f, 600.0f, testFBO.getWidth() / 3.0f, testFBO.getHeight() / 3.0f );
-	*/
-	
-	ofFill();			
-	
-	// test
 	ofFill();	
 	ofSetColor(255,0,255, 255);
 	
@@ -284,52 +239,47 @@ void testApp::drawScene()
 	ofRect( 920.0f, 512.0f, 50.0f, 50.0f );	
 	
 	ofDisableAlphaBlending();
-	
-	_ofEnable( GL_DEPTH_TEST );
-	
-	_ofEnable( GL_COLOR_MATERIAL );	
-	
-	_ofEnable( GL_NORMALIZE );	
+		
+//	_ofEnable( GL_DEPTH_TEST );
+//	_ofEnable( GL_NORMALIZE );	
 	
 	ofSetColor(255,255,255, 255);	
+	
 	
 	ofEnableLighting();
 	
 	//	material.begin();
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
 	if (bPointLight) pointLight.enable();	
-	//	if (bSpotLight) spotLight.enable();
-	//	if (bDirLight) directionalLight.enable();
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
+	/*
 	ofPushMatrix();
 	
-	//ofTranslate(800.0f, ofGetHeight() / 2.0f, cos(ofGetElapsedTimef()*1.4) * 50.f);
-	//ofTranslate(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f, cos(ofGetElapsedTimef()*1.4) * 50.f);	
-	ofTranslate(800.0f, ofGetHeight() / 2.0f, 00.f);
-	
-	
-	ofRotate(ofGetElapsedTimef()*.6 * RAD_TO_DEG, 1, 0, 0);
-	ofRotate(ofGetElapsedTimef()*.8 * RAD_TO_DEG, 0, 1, 0);
-	
-	//ofRotate( 55.0f, 1, 0, 0);
-	//ofRotate( 30.0f, 0, 1, 0);
-	
-	//ofBox(0, 0, 0, 120);
-	
-	//model.drawFaces();
-	
-	drawCube( 120.0f );
-	//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
-	//drawIcosahedron( 120.0f );
+		ofTranslate(800.0f, ofGetHeight() / 2.0f, 00.f);
+			
+		ofRotate(ofGetElapsedTimef()*.6 * RAD_TO_DEG, 1, 0, 0);
+		ofRotate(ofGetElapsedTimef()*.8 * RAD_TO_DEG, 0, 1, 0);
+		
+		//model.drawFaces();	
+		drawCube( 120.0f );
+		//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
+		//drawIcosahedron( 120.0f );
 	
 	ofPopMatrix();
-	pointLight.disable();
-	//	spotLight.disable();
-	//	directionalLight.disable();
+	*/ 
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
-	//	material.end();
+ 	pointLight.disable();
+
 	
+	//	material.end();	
 	ofDisableLighting();
+ 
 	
 	ofSetColor( pointLight.getDiffuseColor() );
 	if(bPointLight) pointLight.draw();
@@ -337,17 +287,15 @@ void testApp::drawScene()
 	//	ofSetColor( spotLight.getDiffuseColor() );
 	//	if(bSpotLight) spotLight.draw();
 	
-	_ofDisable( GL_CULL_FACE );
-	_ofDisable( GL_DEPTH_TEST );
+//	_ofDisable( GL_CULL_FACE );
+//	_ofDisable( GL_DEPTH_TEST );
 	
 	
 	ofEnableAlphaBlending();	
 	
 	ofSetColor(255,255,255);	
 	testImage.draw( 870.0f, 20.0f, testImage.getWidth() / 3.0f, testImage.getHeight() / 3.0f );
-	
-	//;
-	
+		
 	ofSetColor(255,255,255, AMathHelpers::cosZeroToOne( ofGetElapsedTimef() ) * 255 );		
 	testImage2.draw( 870.0f, 200.0f, testImage2.getWidth() / 3.0f, testImage2.getHeight() / 3.0f );
 	
@@ -698,6 +646,7 @@ void testApp::drawScene()
 	//ofSetHexColor(0x000000);
 	//ofDrawBitmapString("ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?", 20,300);	
 	
+	/*
 	ofSetHexColor(0x000000);
 	ofDrawBitmapString("(a) star\nwinding rule odd", 20,210);
 	
@@ -724,10 +673,11 @@ void testApp::drawScene()
 	ofDrawBitmapString("(h) ofNextContour\nallows for holes", 20,610);
 	
 	ofSetHexColor(0x000000);
-	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);
-	
-	
+	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);	
+	*/
 }
+
+#ifdef OPENGLES_VERSION_2
 
 //--------------------------------------------------------------
 void testApp::debugDraw()
@@ -818,22 +768,22 @@ void testApp::drawCube( float _scale )
 
 	static const float _normals[] =
 	{
-		/* front */ 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
-		/* right */ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
-		/* back */ 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
-		/* left */ -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
-		/* top */ 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-		/* bottom */ 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0
+		0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+		 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
+		 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+		-1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
+		 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+		 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0
 	};
 
 	static const float _colors[] =
 	{
-		/* front  – white  */  1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,
-		/* right  – red    */  1,0,0,1, 1,0,0,1, 1,0,0,1, 1,0,0,1, 1,0,0,1, 1,0,0,1,
-		/* back   – green  */  0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1,
-		/* left   – blue   */  0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1,
-		/* top    - yellow */  1,1,0,1, 1,1,0,1, 1,1,0,1, 1,1,0,1, 1,1,0,1, 1,1,0,1,
-		/* bottom - magenta*/  1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1
+		1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1,
+		1,0,0,1, 1,0,0,1, 1,0,0,1, 1,0,0,1, 1,0,0,1, 1,0,0,1,
+		0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1,
+		0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1,
+		1,1,0,1, 1,1,0,1, 1,1,0,1, 1,1,0,1, 1,1,0,1, 1,1,0,1,
+		1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1
 	};
 	
 	int _vertexCount = 36;
@@ -953,6 +903,47 @@ void testApp::drawIcosahedron( float _scale )
 	
 	ofGetGLES2Context()->glPopMatrix();
 }
+
+#endif 
+
+
+void testApp::checkGlError(GLenum errorCode, const char *file, const unsigned int line)
+{
+	if (errorCode != GL_NO_ERROR)
+	{
+		std::string errorString;
+		switch (errorCode) {
+			case GL_INVALID_ENUM:
+				errorString = "GL_INVALID_ENUM, enum argument out of range.";
+				break;
+			case GL_INVALID_VALUE:
+				errorString = "GL_INVALID_VALUE, numeric argument out of range";
+				break;
+			case GL_INVALID_OPERATION:
+				errorString = "GL_INVALID_OPERATION, operation illegal in current state";
+				break;
+			case GL_STACK_OVERFLOW:
+				errorString = "GL_STACK_OVERFLOW, command would cause a stack overﬂow";
+				break;
+			case GL_STACK_UNDERFLOW:
+				errorString = "GL_STACK_UNDERFLOW, command would cause a stack underﬂow";
+				break;
+			case GL_OUT_OF_MEMORY:
+				errorString = "GL_OUT_OF_MEMORY, not enough memory left to execute command";
+				break;
+			case GL_INVALID_FRAMEBUFFER_OPERATION:
+				errorString = "GL_INVALID_FRAMEBUFFER_OPERATION, framebuffer is incomplete";
+				break;
+			default:
+				errorString = "Unknown GL error";
+				break;
+		}
+		
+		cout << file << " " << line << " GL_ERROR: " << errorCode << " " << errorString << endl;
+		//LOG_DEBUG_MESSAGE(file, line, OpenGLESString("GL ERROR: ") + errorCode + " " + errorString);
+	}
+}
+
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs &touch){

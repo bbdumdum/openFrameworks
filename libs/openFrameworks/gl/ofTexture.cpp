@@ -545,20 +545,22 @@ void ofTexture::loadData(void * data, int w, int h, int glFormat){
 	//  http://www.opengl.org/discussion_boards/ubb/ultimatebb.php?ubb=get_topic;f=3;t=014770#000001
 	
 	//------------------------ likely, we are uploading continuous data
+	
+#ifndef OPENGLES_VERSION_2	
 	GLint prevAlignment;
 	glGetIntegerv(GL_UNPACK_ALIGNMENT, &prevAlignment);
+#endif
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	
 	
 	//Sosolimited: texture compression
 	if (texData.compressionType == OF_COMPRESS_NONE) {
 		//STANDARD openFrameworks: no compression
 		
 		//update the texture image: 
-		glEnable(texData.textureTarget);
-		glBindTexture(texData.textureTarget, (GLuint) texData.textureID);
- 		glTexSubImage2D(texData.textureTarget, 0, 0, 0, w, h, texData.glType, texData.pixelType, data);
-		glDisable(texData.textureTarget);
+		_ofEnable(texData.textureTarget);
+		_ofBindTexture(texData.textureTarget, (GLuint) texData.textureID);
+ 		glTexSubImage2D(texData.textureTarget, 0, 0, 0, w, h, texData.glType, texData.pixelType, data); // Andreas: had a crash here, not reproducable
+		_ofDisable(texData.textureTarget);
 	} else {
 		//SOSOLIMITED: setup mipmaps and use compression
 		//TODO: activate at least mimaps for OPENGL_ES
@@ -632,16 +634,15 @@ void ofTexture::loadData(void * data, int w, int h, int glFormat){
 				gluBuild2DMipmaps(texData.textureTarget, GL_COMPRESSED_LUMINANCE_ARB, w, h, texData.glType, texData.pixelType, data);
 		}
 #endif
-		
-		
 		glDisable(texData.textureTarget);
-		
+
 	}
 	//------------------------ back to normal.
+#ifndef OPENGLES_VERSION_2	
 	glPixelStorei(GL_UNPACK_ALIGNMENT, prevAlignment);
+#endif	
 	
 	texData.bFlipTexture = false;
-	
 }
 
 

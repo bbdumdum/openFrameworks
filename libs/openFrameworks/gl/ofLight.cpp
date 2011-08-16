@@ -20,7 +20,10 @@ void ofEnableLighting() {
 #ifndef TARGET_OPENGLES  //TODO: fix this
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 #endif
-	_ofEnable(GL_COLOR_MATERIAL);
+
+#ifndef OPENGLES_VERSION_2	
+	_ofEnable(GL_COLOR_MATERIAL); // Andreas, this is making glGetError return a "Unknown cap", needs more testing
+#endif	
 }
 
 //----------------------------------------
@@ -168,7 +171,7 @@ ofLight & ofLight::operator=(const ofLight & mom){
 }
 
 //----------------------------------------
-void ofLight::enable() {
+void ofLight::enable() {	
 	if(glIndex==-1){
 		bool bLightFound = false;
 		// search for the first free block
@@ -192,7 +195,7 @@ void ofLight::enable() {
 //----------------------------------------
 void ofLight::disable() {
 	if(glIndex!=-1) {
-		glDisable(GL_LIGHT0 + glIndex);
+		_ofDisable(GL_LIGHT0 + glIndex);
 	}
 }
 

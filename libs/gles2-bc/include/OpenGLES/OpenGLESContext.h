@@ -343,8 +343,8 @@ namespace OpenGLES {
 		virtual GLvoid * glMapBufferOES (GLenum target, GLenum access) = 0;
 		virtual GLboolean glUnmapBufferOES (GLenum target) = 0;
 		
-		virtual GLfloat* getModelViewMatrix()=0;
-		virtual GLfloat* getProjectionMatrix()=0;
+		//virtual GLfloat* getModelViewMatrix()=0;
+		//virtual GLfloat* getProjectionMatrix()=0;
 		//virtual GLfloat* getTextureMatrix(int index)=0;
 		
 		//GLuint overrideShader;

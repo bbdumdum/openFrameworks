@@ -107,10 +107,14 @@ void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMod
 	}
 #endif
 
+	
 #ifndef OPENGLES_VERSION_2
 	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLRenderer(false)));
 #else
-	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer()));
+	// Andreas: testing setting the renderer later to see ifit solves the glGetError problems,
+	// From ofAppiPhoneWindow// DO NOTHING ELSE, opengl will be setup by the app which creates an opengl view
+	
+	//ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 
 #endif
 	//Default colors etc are now in ofGraphics - ofSetupGraphicDefaults
 	//ofSetupGraphicDefaults();

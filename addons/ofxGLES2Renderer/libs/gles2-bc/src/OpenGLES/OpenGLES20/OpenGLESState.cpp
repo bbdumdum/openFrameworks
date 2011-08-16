@@ -858,7 +858,7 @@ void OpenGLESState::uploadUniforms()
 }
 
 void OpenGLESState::setCurrentProgram()
-{
+{	
 	if (OpenGLESConfig::USE_ONLY_UBER_SHADER) {
 		static bool uberShaderCompiled = false;
 		if (!uberShaderCompiled) {
@@ -911,8 +911,8 @@ void OpenGLESState::setCurrentProgram()
 		currentState[index] = val;
 		
 		index++;
-	}	
-	
+	}
+		
 	// Check if it matches to any existing state
 	int stateIndex = -1;
 	for (size_t i = 0; i < stateShaderPrograms.size(); i++)
@@ -935,6 +935,9 @@ void OpenGLESState::setCurrentProgram()
 		currentStateShaderProgram = stateShaderPrograms[stateIndex];
 	} else {
 #ifdef OPENGLES_DEBUG
+		
+		// Andreas: momentarily taking this out
+		/*
 		LOG_DEBUG_MESSAGE("State binary presentation:");
 		LOG_DEBUG_MESSAGE("Bool states: ");
 		for (unsigned int i = 0; i < stateSizeBool; i++) {
@@ -945,6 +948,7 @@ void OpenGLESState::setCurrentProgram()
 			PRINT("%x ", currentState[i]);
 		}
 		LOG_DEBUG_MESSAGE("");
+		 */
 #endif
 		
 		std::vector<ShaderSource *> vertexShaderSources;
@@ -954,6 +958,8 @@ void OpenGLESState::setCurrentProgram()
 		
 		addDefinesToShaderSources(vertexShaderSources, fragmentShaderSources);
 		
+		// Andreas: momentarily taking this out
+		/*
 		if (OpenGLESConfig::DEBUG) {
 			LOG_MESSAGE("Using shader files:");
 			for (size_t i = 0; i < vertexShaderSources.size(); i++)
@@ -966,15 +972,17 @@ void OpenGLESState::setCurrentProgram()
 				LOG_MESSAGE(fragmentShaderSources[i]->getFile()->getName());
 			}
 		}
-		
+		*/
+
 		Shader *vertexShader = new Shader(GL_VERTEX_SHADER, vertexShaderSources);
 		Shader *fragmentShader = new Shader(GL_FRAGMENT_SHADER, fragmentShaderSources);
-		
+
 		currentStateShaderProgram = new StateShaderProgram(getCopyOfCurrentState(), new ShaderProgram(OpenGLESString("Optimized Shader ") + (stateShaderPrograms.size() + 1), vertexShader, fragmentShader));
 		stateShaderPrograms.push_back(currentStateShaderProgram);
 	}
 
 	currentStateShaderProgram->shaderProgram->use();
+		
 	if (currentStateShaderProgram != oldStateShaderProgram) {
 		setActiveUniformLocations(currentStateShaderProgram->shaderProgram->getActiveUniforms());
 		setActiveAttributeLocations(currentStateShaderProgram->shaderProgram->getActiveAttributes());

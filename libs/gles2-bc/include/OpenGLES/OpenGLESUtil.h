@@ -38,6 +38,7 @@
 #include <string>
 #include <stdio.h>
 #include <stdarg.h>
+#include <iostream>
 
 namespace OpenGLES {
 	
@@ -47,7 +48,8 @@ namespace OpenGLES {
 		static void logMessage(const char *file, int line, OpenGLESString msg);
 		static void logMessage(OpenGLESString msg);
 		static void print( const char* format, ... );
-		static void printBits(int val);
+		static void printBits(int val);		
+		static std::string enumToString(GLenum _enum);		
 	};
 	
 }

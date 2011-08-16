@@ -68,9 +68,10 @@ public:
 	void touchUp(ofTouchEventArgs &touch);
 	void touchDoubleTap(ofTouchEventArgs &touch);
 
+	void checkGlError(GLenum errorCode, const char *file, const unsigned int line);
+	
 	ofFbo screenFBO;	
 	
-	//ofFbo testFBO;
 	ofShader testShader;
 	
 	ofMesh testMesh;

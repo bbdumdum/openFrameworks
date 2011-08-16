@@ -53,7 +53,7 @@ void OpenGLESUtil::checkGlError(GLenum errorCode, const char *file, const unsign
 				break;
 		}
 		
-		LOG_DEBUG_MESSAGE(file, line, OpenGLESString("GL ERROR: ") + errorCode + errorString);
+		LOG_DEBUG_MESSAGE(file, line, OpenGLESString("GL ERROR: ") + errorCode + " " + errorString);
 	}
 }
 
@@ -102,3 +102,50 @@ void OpenGLESUtil::printBits(int val)
 #endif
 	}
 }
+std::string OpenGLESUtil::enumToString(GLenum _enum)
+{
+	std::string stringRep = "UNKNOWN";
+
+	switch (_enum) {
+		case GL_ZERO:
+			stringRep = "GL_ZERO";
+			break;
+		case GL_ONE:
+			stringRep = "GL_ONE";
+			break;
+		case GL_SRC_COLOR:
+			stringRep = "GL_SRC_COLOR";
+			break;
+		case GL_ONE_MINUS_SRC_COLOR:
+			stringRep = "GL_ONE_MINUS_SRC_COLOR";
+			break;
+		case GL_SRC_ALPHA:
+			stringRep = "GL_SRC_ALPHA";
+			break;
+		case GL_ONE_MINUS_SRC_ALPHA:
+			stringRep = "GL_ONE_MINUS_SRC_ALPHA";
+			break;
+		case GL_DST_ALPHA:
+			stringRep = "GL_DST_ALPHA";
+			break;
+		case GL_ONE_MINUS_DST_ALPHA:
+			stringRep = "GL_ONE_MINUS_DST_ALPHA";
+			break;
+		case GL_DST_COLOR:
+			stringRep = "GL_DST_COLOR";
+			break;
+		case GL_ONE_MINUS_DST_COLOR:
+			stringRep = "GL_ONE_MINUS_DST_COLOR";
+			break;	
+		case GL_SRC_ALPHA_SATURATE:
+			stringRep = "GL_SRC_ALPHA_SATURATE";
+			break;				
+		default:
+			
+			break;
+	}
+	
+	return stringRep;
+}
+
+

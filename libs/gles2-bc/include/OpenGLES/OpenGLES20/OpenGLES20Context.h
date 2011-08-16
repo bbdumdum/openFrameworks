@@ -286,8 +286,8 @@ namespace OpenGLES {
 			// Non-API
 			int getCachedShaderAmount();
 			
-			GLfloat* getModelViewMatrix();
-			GLfloat* getProjectionMatrix();			
+			//GLfloat* getModelViewMatrix();
+			//GLfloat* getProjectionMatrix();			
 			
 			void setSendDefaultsToCustomShaders(bool send);
 
@@ -299,11 +299,8 @@ namespace OpenGLES {
 			GLuint shaderProgramId;
 			
 			void prepareToDraw();
-
 			bool sendDefaultsToCustomShaders;
 		};
-		
 	}
 }
-
-#endif
+#endif //OpenGLES2Context_H_

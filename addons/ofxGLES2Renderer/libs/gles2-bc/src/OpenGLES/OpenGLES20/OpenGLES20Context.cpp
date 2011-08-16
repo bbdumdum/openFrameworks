@@ -14,6 +14,12 @@
  limitations under the License.
  */
 
+#include "OpenGLES20Context.h"
+#include "ShaderProgram.h"
+#include "OpenGLESUtil.h"
+#include "OpenGLES20Implementation.h"
+#include "OpenGLESConfig.h"
+
 #ifndef __ANDROID__
 	#include <OpenGLES/ES2/gl.h>
 	#include <OpenGLES/ES2/glext.h>
@@ -21,11 +27,9 @@
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
 #endif
-#include "OpenGLES20Context.h"
-#include "ShaderProgram.h"
-#include "OpenGLESUtil.h"
-#include "OpenGLES20Implementation.h"
-#include "OpenGLESConfig.h"
+
+#include <iostream>
+using namespace std;
 
 using namespace OpenGLES::OpenGLES2;
 
@@ -66,13 +70,20 @@ void OpenGLES20Context::glBindTexture (GLenum target, GLuint texture)
 {
 	openGLESState.setBoundTexture(texture);
 	openGLESState.setTextureFormat();
-	::glBindTexture(target, texture);
+	::glBindTexture(target, texture); // Andreas: XCode4 reckons this function lives in ES1/gl.h could this be a problem? Can't find where it might be including it so far
+	
+	//std::cout << "glBindTexture target: " << target << " texture: " << texture << std::endl;
+	
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES20Context::glBlendFunc (GLenum sfactor, GLenum dfactor)
 {
+	//std::cout << sfactor << ", " << dfactor << std::endl;
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+		
 	::glBlendFunc(sfactor, dfactor);
+	
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
@@ -277,7 +288,7 @@ void OpenGLES20Context::glDisableClientState (GLenum array)
 }
 
 void OpenGLES20Context::prepareToDraw()
-{
+{	
 	Matrix4x4<GLfloat> *modelViewMatrix = matrixStack.getModelViewMatrix();
 	openGLESState.setModelViewMatrix(*modelViewMatrix);
 	Matrix4x4<GLfloat> *projectionMatrix = matrixStack.getProjectionMatrix();
@@ -1961,21 +1972,4 @@ GLboolean OpenGLES20Context::glUnmapBufferOES (GLenum target)
 int OpenGLES20Context::getCachedShaderAmount()
 {
 	return openGLESState.getCachedShaderAmount();
-}
-
-
-// Andreas: We need accessors to these matrices
-
-GLfloat* OpenGLES20Context::getModelViewMatrix(){
-	
-	Matrix4x4<GLfloat>* modelView = matrixStack.getModelViewMatrix();
-	for( int i = 0; i < 16; i++ ) { tmpModelViewMatrix[i] = modelView->m[i]; }
-	return tmpModelViewMatrix;	
-}
-
-GLfloat* OpenGLES20Context::getProjectionMatrix(){
-
-	Matrix4x4<GLfloat>* projection = matrixStack.getProjectionMatrix();
-	for( int i = 0; i < 16; i++ ) { tmpProjectionMatrix[i] = projection->m[i]; }	
-	return tmpProjectionMatrix;
 }

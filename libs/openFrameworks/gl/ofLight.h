@@ -15,7 +15,15 @@
 #include "ofNode.h"
 #include "ofColor.h"
 
-#define OF_MAX_LIGHTS		8		// max number of lights allowed by default opengl
+#ifndef OPENGLES_VERSION_2
+	#define OF_MAX_LIGHTS		8		// max number of lights allowed by default opengl
+#else
+	// http://code.google.com/p/gles2-bc/   Known limitations: "Maximum of 3 simultaneous lights are supported"
+	// This of course only refers to the lights gles2-bc can support while emulating the fixed function pipeline
+	#define OF_MAX_LIGHTS		3		
+#endif
+
+
 
 enum ofLightType {
 	OF_LIGHT_POINT,

@@ -1290,7 +1290,7 @@ void ofGLES2Renderer::setLightingModel( unsigned int model ){
 	
 	if( model == GL_SMOOTH ) 
 	{ 
-		gl->glShadeModel( GL_SMOOTH );
+		//gl->glShadeModel( GL_SMOOTH );
 		
 		// http://code.google.com/p/gles2-bc/ glHint(GL_LIGHTING_HINT, GL_NICEST) uses per-fragment lighting if using an OpenGL ES 2.0 context	
 		gl->glHint(GL_LIGHTING_HINT, GL_NICEST); 
@@ -1299,7 +1299,9 @@ void ofGLES2Renderer::setLightingModel( unsigned int model ){
 	{
 		// From http://www.johannesvuorinen.com/stuff/cost_efficient_development_with_various_opengles_apis_-_Johannes_Vuorinen.pdf
 		// "Flat shading is hard to implement efﬁciently in OpenGL ES 2.0. OpenGL ES 2.0 does not have an option to not interpolate varyings so the faces get always smooth shaded."
-		gl->glShadeModel( GL_FLAT ); 
+		//gl->glShadeModel( GL_FLAT ); 
+		
+		gl->glHint(GL_LIGHTING_HINT, GL_FASTEST ); 
 	}
 	
 }

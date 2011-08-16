@@ -35,8 +35,15 @@
 
 #import "EAGLView.h"
 
-#import "ES1Renderer.h"
-#import "ES2Renderer.h"
+
+// Andreas: I'm trying out severing any references to ES1/gl.h in ES2 mode
+#ifdef OPENGLES_VERSION_2 
+	#import "ES2Renderer.h"
+#else
+	#import "ES1Renderer.h"
+#endif
+
+
 
 @implementation EAGLView
 
@@ -77,18 +84,26 @@
 		#ifdef OPENGLES_VERSION_2
 			// TODO: add initSettings to override ES2Renderer even if available
 			renderer = [[ES2Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
+		
+		#else
+            renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
 		#endif
 		
-        if (!renderer) {
-            renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
-			
+        //if (!renderer) {
+
             if (!renderer) {
 				[self release];
 				return nil;
 			}
-        }
+        //}
 		
-		[[self context] renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+		#ifdef OPENGLES_VERSION_2
+			[[self context] renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
+		#else
+			[[self context] renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+		#endif
+		
+
 		
 		
 		self.multipleTouchEnabled = true;

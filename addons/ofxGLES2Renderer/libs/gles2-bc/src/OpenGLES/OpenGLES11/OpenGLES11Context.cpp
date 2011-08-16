@@ -1510,20 +1510,3 @@ GLboolean OpenGLES11Context::glUnmapBufferOES (GLenum target)
 	return 0;
 #endif
 }
-
-// Andreas: We need accessors to these matrices
-
-GLfloat* OpenGLES11Context::getModelViewMatrix(){
-	
-	glGetFloatv( GL_MODELVIEW_MATRIX, tmpModelViewMatrix );
-	return tmpModelViewMatrix;
-	
-}
-
-GLfloat* OpenGLES11Context::getProjectionMatrix(){
-	glGetFloatv( GL_PROJECTION_MATRIX, tmpProjectionMatrix );	
-	return tmpProjectionMatrix;
-}
-
-//GLfloat tmpModelViewMatrix[16];
-//GLfloat tmpProjectionMatrix[16];

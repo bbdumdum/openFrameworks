@@ -39,6 +39,30 @@ OpenGLES20Implementation::~OpenGLES20Implementation()
 
 void OpenGLES20Implementation::init() 
 {	
+	
+	// Initialising these variables as otherwise they will be pointing 
+	// randomly into memory if glGetIntegerv fails for whatever reason
+	// http://stackoverflow.com/questions/6594214/glgetintegerv-returning-garbage-value
+	colorReadFormat 				= -1;
+	colorReadType					= -1;
+	maxCombinedTextureImageUnits 	= -1;
+	maxCubeMapTextureSize 			= -1;
+	maxFragmentUniformVectors 		= -1;
+	maxRenderBufferSize 			= -1;
+	maxTextureImageUnits 			=  3; // this value is used later to initialise a matrix stack, will crash is it is < 0
+	maxTextureSize 					= -1;
+	maxVaryingVectors 				= -1;
+	maxVertexAttribs 				= -1;
+	maxVertexTextureImageUnits 		= -1;
+	maxVertexUniformVectors 		= -1;
+	maxViewportDims[0] 				= -1;
+	maxViewportDims[1] 				= -1;	
+	numCompressedTextureFormats 	= -1;
+	numShaderBinaryFormats 			= -1;
+	shaderCompilerSupported 		= false;
+	depthBits 						= -1;
+	stencilBits 					= -1;	
+	
 	glGetIntegerv(GL_IMPLEMENTATION_COLOR_READ_FORMAT, &colorReadFormat);
 	glGetIntegerv(GL_IMPLEMENTATION_COLOR_READ_TYPE, &colorReadType);
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxCombinedTextureImageUnits);
@@ -61,7 +85,7 @@ void OpenGLES20Implementation::init()
 	shaderBinaryFormats = (int *)malloc(sizeof(int) * numShaderBinaryFormats);
 	glGetIntegerv(GL_SHADER_BINARY_FORMATS, shaderBinaryFormats);
 	
-	unsigned char tmp;
+	unsigned char tmp = 0;
 	glGetBooleanv(GL_SHADER_COMPILER, &tmp);
 	shaderCompilerSupported = tmp == 0;
 	

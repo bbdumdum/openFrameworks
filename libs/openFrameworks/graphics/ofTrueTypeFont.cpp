@@ -783,21 +783,19 @@ void ofTrueTypeFont::bind(){
 		#ifndef TARGET_OPENGLES
 			glPushAttrib(GL_COLOR_BUFFER_BIT);
 		#else
-			blend_enabled = glIsEnabled(GL_BLEND);
-			texture_2d_enabled = glIsEnabled(GL_TEXTURE_2D);
+
+			#ifndef OPENGLES_VERSION_2
+				blend_enabled = glIsEnabled(GL_BLEND);
+				texture_2d_enabled = glIsEnabled(GL_TEXTURE_2D); // Andreas, this makes glGetError() return GL_INVALID_ENUM in ES2 mode
+			#endif
 		
-			glGetIntegerv( GL_BLEND_SRC, &blend_src );
-			glGetIntegerv( GL_BLEND_DST, &blend_dst );
 		#endif
 
 		savedBlendingMode = ofGetStyle().blendingMode;
 		
 	    // (b) enable our regular ALPHA blending!
-	    _ofEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//ofGetCurrentRenderer()->setBlendMode( OF_BLENDMODE_ALPHA );
 		ofEnableBlendMode( OF_BLENDMODE_ALPHA );
-		
+
 		texAtlas.bind();
 		stringQuads.clear();
 		binded = true;
@@ -821,7 +819,6 @@ void ofTrueTypeFont::unbind(){
 			if( !texture_2d_enabled )
 				_ofDisable(GL_TEXTURE_2D);
 			
-			//glBlendFunc( blend_src, blend_dst ); 
 		#endif
 		
 		binded = false;

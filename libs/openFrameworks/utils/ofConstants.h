@@ -26,7 +26,6 @@ enum ofLoopType{
 		#define TARGET_OF_IPHONE
 		#define TARGET_OPENGLES
 	
-		// Andreas: this is not ideal, need a better solution for choosing between GL-ES 1.1 and 2.0 
 		#define OPENGLES_VERSION_2		
 		
 	#else
@@ -169,7 +168,7 @@ enum ofLoopType{
 #endif
 
 #ifdef OPENGLES_VERSION_2
-	#include "OpenGLES/OpenGLESDefines.h"
+	//#include "OpenGLES/OpenGLESDefines.h"
 #endif
 
 

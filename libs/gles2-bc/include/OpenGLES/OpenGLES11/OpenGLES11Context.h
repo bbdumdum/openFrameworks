@@ -279,8 +279,8 @@ namespace OpenGLES {
 			GLvoid * glMapBufferOES (GLenum target, GLenum access);
 			GLboolean glUnmapBufferOES (GLenum target);
 			
-			GLfloat* getModelViewMatrix();
-			GLfloat* getProjectionMatrix();
+			//GLfloat* getModelViewMatrix();
+			//GLfloat* getProjectionMatrix();
 			
 		private:
 			
