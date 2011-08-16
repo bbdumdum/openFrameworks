@@ -111,10 +111,20 @@ void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMod
 #ifndef OPENGLES_VERSION_2
 	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLRenderer(false)));
 #else
-	// Andreas: testing setting the renderer later to see ifit solves the glGetError problems,
-	// From ofAppiPhoneWindow// DO NOTHING ELSE, opengl will be setup by the app which creates an opengl view
 	
-	//ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 
+	#ifdef TARGET_OF_IPHONE
+		
+		// Andreas: On iPhone we do not have an OpenGL context still at this point,
+		// from ofAppiPhoneWindow "DO NOTHING ELSE, opengl will be setup by the app which creates an opengl view"
+		// In ES2 mode we are now setting it in EAGLView.mm, avoids a warning about a memory leak
+	
+		// ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 
+	
+	#else
+		ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 	
+	#endif
+	
+
 #endif
 	//Default colors etc are now in ofGraphics - ofSetupGraphicDefaults
 	//ofSetupGraphicDefaults();

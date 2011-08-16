@@ -284,11 +284,8 @@ namespace OpenGLES {
 			GLboolean glUnmapBufferOES (GLenum target);
 			
 			// Non-API
-			int getCachedShaderAmount();
-			
-			//GLfloat* getModelViewMatrix();
-			//GLfloat* getProjectionMatrix();			
-			
+			int getCachedShaderAmount();	
+				
 			void setSendDefaultsToCustomShaders(bool send);
 
 			OpenGLESState openGLESState;

@@ -14,11 +14,8 @@ void testApp::setup()
 	overrideGLVersion = 1;
 #endif	
 
-	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer(overrideGLVersion)));
-	
-	/*gles2Renderer = ofPtr<ofGLES2Renderer>( new ofGLES2Renderer(overrideGLVersion) );
-	ofSetCurrentRenderer( gles2Renderer );	*/
-	
+	//ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer(overrideGLVersion)));
+		
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
 	
 	//ipad doesn't need no scale ;) 
@@ -240,7 +237,7 @@ void testApp::drawScene()
 	
 	ofDisableAlphaBlending();
 		
-//	_ofEnable( GL_DEPTH_TEST );
+	_ofEnable( GL_DEPTH_TEST );
 //	_ofEnable( GL_NORMALIZE );	
 	
 	ofSetColor(255,255,255, 255);	
@@ -256,7 +253,7 @@ void testApp::drawScene()
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
-	/*
+	
 	ofPushMatrix();
 	
 		ofTranslate(800.0f, ofGetHeight() / 2.0f, 00.f);
@@ -270,7 +267,7 @@ void testApp::drawScene()
 		//drawIcosahedron( 120.0f );
 	
 	ofPopMatrix();
-	*/ 
+	
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
@@ -288,7 +285,7 @@ void testApp::drawScene()
 	//	if(bSpotLight) spotLight.draw();
 	
 //	_ofDisable( GL_CULL_FACE );
-//	_ofDisable( GL_DEPTH_TEST );
+	_ofDisable( GL_DEPTH_TEST );
 	
 	
 	ofEnableAlphaBlending();	

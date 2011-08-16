@@ -104,7 +104,10 @@
 		#endif
 		
 
-		
+
+#ifdef OPENGLES_VERSION_2
+		ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 
+#endif
 		
 		self.multipleTouchEnabled = true;
 		self.opaque = true;
