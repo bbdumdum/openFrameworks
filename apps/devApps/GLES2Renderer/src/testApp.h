@@ -4,7 +4,7 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 
-//#include "ofxAssimpModelLoader.h"
+#include "ofxAssimpModelLoader.h"
 
 #include "ofGLES2Renderer.h"
 

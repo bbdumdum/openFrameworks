@@ -39,6 +39,7 @@
 		BD9E129813F4507C0001B4F1 /* OpenGLESUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128213F4507C0001B4F1 /* OpenGLESUtil.cpp */; };
 		BD9E129913F4507C0001B4F1 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128413F4507C0001B4F1 /* ofGLES2Renderer.cpp */; };
 		CB836CCB13DC376C003E8700 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */; };
+		CB955CA513FB125B002929B5 /* ShaderBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB955CA313FB125B002929B5 /* ShaderBlur.cpp */; };
 		CBB7773C13F556220014274B /* alphaTest.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772713F556220014274B /* alphaTest.frag */; };
 		CBB7773D13F556220014274B /* clipPlane.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772813F556220014274B /* clipPlane.frag */; };
 		CBB7773E13F556220014274B /* clipPlane.vert in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772913F556220014274B /* clipPlane.vert */; };
@@ -169,6 +170,8 @@
 		CB836CC813DC376C003E8700 /* ofxAssimpMeshHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpMeshHelper.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.h; sourceTree = "<group>"; };
 		CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxAssimpModelLoader.cpp; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.cpp; sourceTree = "<group>"; };
 		CB836CCA13DC376C003E8700 /* ofxAssimpModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpModelLoader.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.h; sourceTree = "<group>"; };
+		CB955CA313FB125B002929B5 /* ShaderBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderBlur.cpp; sourceTree = "<group>"; };
+		CB955CA413FB125B002929B5 /* ShaderBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderBlur.h; sourceTree = "<group>"; };
 		CBB7772713F556220014274B /* alphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = alphaTest.frag; sourceTree = "<group>"; };
 		CBB7772813F556220014274B /* clipPlane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.frag; sourceTree = "<group>"; };
 		CBB7772913F556220014274B /* clipPlane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.vert; sourceTree = "<group>"; };
@@ -490,6 +493,15 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		CB955CA113FB125B002929B5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CB955CA313FB125B002929B5 /* ShaderBlur.cpp */,
+				CB955CA413FB125B002929B5 /* ShaderBlur.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		CBB7772613F556220014274B /* shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +542,7 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CB955CA113FB125B002929B5 /* Utils */,
 				CB3F08BF13E96EEC0093CE64 /* Math */,
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
@@ -700,6 +713,7 @@
 				CBB7774E13F556220014274B /* texture1.vert in Sources */,
 				CBB7774F13F556220014274B /* texture2.frag in Sources */,
 				CBB7775013F556220014274B /* texture2.vert in Sources */,
+				CB955CA513FB125B002929B5 /* ShaderBlur.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

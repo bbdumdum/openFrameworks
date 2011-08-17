@@ -8,20 +8,21 @@ void testApp::setup()
 	
 	//ofSetLogLevel( OF_LOG_NOTICE );
 	ofSetLogLevel( OF_LOG_VERBOSE );
-		
+	
+	/*
 	int overrideGLVersion = 2;
 #ifndef OPENGLES_VERSION_2
 	overrideGLVersion = 1;
 #endif	
-
-	//ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer(overrideGLVersion)));
-		
+	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer(overrideGLVersion)));
+	*/	
+	 
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
 	
 	//ipad doesn't need no scale ;) 
 	appIphoneScale = 1.0;
 
-	ofBackground(200,200,200);	
+	ofBackground(220,220,220);	
 	ofSetFrameRate(60);
 	
 	ofSetCircleResolution( 50 );
@@ -132,7 +133,7 @@ void testApp::setup()
 	
 	ofFbo::Settings tmpScreenFBOSettings = ofFbo::Settings(); 
 	tmpScreenFBOSettings.width  = 1024;
-	tmpScreenFBOSettings.height = 1024;	// Andreas: For now FBO dimensions have to be a power of two, investigating
+	tmpScreenFBOSettings.height = 768;	// Andreas: For now FBO dimensions have to be a power of two, investigating
 	tmpScreenFBOSettings.useDepth = true;
 	tmpScreenFBOSettings.useStencil = false;
 	tmpScreenFBOSettings.internalformat = GL_RGB;
@@ -201,12 +202,13 @@ void testApp::draw()
 
 	ofSetColor(255,255,255, 255);
 
+	//cout << screenFBO.getWidth() << ", " << screenFBO.getHeight() << endl;
 	
 	testShader.begin();
 	testShader.setUniform1f("u_time", ofGetElapsedTimef() );
 		ofPushMatrix();
 			ofRotate( 90.0f );
-			screenFBO.draw(0.0f, -768, 1024, 1024 ); // this is completely wrong, 1024 in height, have a look at this.. (It's to do with FBOs only working on power of two sizes with depth)
+			screenFBO.draw(0.0f,-768.0f, 1024, 768 );
 		ofPopMatrix(); 
 	testShader.end();
 	
@@ -217,6 +219,10 @@ void testApp::draw()
 void testApp::drawScene()
 {
 	ofFill();	
+	
+	ofSetColor(150,150,150, 255);	
+	ofLine( 0.0f, 0.0f, 1024.0f, 768.0f );
+	
 	ofSetColor(255,0,255, 255);
 	
 	ofEnableAlphaBlending();

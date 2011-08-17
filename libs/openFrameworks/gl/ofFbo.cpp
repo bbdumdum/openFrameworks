@@ -399,30 +399,7 @@ void ofFbo::allocate(Settings _settings) {
 	bind();
 
 		
-	// If we want both a depth AND a stencil buffer tehn combine them into a single buffer
-#ifndef TARGET_OPENGLES
-	if( settings.useDepth && settings.useStencil )
-	{
-		stencilBuffer = depthBuffer = createAndAttachRenderbuffer(GL_DEPTH_STENCIL, GL_DEPTH_STENCIL_ATTACHMENT);
-		retainRB(depthBuffer);
-		retainRB(stencilBuffer);
-	}else
-#endif
-	{
-				
-		// if we want a depth buffer, create it, and attach to our main fbo
-		if(settings.useDepth){
-			depthBuffer = createAndAttachRenderbuffer( GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT);
-			retainRB(depthBuffer);
-		}
-
-		// if we want a stencil buffer, create it, and attach to our main fbo
-		if(settings.useStencil){
-			stencilBuffer = createAndAttachRenderbuffer(GL_STENCIL_INDEX, GL_STENCIL_ATTACHMENT);
-			retainRB(stencilBuffer);
-		}
-		
-	}
+	
 	// if we want MSAA, create a new fbo for textures
 #ifndef TARGET_OPENGLES
 	if(settings.numSamples){
@@ -437,13 +414,41 @@ void ofFbo::allocate(Settings _settings) {
 		ofLog(OF_LOG_WARNING,"ofFbo: multisampling not supported in opengles");
 	}
 #endif
+	
 	// now create all textures and color buffers
 	for(int i=0; i<settings.numColorbuffers; i++) createAndAttachTexture(i);
-
+	
 	// if textures are attached to a different fbo (e.g. if using MSAA) check it's status
 	if(fbo != fboTextures) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fboTextures);
+	}	
+	
+	// We want to make sure we request renderbuffers of the same size as the render texture, so get the data for that 	
+	ofTextureData texData = textures.at(0).getTextureData(); 
+	
+	// If we want both a depth AND a stencil buffer tehn combine them into a single buffer
+#ifndef TARGET_OPENGLES
+	if( settings.useDepth && settings.useStencil )
+	{
+		stencilBuffer = depthBuffer = createAndAttachRenderbuffer(GL_DEPTH_STENCIL, GL_DEPTH_STENCIL_ATTACHMENT, texData.tex_w, texData.tex_h );
+		retainRB(depthBuffer);
+		retainRB(stencilBuffer);
+	}else
+#endif
+	{
+		// if we want a depth buffer, create it, and attach to our main fbo
+		if(settings.useDepth){
+			depthBuffer = createAndAttachRenderbuffer( GL_DEPTH_COMPONENT, GL_DEPTH_ATTACHMENT, texData.tex_w, texData.tex_h );
+			retainRB(depthBuffer);
+		}
+
+		// if we want a stencil buffer, create it, and attach to our main fbo
+		if(settings.useStencil){
+			stencilBuffer = createAndAttachRenderbuffer(GL_STENCIL_INDEX, GL_STENCIL_ATTACHMENT, texData.tex_w, texData.tex_h );
+			retainRB(stencilBuffer);
+		}
 	}
+	
 
 	// check everything is ok with this fbo
 	checkStatus();
@@ -496,15 +501,19 @@ void ofFbo::allocateForShadow( int width, int height )
 	glBindFramebuffer( GL_FRAMEBUFFER, old );
 }*/
 
-GLuint ofFbo::createAndAttachRenderbuffer(GLenum internalFormat, GLenum attachmentPoint) {
+GLuint ofFbo::createAndAttachRenderbuffer(GLenum internalFormat, GLenum attachmentPoint, int width, int height ) {
+
+	if ( width == 0 )  width = settings.width;
+	if ( height == 0 ) height = settings.height;	
+	
 	GLuint buffer;
 	glGenRenderbuffers(1, &buffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, buffer);
 #ifndef TARGET_OPENGLES
-	if(settings.numSamples==0) glRenderbufferStorage(GL_RENDERBUFFER, internalFormat, settings.width, settings.height);
-	else glRenderbufferStorageMultisample(GL_RENDERBUFFER, settings.numSamples, internalFormat, settings.width, settings.height);
+	if(settings.numSamples==0) glRenderbufferStorage(GL_RENDERBUFFER, internalFormat, width, height);
+	else glRenderbufferStorageMultisample(GL_RENDERBUFFER, settings.numSamples, internalFormat, width, height);
 #else
-	glRenderbufferStorage(GL_RENDERBUFFER, internalFormat, settings.width, settings.height);
+	glRenderbufferStorage(GL_RENDERBUFFER, internalFormat, width, height);
 #endif
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, attachmentPoint, GL_RENDERBUFFER, buffer);
 	return buffer;
@@ -523,7 +532,16 @@ void ofFbo::createAndAttachTexture(GLenum attachmentPoint) {
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachmentPoint, tex.texData.textureTarget, tex.texData.textureID, 0);
 	textures.push_back(tex);
 
-
+	ofTextureData texData = tex.getTextureData();
+	
+	ofLogNotice() << "----------------------------------------";	
+	ofLogNotice() << "Requested dimensions: " << settings.width << ", " << settings.height;	
+	ofLogNotice() << "Texture dimensions:   " << texData.tex_w << ", " << texData.tex_h;
+	ofLogNotice() << "Texture t, u:   " << texData.tex_t << ", " << texData.tex_u;	
+	ofLogNotice() << "Texture width height:   " << texData.width << ", " << texData.height;	
+	
+	ofLogNotice() << "----------------------------------------";	
+	
 	// if MSAA, bind main fbo and attach renderbuffer
 	if(settings.numSamples) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);

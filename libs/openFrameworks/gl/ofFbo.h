@@ -101,7 +101,7 @@ private:
 	
 	bool checkStatus();
 	void createAndAttachTexture(GLenum attachmentPoint);
-	GLuint createAndAttachRenderbuffer(GLenum internalFormat, GLenum attachmentPoint);
+	GLuint createAndAttachRenderbuffer(GLenum internalFormat, GLenum attachmentPoint, int width = 0, int height = 0);
 
 	// if using MSAA, we will have rendered into a colorbuffer, not directly into the texture
 	// call this to blit from the colorbuffer into the texture so we can use the results for rendering, or input to a shader etc.
