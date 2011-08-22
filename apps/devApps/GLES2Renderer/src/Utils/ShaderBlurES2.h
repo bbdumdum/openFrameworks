@@ -15,12 +15,14 @@
 
 #include "ofMain.h"
 
-class ShaderBlur
+#if !defined (TARGET_OPENGLES) || defined (OPENGLES_VERSION_2)
+
+class ShaderBlurES2
 {
 	public:
 	
-		ShaderBlur();
-		~ShaderBlur();
+		ShaderBlurES2();
+		~ShaderBlurES2();
 	
 		void setup(int fboW, int fboH);
 		
@@ -47,3 +49,5 @@ class ShaderBlur
 	
 		ofColor clearColor;
 };
+
+#endif 

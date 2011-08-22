@@ -70,19 +70,24 @@ void testApp::setup()
 	pointLight.setPosition( 0.0f, 10.0f, 0.0f );	
 	pointLight.setPointLight();
 	
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
-	spotLight.setDiffuseColor( ofColor(255, 0, 0) );
-	spotLight.setSpecularColor( ofColor(255, 255, 255) );
-	spotLight.setSpotlight(40, 6);
+//	spotLight.setDiffuseColor( ofColor(255, 0, 0) );
+//	spotLight.setSpecularColor( ofColor(255, 255, 255) );
+//	spotLight.setSpotlight(40, 6);
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
 	directionalLight.setDiffuseColor( ofColor(0, 0, 255) );
 	directionalLight.setSpecularColor( ofColor(255, 255, 255) );
 	directionalLight.setDirectional();
 	directionalLight.setOrientation( ofVec3f(0, 90, 0) );	
 	
-	material.setSpecularColor(ofColor(255, 255, 255, 255));	
-	material.setShininess( 120 );
-	 
+//	material.setSpecularColor(ofColor(255, 255, 255, 255));	
+//	material.setShininess( 120 );
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
 	ofSetSmoothLighting(true);
 	
 	bPointLight = bSpotLight = bDirLight = true;
@@ -91,29 +96,30 @@ void testApp::setup()
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
-	/*
-	 // we need GL_TEXTURE_2D for our models coords.
-	 ofDisableArbTex();
-	 
-	 if(model.loadModel("astroBoy_walk.dae",true))
-	 {
-		 model.setAnimation(0);
-		 model.setPosition(ofGetWidth()/2, (float)ofGetHeight() * 0.75 , 0);
-		 //model.createLightsFromAiModel();
-		 //model.disableTextures();
-		 //model.disableMaterials();
-		 
-		 mesh = model.getMesh(0);
-		 position = model.getPosition();
-		 normScale = model.getNormalizedScale();
-		 scale = model.getScale();
-		 sceneCenter = model.getSceneCenter();
-		 material = model.getMaterialForMesh(0);
-		 tex = model.getTextureForMesh(0);
-	 }
-	 
+	
+	// we need GL_TEXTURE_2D for our models coords.
+	ofDisableArbTex();
+ 
+	string modelPath = "astroBoy_walk.dae";
+	//string modelPath = "teapot-530verts.dae";	
+    if(model.loadModel(modelPath,true)){
+    	model.setAnimation(0);
+    	model.setPosition(ofGetWidth()/2, (float)ofGetHeight() * 0.75 , 0);
+    	//model.createLightsFromAiModel();
+    	//model.disableTextures();
+    	//model.disableMaterials();
+		
+    	mesh = model.getMesh(0);
+    	position = model.getPosition();
+    	normScale = model.getNormalizedScale();
+    	scale = model.getScale();
+    	sceneCenter = model.getSceneCenter();
+    	material = model.getMaterialForMesh(0);
+        tex = model.getTextureForMesh(0);
+    }
+
 	 ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-	 */
+	animationTime = 0.0f;
 	 
 	 //some model / light stuff
 	 //glShadeModel(GL_SMOOTH);
@@ -143,12 +149,56 @@ void testApp::setup()
 	 
 	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
+#ifdef OPENGLES_VERSION_2	
+
 	testShader.load("shaders/TestShader");
 	
+	shaderBlur.setup( 1024, 768 );
+	shaderBlur.clearColor.set( 100, 100, 100, 255);
+
+
+
+#endif	
 	mouseX = 400;
 	mouseY = 400;	
 	
 	counter = 0;
+	total = 0;
+	
+	restLength = 3.0;
+	space      = 4;
+	
+	center.x   = ((GRID_WIDTH-1)  * space) / 2;
+	center.y   = ((GRID_HEIGHT-1) * space) / 2;
+	
+	for (int i=0; i<GRID_WIDTH; i++) {
+		for (int j=0; j<GRID_HEIGHT; j++) {
+			
+			int x	  = (i * space) - center.x;
+			int y     = 0;
+			int z     = (j * space) - center.y;
+			int index = (j*GRID_WIDTH+i) * LENGTH;
+			
+			// now we are at each line
+			for (int k=0; k<LENGTH; k++) {
+				y = ofMap(k, 0, LENGTH, 0, 50);
+				pos[index + k].set( x, y, z );
+				
+				float tmpFrac = k / ((float)LENGTH-1);
+				col[index + k].set( tmpFrac, tmpFrac, tmpFrac );
+				
+				norm[index + k].set( 0.0f, 1.0f, 0.0f);
+			}
+		}
+	}
+	
+	total = GRID_WIDTH*GRID_HEIGHT*LENGTH;
+	vbo.setVertexData(pos, total, GL_DYNAMIC_DRAW);	
+	vbo.setColorData(col, total, GL_DYNAMIC_DRAW);		
+	//vbo.setNormalData(norm, total, GL_DYNAMIC_DRAW);			
+	
+//	initVBOTest2();
+	//vboMode = 1;
 	
 	//string extensions = (char*)glGetString(GL_EXTENSIONS);
 	//ofLog(OF_LOG_VERBOSE,extensions);
@@ -160,7 +210,9 @@ void testApp::setup()
 	//ofLog(OF_LOG_VERBOSE,glslVersion);
 	
 	
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
 }
+
 
 //	{ GLenum tmpError = glGetError(); if( tmpError != GL_NO_ERROR ) { cout << "GL Error: " << tmpError << " in " << __FILE__ << " at line: " << __LINE__ << endl;} }
 
@@ -194,15 +246,14 @@ void testApp::draw()
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );
 
-	
+/*	
+ 	// 
 	screenFBO.begin();		
 		ofClear( 100.0f, 100.0f, 100.0f, 255.0f );	
-		drawScene();
+		drawSceneSimple();
 	screenFBO.end();	
 
 	ofSetColor(255,255,255, 255);
-
-	//cout << screenFBO.getWidth() << ", " << screenFBO.getHeight() << endl;
 	
 	testShader.begin();
 	testShader.setUniform1f("u_time", ofGetElapsedTimef() );
@@ -211,12 +262,145 @@ void testApp::draw()
 			screenFBO.draw(0.0f,-768.0f, 1024, 768 );
 		ofPopMatrix(); 
 	testShader.end();
+*/
 	
+/*	
+	shaderBlur.beginRender();
+		drawSceneSimple();
+		//drawSceneModel();
+		//drawSceneVBO();
+	shaderBlur.endRender();	
+	shaderBlur.performBlur();
+	
+	ofSetColor(255,255,255, 255);	
+	ofPushMatrix();
+		ofRotate( 90.0f );
+		shaderBlur.draw(0.0f,-768.0f, 1024, 768 );
+	ofPopMatrix();	
+*/	
+	
+	
+	//drawSceneSimple();
+	drawSceneVBO();
+	//drawSceneModel();	
+	//drawSceneVBOTest2();
+
+}
+
+
+
+
+//--------------------------------------------------------------
+void testApp::drawSceneVBO()
+{
+	// Update
+	ofVec3f vec;
+	float   r = 0.3;
+	//total = 0;
+	for (int i=0; i<GRID_WIDTH; i++) {
+		for (int j=0; j<GRID_HEIGHT; j++) {
+			
+			int x	  = (i * space) - center.x;
+			int y     = 0;
+			int z     = (j * space) - center.y;
+			int index = (j*GRID_WIDTH+i) * LENGTH;
+			pos[index].set(x, y, z);
+			pos[index+1].set(x+ofRandom(-r,r), y+ofRandom(-r,r), z+ofRandom(-r,r));
+			pos[index+1].y -= 1.0;
+			
+			for (int k=2; k<LENGTH; k++) {
+				vec		 =  pos[index + k] - pos[index + (k-2)];
+				float d  = vec.length();
+				if(d > 0.0) {
+					pos[index + k] = pos[index + k-1] + (vec * restLength) /d;
+				}	
+			}
+		}
+	}
+	
+	ofPushMatrix();
+	
+	
+		ofTranslate(ofGetWidth()/2, ofGetHeight()/2,/*( 10 + AMathHelpers::cosZeroToOne( ofGetElapsedTimef() ) * -200.0f )*/ 700.0f );
+		
+		ofRotate(ofGetElapsedTimef()*.6 * RAD_TO_DEG, 1, 0, 0);
+		ofRotate(ofGetElapsedTimef()*.8 * RAD_TO_DEG, 0, 1, 0);
+		
+		// the lines
+		ofEnableAlphaBlending();
+	
+	
+		ofSetColor(255, 255, 255);
+		checkGlError( glGetError(), __FILE__, __LINE__ );	
+		vbo.bind();
+		checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
+		vbo.updateVertexData(pos, total);
+	
+	//	vbo.updateColorData(col, total);		
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );	
+		
+	
+		for (int i=0; i<GRID_WIDTH; i++) {
+			for (int j=0; j<GRID_HEIGHT; j++) {
+				int index = (j*GRID_WIDTH+i) * LENGTH;
+				vbo.draw(GL_LINE_STRIP, index, LENGTH);
+			}
+		}
+	
+	
+		vbo.draw( GL_POINTS, 0, total );
+	 
+		checkGlError( glGetError(), __FILE__, __LINE__ );
+	
+		vbo.unbind();	
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );
+	
+		ofDisableAlphaBlending();
+	
+		//ofBox( 16.0f );
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );
+	
+	ofPopMatrix();	
+
 }
 
 
 //--------------------------------------------------------------
-void testApp::drawScene()
+void testApp::drawSceneModel()
+{
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
+	animationTime += ofGetLastFrameTime();
+	if( animationTime >= 1.0 ){
+		animationTime = 0.0;
+	}
+	model.setNormalizedTime(animationTime);
+	mesh = model.getCurrentAnimatedMesh(0);	
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
+	ofPushMatrix();
+	
+	ofTranslate(model.getPosition().x, model.getPosition().y, 0);
+	ofRotate(-mouseX, 0, 1, 0);
+	ofTranslate(-model.getPosition().x, -model.getPosition().y, 0);
+	
+	model.drawFaces();
+	//model.drawWireframe();
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+    ofPopMatrix();
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+}
+
+
+//--------------------------------------------------------------
+void testApp::drawSceneSimple()
 {
 	ofFill();	
 	
@@ -268,8 +452,10 @@ void testApp::drawScene()
 		ofRotate(ofGetElapsedTimef()*.8 * RAD_TO_DEG, 0, 1, 0);
 		
 		//model.drawFaces();	
+#ifdef OPENGLES_VERSION_2	
 		drawCube( 120.0f );
-		//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
+#endif
+	//ofRect( 0.0, 0.0f, 100.0f, 100.0f );
 		//drawIcosahedron( 120.0f );
 	
 	ofPopMatrix();
@@ -646,10 +832,10 @@ void testApp::drawScene()
 	//-------------------------------------
 	
 	
-	//ofSetHexColor(0x000000);
-	//ofDrawBitmapString("ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?", 20,300);	
+	ofSetHexColor(0x000000);
+	ofDrawBitmapString("ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789,:&!?", 20,300);	
 	
-	/*
+	
 	ofSetHexColor(0x000000);
 	ofDrawBitmapString("(a) star\nwinding rule odd", 20,210);
 	
@@ -677,7 +863,7 @@ void testApp::drawScene()
 	
 	ofSetHexColor(0x000000);
 	ofDrawBitmapString("(i) ofNextContour\ncan even be used for CSG operations\nsuch as union and intersection", 260,620);	
-	*/
+	
 }
 
 #ifdef OPENGLES_VERSION_2
@@ -934,19 +1120,20 @@ void testApp::checkGlError(GLenum errorCode, const char *file, const unsigned in
 			case GL_OUT_OF_MEMORY:
 				errorString = "GL_OUT_OF_MEMORY, not enough memory left to execute command";
 				break;
+#ifdef OPENGLES_VERSION_2				
 			case GL_INVALID_FRAMEBUFFER_OPERATION:
 				errorString = "GL_INVALID_FRAMEBUFFER_OPERATION, framebuffer is incomplete";
 				break;
+#endif				
 			default:
 				errorString = "Unknown GL error";
 				break;
 		}
 		
-		cout << file << " " << line << " GL_ERROR: " << errorCode << " " << errorString << endl;
+		cout << "** " << file << " " << line << " GL_ERROR: " << errorCode << " " << errorString << " **" << endl;
 		//LOG_DEBUG_MESSAGE(file, line, OpenGLESString("GL ERROR: ") + errorCode + " " + errorString);
 	}
 }
-
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs &touch){
@@ -968,15 +1155,19 @@ void testApp::touchDown(ofTouchEventArgs &touch){
 	}
 }
 
+
 //--------------------------------------------------------------
-void testApp::touchMoved(ofTouchEventArgs &touch){
-	if( touch.id == 0 ){
-		for (int i = 0; i < nCurveVertexes; i++){
-		if (curveVertices[i].bBeingDragged == true){
-			curveVertices[i].x = touch.x/appIphoneScale;
-			curveVertices[i].y = touch.y/appIphoneScale;
+void testApp::touchMoved(ofTouchEventArgs &touch)
+{
+	if( touch.id == 0 )
+	{
+		for (int i = 0; i < nCurveVertexes; i++)
+		{
+			if (curveVertices[i].bBeingDragged == true){
+				curveVertices[i].x = touch.x/appIphoneScale;
+				curveVertices[i].y = touch.y/appIphoneScale;
+			}
 		}
-	}
 	}
 }
 

@@ -103,7 +103,7 @@ enum {
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
-        NSLog(@"Failed to make complete framebuffer object %x %i %i", glCheckFramebufferStatus(GL_FRAMEBUFFER), backingWidth, backingHeight);
+        NSLog(@"ES2Renderer: Failed to make complete framebuffer object %x %i %i", glCheckFramebufferStatus(GL_FRAMEBUFFER), backingWidth, backingHeight);
         return NO;
     }
 

@@ -7,21 +7,23 @@
  *
  */
 
-#include "shaderBlur.h"
+#include "ShaderBlurES2.h"
+
+#if !defined (TARGET_OPENGLES) || defined (OPENGLES_VERSION_2)
 
 //--------------------------------------------------------------
-ShaderBlur::ShaderBlur()
+ShaderBlurES2::ShaderBlurES2()
 {
 	clearColor.set( 0, 0, 0, 255 );	
 }
 
 //--------------------------------------------------------------
-ShaderBlur::~ShaderBlur()
+ShaderBlurES2::~ShaderBlurES2()
 {
 }
 
 //--------------------------------------------------------------
-void ShaderBlur::setup(int fboW, int fboH){	
+void ShaderBlurES2::setup(int fboW, int fboH){	
 	
 	clearColor.set(0,0,0,255);
 	
@@ -54,26 +56,26 @@ void ShaderBlur::setup(int fboW, int fboH){
 }
 
 //--------------------------------------------------------------
-void ShaderBlur::beginRender()
+void ShaderBlurES2::beginRender()
 {
 	fbo1.begin();
 	ofClear( clearColor.r ,clearColor.g,clearColor.b,clearColor.a);	
 }
 
 //--------------------------------------------------------------
-void ShaderBlur::endRender()
+void ShaderBlurES2::endRender()
 {
 	fbo1.end();
 }
 
 //--------------------------------------------------------------
-void ShaderBlur::setBlurParams(int numPasses, float blurDist){
+void ShaderBlurES2::setBlurParams(int numPasses, float blurDist){
 	noPasses		= ofClamp(numPasses, 1, 100000);
 	blurDistance	= blurDist;
 }
 
 //--------------------------------------------------------------
-void ShaderBlur::performBlur()
+void ShaderBlurES2::performBlur()
 {
 	ofFbo * src, * dst;	
 	src = &fbo1;
@@ -116,17 +118,17 @@ void ShaderBlur::performBlur()
 
 
 //--------------------------------------------------------------
-void ShaderBlur::draw(float x, float y )
+void ShaderBlurES2::draw(float x, float y )
 {
 	fbo1.draw(x, y, fbo1.getWidth(), fbo1.getHeight() );	
 }
 
 
 //--------------------------------------------------------------
-void ShaderBlur::draw(float x, float y, float w, float h)
+void ShaderBlurES2::draw(float x, float y, float w, float h)
 {
 	fbo1.draw(x, y, w, h);	
 }
 
-
+#endif
 

@@ -531,16 +531,6 @@ void ofFbo::createAndAttachTexture(GLenum attachmentPoint) {
 	tex.setTextureMinMagFilter(settings.minFilter, settings.maxFilter);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachmentPoint, tex.texData.textureTarget, tex.texData.textureID, 0);
 	textures.push_back(tex);
-
-	ofTextureData texData = tex.getTextureData();
-	
-	ofLogNotice() << "----------------------------------------";	
-	ofLogNotice() << "Requested dimensions: " << settings.width << ", " << settings.height;	
-	ofLogNotice() << "Texture dimensions:   " << texData.tex_w << ", " << texData.tex_h;
-	ofLogNotice() << "Texture t, u:   " << texData.tex_t << ", " << texData.tex_u;	
-	ofLogNotice() << "Texture width height:   " << texData.width << ", " << texData.height;	
-	
-	ofLogNotice() << "----------------------------------------";	
 	
 	// if MSAA, bind main fbo and attach renderbuffer
 	if(settings.numSamples) {

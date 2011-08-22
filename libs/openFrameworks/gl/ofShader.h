@@ -1,7 +1,7 @@
 #pragma once
 
 //#ifndef TARGET_OPENGLES
-#if (defined (TARGET_OPENGLES) && defined (OPENGLES_VERSION_2)) || ! defined (TARGET_OPENGLES)
+#if !defined (TARGET_OPENGLES) || defined (OPENGLES_VERSION_2)
 
 /*
  todo: add support for attachment of multiple shaders

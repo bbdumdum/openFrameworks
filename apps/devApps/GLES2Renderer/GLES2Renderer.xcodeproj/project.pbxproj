@@ -39,7 +39,6 @@
 		BD9E129813F4507C0001B4F1 /* OpenGLESUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128213F4507C0001B4F1 /* OpenGLESUtil.cpp */; };
 		BD9E129913F4507C0001B4F1 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128413F4507C0001B4F1 /* ofGLES2Renderer.cpp */; };
 		CB836CCB13DC376C003E8700 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */; };
-		CB955CA513FB125B002929B5 /* ShaderBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB955CA313FB125B002929B5 /* ShaderBlur.cpp */; };
 		CBB7773C13F556220014274B /* alphaTest.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772713F556220014274B /* alphaTest.frag */; };
 		CBB7773D13F556220014274B /* clipPlane.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772813F556220014274B /* clipPlane.frag */; };
 		CBB7773E13F556220014274B /* clipPlane.vert in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772913F556220014274B /* clipPlane.vert */; };
@@ -81,6 +80,7 @@
 		CBB7776213F556340014274B /* texture1.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBB7773913F556220014274B /* texture1.vert */; };
 		CBB7776313F556340014274B /* texture2.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBB7773A13F556220014274B /* texture2.frag */; };
 		CBB7776413F556340014274B /* texture2.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBB7773B13F556220014274B /* texture2.vert */; };
+		CBD4CB2A13FFC1F900F0C042 /* ShaderBlurES2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD4CB2813FFC1F900F0C042 /* ShaderBlurES2.cpp */; };
 		E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E41D3ED613B38FB500A75A5D /* Project.xcconfig */; };
 		E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */; };
 		E41D400B13B39D2100A75A5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41D400613B39D2100A75A5D /* AVFoundation.framework */; };
@@ -170,8 +170,6 @@
 		CB836CC813DC376C003E8700 /* ofxAssimpMeshHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpMeshHelper.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.h; sourceTree = "<group>"; };
 		CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxAssimpModelLoader.cpp; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.cpp; sourceTree = "<group>"; };
 		CB836CCA13DC376C003E8700 /* ofxAssimpModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpModelLoader.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.h; sourceTree = "<group>"; };
-		CB955CA313FB125B002929B5 /* ShaderBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderBlur.cpp; sourceTree = "<group>"; };
-		CB955CA413FB125B002929B5 /* ShaderBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderBlur.h; sourceTree = "<group>"; };
 		CBB7772713F556220014274B /* alphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = alphaTest.frag; sourceTree = "<group>"; };
 		CBB7772813F556220014274B /* clipPlane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.frag; sourceTree = "<group>"; };
 		CBB7772913F556220014274B /* clipPlane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = clipPlane.vert; sourceTree = "<group>"; };
@@ -193,6 +191,8 @@
 		CBB7773913F556220014274B /* texture1.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture1.vert; sourceTree = "<group>"; };
 		CBB7773A13F556220014274B /* texture2.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.frag; sourceTree = "<group>"; };
 		CBB7773B13F556220014274B /* texture2.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.vert; sourceTree = "<group>"; };
+		CBD4CB2813FFC1F900F0C042 /* ShaderBlurES2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderBlurES2.cpp; sourceTree = "<group>"; };
+		CBD4CB2913FFC1F900F0C042 /* ShaderBlurES2.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ShaderBlurES2.h; sourceTree = "<group>"; };
 		E41D3ED613B38FB500A75A5D /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/iphone/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D400613B39D2100A75A5D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -496,8 +496,8 @@
 		CB955CA113FB125B002929B5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				CB955CA313FB125B002929B5 /* ShaderBlur.cpp */,
-				CB955CA413FB125B002929B5 /* ShaderBlur.h */,
+				CBD4CB2813FFC1F900F0C042 /* ShaderBlurES2.cpp */,
+				CBD4CB2913FFC1F900F0C042 /* ShaderBlurES2.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -713,7 +713,7 @@
 				CBB7774E13F556220014274B /* texture1.vert in Sources */,
 				CBB7774F13F556220014274B /* texture2.frag in Sources */,
 				CBB7775013F556220014274B /* texture2.vert in Sources */,
-				CB955CA513FB125B002929B5 /* ShaderBlur.cpp in Sources */,
+				CBD4CB2A13FFC1F900F0C042 /* ShaderBlurES2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

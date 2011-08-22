@@ -782,7 +782,7 @@ void ofxAssimpModelLoader::draw(ofPolyRenderMode renderType)
         glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
         glPolygonMode(GL_FRONT_AND_BACK, ofGetGLPolyMode(renderType));
 #endif
-        glEnable(GL_NORMALIZE);
+        _ofEnable(GL_NORMALIZE);
 
         ofPushMatrix();
 
@@ -823,9 +823,9 @@ void ofxAssimpModelLoader::draw(ofPolyRenderMode renderType)
 
 			// Culling
 			if(meshHelper.twoSided)
-				glEnable(GL_CULL_FACE);
+				_ofEnable(GL_CULL_FACE);
 			else
-				glDisable(GL_CULL_FACE);
+				_ofDisable(GL_CULL_FACE);
 
 			ofEnableBlendMode(meshHelper.blendMode);
 #ifndef TARGET_OPENGLES

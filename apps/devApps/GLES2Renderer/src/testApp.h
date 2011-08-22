@@ -6,13 +6,13 @@
 
 #include "ofxAssimpModelLoader.h"
 
-#include "ofGLES2Renderer.h"
+#include "Utils/ShaderBlurES2.h"
 
 #include "Math/AMathHelpers.h"
 
 
 // Copy pasted some code from the net for sanity checking, temporarily need this.
-typedef struct { float x,y; bool bBeingDragged; bool bOver; float radius; }draggableVertex;
+typedef struct { float x,y; bool bBeingDragged; bool bOver; float radius; } draggableVertex;
 typedef struct { GLfloat red, green, blue, alpha; } Color3D;
 typedef struct { GLfloat x,y,z; } Vertex3D;
 typedef struct { GLfloat x,y,z; } Vector3D;
@@ -45,6 +45,14 @@ static inline Vector3D Vector3DMakeWithStartAndEndPoints(Vertex3D start, Vertex3
 #define DEGREES_TO_RADIANS(x) (3.14159265358979323846 * x / 180.0)
 #define RANDOM_FLOAT_BETWEEN(x, y) (((float) rand() / RAND_MAX) * (y - x) + x)
 
+#define GRID_WIDTH  16
+#define GRID_HEIGHT 16
+#define LENGTH		2 * 8
+
+#define NUM_PTS			10000
+#define WORM_LEN		5500
+#define	NUM_PARTICLES	50000
+#define	NUM_BILLBOARDS	1000
 
 
 
@@ -55,13 +63,18 @@ public:
 	void setup();
 	void update();
 	void draw();
-	
-	void drawScene();
+
+	void drawSceneModel();	
+	void drawSceneVBO();
+//	void drawSceneVBOTest2();	
+	void drawSceneSimple();
 	
 	void debugDraw();
 	
 	void drawIcosahedron( float _scale );
 	void drawCube( float _scale );
+	
+//	void initVBOTest2();
 	
 	void touchDown(ofTouchEventArgs &touch);
 	void touchMoved(ofTouchEventArgs &touch);
@@ -72,14 +85,25 @@ public:
 	
 	ofFbo screenFBO;	
 	
+#ifdef OPENGLES_VERSION_2	
 	ofShader testShader;
-	
+	ShaderBlurES2 shaderBlur;
+#endif	
 	ofMesh testMesh;
 	
 	ofImage testImage;
 	ofImage testImage2;	
 	
 	ofImage testImageAlpha;		
+	
+	ofVbo	vbo;
+	ofVec3f pos[GRID_WIDTH*GRID_HEIGHT*LENGTH];
+	ofVec3f norm[GRID_WIDTH*GRID_HEIGHT*LENGTH];	
+	ofFloatColor col[GRID_WIDTH*GRID_HEIGHT*LENGTH];	
+	ofVec3f center;
+	int		space;
+	float   restLength;
+	int		total;	
 	
 	ofTrueTypeFont  franklinBook14;
 	
@@ -96,9 +120,10 @@ public:
 
 	float appIphoneScale;
 	
-	//ofxAssimpModelLoader model;
+	ofxAssimpModelLoader model;
+	float animationTime;
 	
-	string typeStr;
+	std::string typeStr;
 	
 	ofVboMesh mesh;
 	ofPoint position;
@@ -110,6 +135,30 @@ public:
 	
 	int counter;
 
+/*	
+	// For VBO test 2
+	int			vboMode;
+	ofVec2f		cameraRotation;	
+	
+	// particles
+	int			particleCount;
+	ofVec2f		particlePos[NUM_PARTICLES];
+	ofVec2f		particleVel[NUM_PARTICLES];
+	ofFloatColor		particleColor[NUM_PARTICLES];
+	float		particleTime[NUM_PARTICLES];
+	ofVbo		particleVbo;
+	
+	// the stars
+	ofVbo		ptsVbo;
+	ofVec3f		pts[NUM_PTS];
+	ofFloatColor		color[NUM_PTS];
+	float	    fadeSpeed[NUM_PTS];
+	bool		fadeFlip[NUM_PTS];
+	
+	// the worm
+	int			wormDrawMode;
+	ofVbo		wormVbo;
+	ofVec3f		worm[WORM_LEN];
+*/	
+	
 };
-
-

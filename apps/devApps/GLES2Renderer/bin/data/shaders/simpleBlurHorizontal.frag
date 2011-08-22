@@ -34,5 +34,8 @@ void main( void )
 	color		+= 1.0 * texture2D(u_texture0Sampler, st + vec2(extra * 4.0, 0.0));
 	
 	color /= 25.0;
+	
+	color.w = 1.0;
+	
 	gl_FragColor = color;
 }

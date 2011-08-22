@@ -1107,16 +1107,9 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 	
 	// this is copied from the ofTrueTypeFont
 	//GLboolean blend_enabled =  gl->glIsEnabled(GL_BLEND); //TODO: this is not used?
-	GLint blend_src, blend_dst;
-	
-	gl->glGetIntegerv( GL_BLEND_SRC, &blend_src );
-	gl->glGetIntegerv( GL_BLEND_DST, &blend_dst );
 	
 	ofBlendMode prevBlendMode = ofGetStyle().blendingMode;
 	
-	//gl->glEnable(GL_BLEND);
-	//gl->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	setBlendMode( OF_BLENDMODE_ALPHA );
 
 	int len = (int)textString.length();
@@ -1280,7 +1273,6 @@ void ofGLES2Renderer::drawString(string textString, float x, float y, float z, o
 		ofPopView();
 
 	setBlendMode( prevBlendMode );
-	//gl->glBlendFunc(blend_src, blend_dst);
 }
 
 

@@ -37,12 +37,12 @@
 
 
 // Andreas: I'm trying out severing any references to ES1/gl.h in ES2 mode
+
 #ifdef OPENGLES_VERSION_2 
 	#import "ES2Renderer.h"
 #else
 	#import "ES1Renderer.h"
 #endif
-
 
 
 @implementation EAGLView
@@ -86,7 +86,10 @@
 			renderer = [[ES2Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
 		
 		#else
-            renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
+            //renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
+            
+			// Andreas: TEMP, for some reason depth is broken in ES1 now, will investigate, hack so I can switch back and forth for now
+			renderer = [[ES1Renderer alloc] initWithDepth:false andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
 		#endif
 		
         //if (!renderer) {
@@ -97,6 +100,7 @@
 			}
         //}
 		
+		
 		#ifdef OPENGLES_VERSION_2
 			[[self context] renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
 		#else
@@ -104,6 +108,8 @@
 		#endif
 		
 
+	
+		
 
 #ifdef OPENGLES_VERSION_2
 		ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 

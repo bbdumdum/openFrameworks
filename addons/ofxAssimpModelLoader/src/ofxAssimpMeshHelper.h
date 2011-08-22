@@ -7,7 +7,7 @@
 class ofxAssimpMeshHelper{
     public:
 	ofxAssimpMeshHelper(){
-		cout << "mesh helper cons"<< endl;
+		//cout << "mesh helper cons"<< endl;
 	}
     
     // pointer to the aiMesh we represent.

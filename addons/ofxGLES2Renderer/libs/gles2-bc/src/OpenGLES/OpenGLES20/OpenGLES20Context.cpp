@@ -68,11 +68,11 @@ void OpenGLES20Context::glAlphaFuncx (GLenum func, GLclampx ref)
 
 void OpenGLES20Context::glBindTexture (GLenum target, GLuint texture)
 {
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+		
 	openGLESState.setBoundTexture(texture);
 	openGLESState.setTextureFormat();
 	::glBindTexture(target, texture); // Andreas: XCode4 reckons this function lives in ES1/gl.h could this be a problem? Can't find where it might be including it so far
-	
-	//std::cout << "glBindTexture target: " << target << " texture: " << texture << std::endl;
 	
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
@@ -404,7 +404,13 @@ void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
 	if (shaderProgramId == 0 || sendDefaultsToCustomShaders) {
 		prepareToDraw();
 	}
+
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+	
+	cout << "OpenGLES20Context::glDrawArrays mode: " << mode << " first: " << first << " count: " << count << endl;
+	
 	::glDrawArrays(mode, first, count);
+
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
@@ -589,6 +595,7 @@ GLenum OpenGLES20Context::glGetError (void)
 
 void OpenGLES20Context::glGetIntegerv (GLenum pname, GLint *params)
 {
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
 	::glGetIntegerv(pname, params);
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }

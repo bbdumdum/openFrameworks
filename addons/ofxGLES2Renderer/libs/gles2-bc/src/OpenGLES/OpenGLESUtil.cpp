@@ -53,14 +53,14 @@ void OpenGLESUtil::checkGlError(GLenum errorCode, const char *file, const unsign
 				break;
 		}
 		
-		LOG_DEBUG_MESSAGE(file, line, OpenGLESString("GL ERROR: ") + errorCode + " " + errorString);
+		LOG_DEBUG_MESSAGE(file, line, OpenGLESString(" GL ERROR: ") + errorCode + " " + errorString + " **");
 	}
 }
 
 void OpenGLESUtil::logMessage(const char *file, int line, OpenGLESString msg)
 {
 #ifndef __ANDROID__
-	printf("%s:%d %s\n", file, line, msg().c_str());
+	printf("** %s:%d %s\n", file, line, msg().c_str());
 #else
 	__android_log_print(ANDROID_LOG_INFO,"gles-bc","%s:%d %s\n", file, line, msg().c_str());
 #endif
@@ -69,7 +69,7 @@ void OpenGLESUtil::logMessage(const char *file, int line, OpenGLESString msg)
 void OpenGLESUtil::logMessage(OpenGLESString msg)
 {
 #ifndef __ANDROID__
-	printf("%s\n", msg().c_str());
+	printf("** %s\n", msg().c_str());
 #else
 	__android_log_print(ANDROID_LOG_INFO,"gles-bc", msg().c_str());
 #endif

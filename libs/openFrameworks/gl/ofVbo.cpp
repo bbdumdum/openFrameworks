@@ -462,6 +462,16 @@ void ofVbo::bind(){
 #endif
 }
 
+
+/*
+ * When binding we need to set required OpenGL gles2-bc states
+ * to make gles2-bc generate the correct shader so that it contains
+ * the right attribute slots
+ * 
+ *
+ */
+
+
 //--------------------------------------------------------------
 void ofVbo::unbind() {
 //	if(bUsingVerts)  glDisableClientState(GL_VERTEX_ARRAY);
@@ -485,14 +495,28 @@ void ofVbo::unbind() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+
+
 //--------------------------------------------------------------
 void ofVbo::draw(int drawMode, int first, int total) {
 	if(bAllocated) {
 		bind();
+		
+#ifdef OPENGLES_VERSION_2
+		ofGetGLES2Context()->glDrawArrays(drawMode, first, total);
+#else
 		glDrawArrays(drawMode, first, total);
+#endif		
 		unbind();
 	}
 }
+
+/*
+ #ifdef OPENGLES_VERSION_2
+ ofGetGLES2Context()->
+ #else
+ #endif
+ */
 
 //--------------------------------------------------------------
 void ofVbo::drawElements(int drawMode, int amt) {
@@ -501,7 +525,13 @@ void ofVbo::drawElements(int drawMode, int amt) {
 		if(bUsingIndices){
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
 #ifdef TARGET_OPENGLES
+			
+	#ifdef OPENGLES_VERSION_2
+			ofGetGLES2Context()->glDrawElements(drawMode, amt, GL_UNSIGNED_SHORT, NULL);
+	#else
 			glDrawElements(drawMode, amt, GL_UNSIGNED_SHORT, NULL);
+	#endif	
+			
 #else
 			glDrawElements(drawMode, amt, GL_UNSIGNED_INT, NULL);
 #endif

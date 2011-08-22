@@ -109,6 +109,8 @@
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
 
+	NSLog(@"ES1Renderer: backing dimensions %ix%i", backingWidth, backingHeight);	
+	
 	if(fsaaEnabled)
 	{
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fsaaFrameBuffer);
@@ -141,7 +143,7 @@
 	
     if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
     {
-        NSLog(@"Failed to make complete framebuffer object %x %ix%i", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES), backingWidth, backingHeight);
+        NSLog(@"ES1Renderer: Failed to make complete framebuffer object %x %ix%i", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES), backingWidth, backingHeight);
         return NO;
     }
 
