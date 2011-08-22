@@ -958,8 +958,7 @@ void OpenGLESState::setCurrentProgram()
 		
 		addDefinesToShaderSources(vertexShaderSources, fragmentShaderSources);
 		
-		// Andreas: momentarily taking this out
-		/*
+
 		if (OpenGLESConfig::DEBUG) {
 			LOG_MESSAGE("Using shader files:");
 			for (size_t i = 0; i < vertexShaderSources.size(); i++)
@@ -972,7 +971,7 @@ void OpenGLESState::setCurrentProgram()
 				LOG_MESSAGE(fragmentShaderSources[i]->getFile()->getName());
 			}
 		}
-		*/
+		
 
 		Shader *vertexShader = new Shader(GL_VERTEX_SHADER, vertexShaderSources);
 		Shader *fragmentShader = new Shader(GL_FRAGMENT_SHADER, fragmentShaderSources);
@@ -1128,24 +1127,24 @@ void OpenGLESState::setBoundTexture(int i)
 	boundTextures[activeTexture] = i;
 }
 
-void OpenGLESState::setPosition( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer )
+void OpenGLESState::setPosition( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId )
 {
-	attributes[AttributeId::POSITION]->setValues(size, type, stride, pointer);
+	attributes[AttributeId::POSITION]->setValues(size, type, stride, pointer, _bufferId);
 }
 
-void OpenGLESState::setNormal( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer )
+void OpenGLESState::setNormal( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId )
 {
-	attributes[AttributeId::NORMAL]->setValues(size, type, stride, pointer);
+	attributes[AttributeId::NORMAL]->setValues(size, type, stride, pointer, _bufferId);
 }
 
-void OpenGLESState::setColor( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer )
+void OpenGLESState::setColor( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId )
 {
-	attributes[AttributeId::COLOR]->setValues(size, type, stride, pointer);
+	attributes[AttributeId::COLOR]->setValues(size, type, stride, pointer, _bufferId);
 }
 
-void OpenGLESState::setTexCoord( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer )
+void OpenGLESState::setTexCoord( GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId )
 {
-	attributes[AttributeId::TEXCOORD0 + clientActiveTexture]->setValues(size, type, stride, pointer);
+	attributes[AttributeId::TEXCOORD0 + clientActiveTexture]->setValues(size, type, stride, pointer, _bufferId );
 }
 
 void OpenGLESState::setPosition( bool enabled )

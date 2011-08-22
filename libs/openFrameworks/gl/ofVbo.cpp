@@ -436,28 +436,30 @@ void ofVbo::bind(){
 		glTexCoordPointer(2, GL_FLOAT, texCoordStride, 0);
 	}
 #else
+		
 	if(bUsingVerts){
 		ofGetGLES2Context()->glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, vertId);
-		ofGetGLES2Context()->glVertexPointer(vertSize, GL_FLOAT, vertStride, 0);
+		ofGetGLES2Context()->glVertexPointer(vertSize, GL_FLOAT, vertStride, 0, vertId); // These are not actually called in the ES 2 context until the prepareToDraw function, 
+																				 // so we need to pass along the buffer to be bound when glVertexAttribPointer is called 
 	}
 
 	if(bUsingColors) {
 		ofGetGLES2Context()->glEnableClientState(GL_COLOR_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, colorId);
-		ofGetGLES2Context()->glColorPointer(4, GL_FLOAT, colorStride, 0);
+		ofGetGLES2Context()->glColorPointer(4, GL_FLOAT, colorStride, 0, colorId);
 	}
 
 	if(bUsingNormals) {
 		ofGetGLES2Context()->glEnableClientState(GL_NORMAL_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, normalId);
-		ofGetGLES2Context()->glNormalPointer(GL_FLOAT, normalStride, 0);
+		ofGetGLES2Context()->glNormalPointer(GL_FLOAT, normalStride, 0, normalId);
 	}
 
 	if(bUsingTexCoords) {
 		ofGetGLES2Context()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoordId);
-		ofGetGLES2Context()->glTexCoordPointer(2, GL_FLOAT, texCoordStride, 0);
+		ofGetGLES2Context()->glTexCoordPointer(2, GL_FLOAT, texCoordStride, 0, texCoordId);
 	}
 #endif
 }

@@ -445,10 +445,10 @@ namespace OpenGLES {
 			void setBoundTextureFormat(int format);
 			void setBoundTexture(int i);
 			
-			void setPosition(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
-			void setNormal(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
-			void setColor(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
-			void setTexCoord(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+			void setPosition(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId);
+			void setNormal(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId);
+			void setColor(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId);
+			void setTexCoord(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId);
 			
 			void setPosition(bool enabled);
 			void setNormal(bool enabled);

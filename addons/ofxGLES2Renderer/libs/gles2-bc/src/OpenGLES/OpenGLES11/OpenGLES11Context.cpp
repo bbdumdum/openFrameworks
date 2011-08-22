@@ -129,7 +129,7 @@ void OpenGLES11Context::glColorMask (GLboolean red, GLboolean green, GLboolean b
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
-void OpenGLES11Context::glColorPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES11Context::glColorPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
 	::glColorPointer(size, type, stride, pointer);
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
@@ -478,7 +478,7 @@ void OpenGLES11Context::glNormal3x (GLfixed nx, GLfixed ny, GLfixed nz)
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
-void OpenGLES11Context::glNormalPointer (GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES11Context::glNormalPointer (GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
 	::glNormalPointer(type, stride, pointer);
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
@@ -610,7 +610,7 @@ void OpenGLES11Context::glStencilOp (GLenum fail, GLenum zfail, GLenum zpass)
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
-void OpenGLES11Context::glTexCoordPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES11Context::glTexCoordPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
 	::glTexCoordPointer(size, type, stride, pointer);
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
@@ -684,7 +684,7 @@ void OpenGLES11Context::glTranslatex(GLfixed x, GLfixed y, GLfixed z)
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
-void OpenGLES11Context::glVertexPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES11Context::glVertexPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
 	::glVertexPointer(size, type, stride, pointer);
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);

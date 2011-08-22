@@ -139,7 +139,7 @@ void testApp::setup()
 	
 	ofFbo::Settings tmpScreenFBOSettings = ofFbo::Settings(); 
 	tmpScreenFBOSettings.width  = 1024;
-	tmpScreenFBOSettings.height = 768;	// Andreas: For now FBO dimensions have to be a power of two, investigating
+	tmpScreenFBOSettings.height = 768;	
 	tmpScreenFBOSettings.useDepth = true;
 	tmpScreenFBOSettings.useStencil = false;
 	tmpScreenFBOSettings.internalformat = GL_RGB;
@@ -187,7 +187,7 @@ void testApp::setup()
 				float tmpFrac = k / ((float)LENGTH-1);
 				col[index + k].set( tmpFrac, tmpFrac, tmpFrac );
 				
-				norm[index + k].set( 0.0f, 1.0f, 0.0f);
+				norm[index + k].set( /*0.0f, 0.0f, 0.0f*/ ofRandom(100.0f), ofRandom(100.0f), ofRandom(100.0f));
 			}
 		}
 	}
@@ -195,7 +195,7 @@ void testApp::setup()
 	total = GRID_WIDTH*GRID_HEIGHT*LENGTH;
 	vbo.setVertexData(pos, total, GL_DYNAMIC_DRAW);	
 	vbo.setColorData(col, total, GL_DYNAMIC_DRAW);		
-	//vbo.setNormalData(norm, total, GL_DYNAMIC_DRAW);			
+//	vbo.setNormalData(norm, total, GL_DYNAMIC_DRAW);			
 	
 //	initVBOTest2();
 	//vboMode = 1;
@@ -281,10 +281,11 @@ void testApp::draw()
 	
 	
 	//drawSceneSimple();
-	drawSceneVBO();
-	//drawSceneModel();	
+	//drawSceneVBO();
+	drawSceneModel();	
 	//drawSceneVBOTest2();
 
+	
 }
 
 

@@ -24,6 +24,8 @@
 	#include <GLES2/gl2.h>
 #endif
 #include <string>
+#include <iostream>
+using namespace std;
 
 namespace OpenGLES {
 	namespace OpenGLES2 {
@@ -50,7 +52,7 @@ namespace OpenGLES {
 			void setEnabled(bool enabled);
 			void setLocation(GLint loc);
 			void upload(ShaderProgram *program);
-			void setValues(GLint size, GLenum type, GLsizei stride, const void *pointer);
+			void setValues(GLint size, GLenum type, GLsizei stride, const void *pointer, GLuint _bufferId = -1);
 			void setSize(GLint size);
 			void setType(GLenum type);
 			void setNormalized(GLboolean normalized);
@@ -66,6 +68,8 @@ namespace OpenGLES {
 			GLboolean normalized;
 			GLsizei stride;
 			const void *pointer;			
+			
+			GLuint bufferId;
 			
 		private:
 			GLint location;

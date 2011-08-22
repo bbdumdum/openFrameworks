@@ -146,9 +146,9 @@ void OpenGLES20Context::glColorMask (GLboolean red, GLboolean green, GLboolean b
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
-void OpenGLES20Context::glColorPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES20Context::glColorPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
-	openGLESState.setColor(size, type, stride, pointer);
+	openGLESState.setColor(size, type, stride, pointer, _bufferId);
 }
 
 void OpenGLES20Context::glCompressedTexImage2D (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const GLvoid *data)
@@ -407,7 +407,7 @@ void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
 
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
 	
-	cout << "OpenGLES20Context::glDrawArrays mode: " << mode << " first: " << first << " count: " << count << endl;
+	//cout << "OpenGLES20Context::glDrawArrays mode: " << mode << " first: " << first << " count: " << count << endl;
 	
 	::glDrawArrays(mode, first, count);
 
@@ -872,9 +872,9 @@ void OpenGLES20Context::glNormal3x (GLfixed nx, GLfixed ny, GLfixed nz)
 	LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Not implemented.");
 }
 
-void OpenGLES20Context::glNormalPointer (GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES20Context::glNormalPointer (GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
-	openGLESState.setNormal(3, type, stride, pointer);
+	openGLESState.setNormal(3, type, stride, pointer, _bufferId);
 }
 
 void OpenGLES20Context::glOrthof (GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar)
@@ -990,9 +990,9 @@ void OpenGLES20Context::glStencilOp (GLenum fail, GLenum zfail, GLenum zpass)
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
-void OpenGLES20Context::glTexCoordPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES20Context::glTexCoordPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
-	openGLESState.setTexCoord(size, type, stride, pointer);
+	openGLESState.setTexCoord(size, type, stride, pointer, _bufferId );
 }
 
 void OpenGLES20Context::glTexEnvf (GLenum target, GLenum pname, GLfloat param)
@@ -1064,9 +1064,9 @@ void OpenGLES20Context::glTranslatex (GLfixed x, GLfixed y, GLfixed z)
 	LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Not implemented.");
 }
 
-void OpenGLES20Context::glVertexPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+void OpenGLES20Context::glVertexPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId)
 {
-	openGLESState.setPosition(size, type, stride, pointer);
+	openGLESState.setPosition(size, type, stride, pointer, _bufferId );
 }
 
 void OpenGLES20Context::glViewport (GLint x, GLint y, GLsizei width, GLsizei height)

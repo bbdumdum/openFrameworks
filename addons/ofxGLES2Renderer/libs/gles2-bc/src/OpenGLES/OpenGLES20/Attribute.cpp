@@ -21,7 +21,7 @@ using namespace OpenGLES::OpenGLES2;
 
 AttributeSimple::AttributeSimple(int id, GLint location) : id(id), location(location)
 {
-	
+
 }
 
 const GLint AttributeSimple::getLocation()
@@ -36,7 +36,7 @@ const int AttributeSimple::getId()
 
 Attribute::Attribute() : location(-1), enabled(false), uploaded(false)
 {
-	
+	bufferId = -1;	
 }
 Attribute::~Attribute()
 {
@@ -62,6 +62,12 @@ void Attribute::upload(ShaderProgram *program)
 	if (enabled) {
 		glEnableVertexAttribArray(location);
 		if (!uploaded) {
+			
+			if( bufferId > 0) { // could we have a buffer ID that is 0? This could introduce a bug, maybe change bufferID to a signed int and then convert
+				//cout << "binding buffer " << bufferId << endl;		
+				glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+			}
+			
 			program->setAttributeVertexPointer(location, size, type, normalized, stride, pointer);
 			uploaded = true;
 		}
@@ -78,13 +84,14 @@ void Attribute::setVertexAttribPointer( GLint _otherLocation ){
 }			
 
 
-void Attribute::setValues( GLint s, GLenum t, GLsizei st, const void *p )
+void Attribute::setValues( GLint s, GLenum t, GLsizei st, const void *p, GLuint _bufferId )
 {
 	size = s;
 	type = t;
 	stride = st;
 	pointer = p;
 	normalized = GL_FALSE;
+	bufferId = _bufferId;
 	uploaded = false;
 }
 

@@ -46,7 +46,7 @@ namespace OpenGLES {
 			void glColor4f (GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 			void glColor4x (GLfixed red, GLfixed green, GLfixed blue, GLfixed alpha);
 			void glColorMask (GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
-			void glColorPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+			void glColorPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId = 0 );
 			void glCompressedTexImage2D (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const GLvoid *data);
 			void glCompressedTexSubImage2D (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data);
 			void glCopyTexImage2D (GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border);
@@ -102,7 +102,7 @@ namespace OpenGLES {
 			void glMultiTexCoord4x (GLenum target, GLfixed s, GLfixed t, GLfixed r, GLfixed q);
 			void glNormal3f (GLfloat nx, GLfloat ny, GLfloat nz);
 			void glNormal3x (GLfixed nx, GLfixed ny, GLfixed nz);
-			void glNormalPointer (GLenum type, GLsizei stride, const GLvoid *pointer);
+			void glNormalPointer (GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId = 0 );
 			void glOrthof (GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar);
 			void glOrthox (GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed zNear, GLfixed zFar);
 			void glPixelStorei (GLenum pname, GLint param);
@@ -124,7 +124,7 @@ namespace OpenGLES {
 			void glStencilFunc (GLenum func, GLint ref, GLuint mask);
 			void glStencilMask (GLuint mask);
 			void glStencilOp (GLenum fail, GLenum zfail, GLenum zpass);
-			void glTexCoordPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+			void glTexCoordPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId = 0 );
 			void glTexEnvf (GLenum target, GLenum pname, GLfloat param);
 			void glTexEnvfv (GLenum target, GLenum pname, const GLfloat *params);
 			void glTexEnvx (GLenum target, GLenum pname, GLfixed param);
@@ -135,7 +135,7 @@ namespace OpenGLES {
 			void glTexSubImage2D (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);
 			void glTranslatef (GLfloat x, GLfloat y, GLfloat z);
 			void glTranslatex (GLfixed x, GLfixed y, GLfixed z);
-			void glVertexPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+			void glVertexPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer, GLuint _bufferId = 0 );
 			void glViewport (GLint x, GLint y, GLsizei width, GLsizei height);
 			
 			// OpenGL ES 1.1 functions
