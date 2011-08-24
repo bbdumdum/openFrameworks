@@ -92,15 +92,11 @@
 			renderer = [[ES1Renderer alloc] initWithDepth:false andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
 		#endif
 		
-        //if (!renderer) {
-
-            if (!renderer) {
-				[self release];
-				return nil;
-			}
-        //}
-		
-		
+		if (!renderer) {
+			[self release];
+			return nil;
+		}
+        
 		#ifdef OPENGLES_VERSION_2
 			[[self context] renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
 		#else
@@ -108,8 +104,7 @@
 		#endif
 		
 
-	
-		
+		// Before this we do not have a valid OpenGL context on iOS, todo: go through gles2-bc and make sure thi does not matter when initialising
 
 #ifdef OPENGLES_VERSION_2
 		ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer())); 

@@ -96,6 +96,8 @@ enum {
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
 
+	NSLog(@"ES2Renderer, resizeFromLayer: backing dimensions %i x %i", backingWidth, backingHeight);		
+	
 	glGenRenderbuffers(1, &depthRenderbuffer); 
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer); 
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, backingWidth, backingHeight); 

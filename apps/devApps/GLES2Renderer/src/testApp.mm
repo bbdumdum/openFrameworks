@@ -92,7 +92,7 @@ void testApp::setup()
 	
 	bPointLight = bSpotLight = bDirLight = true;
 	
-	ofLightingModel(GL_SMOOTH);
+	//ofLightingModel(GL_SMOOTH);
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
@@ -156,8 +156,6 @@ void testApp::setup()
 	shaderBlur.setup( 1024, 768 );
 	shaderBlur.clearColor.set( 100, 100, 100, 255);
 
-
-
 #endif	
 	
 	mouseX = 400;
@@ -214,7 +212,7 @@ void testApp::setup()
 	surfaceSpacingY = 30.0f;	
 	
 	surfacePointAmount = surfaceGridX * surfaceGridY;
-	surfaceTriangleAmount = (surfaceGridX-1) * (surfaceGridY-1) * 2;
+	surfaceTriangleAmount = ((surfaceGridX-1) * (surfaceGridY-1)) * 2;
 	
 	surfacePoints  = new ofVec3f[ surfaceGridX*surfaceGridY ];
 	surfaceNormals = new ofVec3f[ surfaceGridX*surfaceGridY ];
@@ -235,10 +233,10 @@ void testApp::setup()
 	
 	tmpIndex = 0;
 	for( int i = 0; i < surfaceGridY-1; i++){
-		tmpIndex = i * surfaceGridX;
+		//tmpIndex = i * surfaceGridX;
 		for( int j = 0; j < surfaceGridX-1; j++){
 			
-			int leftOffset		  = j + (i*surfaceGridY);
+			int leftOffset		  = j + (i*surfaceGridX);
 			int rightOffset		  = leftOffset + 1;			
 			
 			int bottomLeftIndex   = leftOffset;
@@ -260,14 +258,18 @@ void testApp::setup()
 		}
 	}	
 	
+	cout << endl;
+	cout << "***************************************" << endl;
 	cout << "tmpIndex " << tmpIndex << "  tmpIndex*3 " << (tmpIndex*3) << " surfaceTriangleAmount: " << surfaceTriangleAmount << "    " << (surfaceTriangleAmount*3) << endl;
-
+	cout << "***************************************" << endl;
+	cout << endl;
+	
 	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
 	surfaceVbo.setColorData(surfaceColors,   surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );
 	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
 	surfaceVbo.setNormalData(surfaceNormals, surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
 
-	surfaceVbo.setIndexData(surfaceIndices,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );		
+	surfaceVbo.setIndexData(surfaceIndices,  surfaceTriangleAmount*3, GL_DYNAMIC_DRAW );		
 	// -----------------------------------------------------	
 	
 	
@@ -295,7 +297,6 @@ void testApp::update()
 	counter++;
 	
 	float radius = 70.f; 
-	//ofVec3f center(800.0f,ofGetHeight()/2.0f, 0);	
 	ofVec3f center(0.0f,0.0f, 0);		
 	
 	
@@ -374,19 +375,16 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::drawSceneLightingTest()
 {
+	ofLightingModel(GL_SMOOTH);	
+	
 	ofEnableLighting();
-
-	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
 	_ofEnable( GL_DEPTH_TEST );
-
-	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
 	ofPushMatrix();
 
-		checkGlError( glGetError(), __FILE__, __LINE__ );		
-
 		pointLight.enable();	
+	pointLight.setPosition( pointLight.getPosition() );
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
@@ -394,35 +392,25 @@ void testApp::drawSceneLightingTest()
 		ofRotate(-mouseX, 0, 1, 0);
 		ofRotate(-mouseY, 1, 0, 0);
 	
+	
+		pointLight.draw();		
+	
 		surfaceVbo.bind();
 	
-		surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount );
+		surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount * 3 );
 	
-		surfaceVbo.draw(GL_POINTS, 0, surfacePointAmount );
+		//surfaceVbo.draw(GL_POINTS, 0, surfacePointAmount );
 	
 		surfaceVbo.unbind();	
-	
-		checkGlError( glGetError(), __FILE__, __LINE__ );	
-	
+		
 		model.drawFaces();
-	
-		checkGlError( glGetError(), __FILE__, __LINE__ );			
 	
 		ofBox( 150.0f, 0.0f, 0.0f, 120.0f );
 	
-		checkGlError( glGetError(), __FILE__, __LINE__ );				
-	
-		pointLight.draw();		
-
-		checkGlError( glGetError(), __FILE__, __LINE__ );			
 	
     ofPopMatrix();
-
-	checkGlError( glGetError(), __FILE__, __LINE__ );			
 	
 	_ofDisable( GL_DEPTH_TEST );	
-
-	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
 	ofDisableLighting();	
 	

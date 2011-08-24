@@ -16,7 +16,7 @@
     {
 		
 		depthEnabled = depth;
-		fsaaEnabled = false;
+		fsaaEnabled = fsaa;
 		fsaaSamples = samples;
 		retinaEnabled = retina;
 				
@@ -104,12 +104,19 @@
 {	
 	layer.opaque = YES;
     // Allocate color buffer backing based on the current layer size
-    //[context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
-	
+    [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
+		
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
 
-	NSLog(@"ES1Renderer: backing dimensions %ix%i", backingWidth, backingHeight);	
+
+	
+	NSLog(@"ES1Renderer, resizeFromLayer: backing dimensions %i x %i", backingWidth, backingHeight);	
+
+//	backingWidth  = 768;	
+//	backingHeight = 1024;
+	
+	// Andreas: The sizes that come back here are wrong, I get 1024x1024 in the iPad simulator, it should be 768x1024, I get that when in ES2 mode.
 	
 	if(fsaaEnabled)
 	{

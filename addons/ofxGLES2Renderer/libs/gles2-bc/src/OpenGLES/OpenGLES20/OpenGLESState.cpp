@@ -958,7 +958,8 @@ void OpenGLESState::setCurrentProgram()
 		
 		addDefinesToShaderSources(vertexShaderSources, fragmentShaderSources);
 		
-
+		// Andreas: momentarily taking this out
+		/*
 		if (OpenGLESConfig::DEBUG) {
 			LOG_MESSAGE("Using shader files:");
 			for (size_t i = 0; i < vertexShaderSources.size(); i++)
@@ -971,7 +972,7 @@ void OpenGLESState::setCurrentProgram()
 				LOG_MESSAGE(fragmentShaderSources[i]->getFile()->getName());
 			}
 		}
-		
+		*/
 
 		Shader *vertexShader = new Shader(GL_VERTEX_SHADER, vertexShaderSources);
 		Shader *fragmentShader = new Shader(GL_FRAGMENT_SHADER, fragmentShaderSources);

@@ -106,7 +106,11 @@ static void release(ofLight & light){
 		ofLog(OF_LOG_WARNING,"ofLight: releasing id not found, this shouldn't be happening releasing anyway");
 		lastRef=true;
 	}
+	
 	if(lastRef){
+	
+		//Andreas: taking this out while i dev to avoid crashes, todo: fix
+		/*
 		light.setAmbientColor(ofColor(0,0,0,255));
 		if(id>0){
 			light.setDiffuseColor(ofColor(0,0,0,255));
@@ -117,8 +121,9 @@ static void release(ofLight & light){
 		}
 		GLfloat cc[] = {0,0,1, 0};
 		_ofLightfv(GL_LIGHT0 + id, GL_POSITION, cc);
-
+		
 		light.disable();
+		*/ 
 		getActiveLights()[id] = false;
 	}
 }
