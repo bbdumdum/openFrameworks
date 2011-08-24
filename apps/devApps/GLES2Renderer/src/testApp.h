@@ -66,15 +66,19 @@ public:
 
 	void drawSceneModel();	
 	void drawSceneVBO();
-//	void drawSceneVBOTest2();	
+	void drawSceneVBOTest2();	
 	void drawSceneSimple();
+	void drawSceneLightingTest();
+
+	//void drawSceneCustomShaderForVBOTest();
+	//void drawSceneEasycamTest();
 	
 	void debugDraw();
 	
 	void drawIcosahedron( float _scale );
 	void drawCube( float _scale );
 	
-//	void initVBOTest2();
+	void initVBOTest2();
 	
 	void touchDown(ofTouchEventArgs &touch);
 	void touchMoved(ofTouchEventArgs &touch);
@@ -95,16 +99,7 @@ public:
 	ofImage testImage2;	
 	
 	ofImage testImageAlpha;		
-	
-	ofVbo	vbo;
-	ofVec3f pos[GRID_WIDTH*GRID_HEIGHT*LENGTH];
-	ofVec3f norm[GRID_WIDTH*GRID_HEIGHT*LENGTH];	
-	ofFloatColor col[GRID_WIDTH*GRID_HEIGHT*LENGTH];	
-	ofVec3f center;
-	int		space;
-	float   restLength;
-	int		total;	
-	
+		
 	ofTrueTypeFont  franklinBook14;
 	
 	ofLight pointLight;
@@ -124,7 +119,27 @@ public:
 	float animationTime;
 	
 	std::string typeStr;
+
+	// ------------------------------------	
+	/*int cubeAmount;
+	ofVec3f* cubePositions;	
+	ofVec3f* cubeRotations;		
+	float* cubeSizes*/;
 	
+	// ------------------------------------
+	int surfaceGridX;
+	int surfaceGridY;
+	float surfaceSpacingX;
+	float surfaceSpacingY;	
+	int surfacePointAmount;	
+	int surfaceTriangleAmount;
+	ofVbo surfaceVbo;
+	ofVec3f* surfacePoints;
+	ofVec3f* surfaceNormals;
+	ofFloatColor* surfaceColors;
+	ofIndexType* surfaceIndices;
+	
+	// ------------------------------------	
 	ofVboMesh mesh;
 	ofPoint position;
 	float normScale;
@@ -135,7 +150,7 @@ public:
 	
 	int counter;
 
-/*	
+	// ------------------------------------
 	// For VBO test 2
 	int			vboMode;
 	ofVec2f		cameraRotation;	
@@ -159,6 +174,17 @@ public:
 	int			wormDrawMode;
 	ofVbo		wormVbo;
 	ofVec3f		worm[WORM_LEN];
-*/	
+	ofFloatColor		wormColor[WORM_LEN];
+	
+	// ------------------------------------	
+	ofVbo	vbo;
+	ofVec3f pos[GRID_WIDTH*GRID_HEIGHT*LENGTH];
+	ofVec3f norm[GRID_WIDTH*GRID_HEIGHT*LENGTH];	
+	ofFloatColor col[GRID_WIDTH*GRID_HEIGHT*LENGTH];	
+	ofVec3f center;
+	int		space;
+	float   restLength;
+	int		total;	
 	
 };
+

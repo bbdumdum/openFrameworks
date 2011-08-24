@@ -59,12 +59,15 @@ ofFloatColor ofMaterial::getEmissiveColor() {
 
 void ofMaterial::begin() {
 	
-    // save previous values, opengl es cannot use push/pop attrib (Andreas: does not work on OPENGLES_VERSION_2 )
+    // save previous values, opengl es cannot use push/pop attrib (Andreas: getting an error from this in OpenGL ES )
+	
+#ifndef TARGET_OPENGLES	
 	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,&prev_diffuse.r);
 	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,&prev_specular.r);
 	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,&prev_ambient.r);
 	_ofGetMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,&prev_emissive.r);
 	_ofGetMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shininess);
+#endif
 	
     // Material colors and properties
 	_ofMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &diffuse.r);
@@ -75,11 +78,14 @@ void ofMaterial::begin() {
 }
 
 void ofMaterial::end() {
+	
+#ifndef TARGET_OPENGLES		
     // Set previous material colors and properties
 	_ofMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &prev_diffuse.r);
 	_ofMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &prev_specular.r);
 	_ofMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &prev_ambient.r);
 	_ofMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, &prev_emissive.r);
 	_ofMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, prev_shininess);
+#endif	
 }
 

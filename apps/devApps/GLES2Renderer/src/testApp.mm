@@ -66,7 +66,7 @@ void testApp::setup()
 	ofSetGlobalAmbientColor( ofColor( 40.0f, 40.0f, 40.0f) );		
 	
 	pointLight.setDiffuseColor( ofColor( 0.0f, 255.0f, 0.0f) );
-	pointLight.setSpecularColor(ofColor(255, 255, 255));
+	pointLight.setSpecularColor(ofColor(127, 127, 127));
 	pointLight.setPosition( 0.0f, 10.0f, 0.0f );	
 	pointLight.setPointLight();
 	
@@ -104,7 +104,7 @@ void testApp::setup()
 	//string modelPath = "teapot-530verts.dae";	
     if(model.loadModel(modelPath,true)){
     	model.setAnimation(0);
-    	model.setPosition(ofGetWidth()/2, (float)ofGetHeight() * 0.75 , 0);
+    	//model.setPosition(ofGetWidth()/2, (float)ofGetHeight() * 0.75 , 0);
     	//model.createLightsFromAiModel();
     	//model.disableTextures();
     	//model.disableMaterials();
@@ -159,8 +159,11 @@ void testApp::setup()
 
 
 #endif	
+	
 	mouseX = 400;
 	mouseY = 400;	
+	
+	// -----------------------------------------------------
 	
 	counter = 0;
 	total = 0;
@@ -195,10 +198,78 @@ void testApp::setup()
 	total = GRID_WIDTH*GRID_HEIGHT*LENGTH;
 	vbo.setVertexData(pos, total, GL_DYNAMIC_DRAW);	
 	vbo.setColorData(col, total, GL_DYNAMIC_DRAW);		
-//	vbo.setNormalData(norm, total, GL_DYNAMIC_DRAW);			
+	vbo.setNormalData(norm, total, GL_DYNAMIC_DRAW);	// throw some normals in there too, not used in rendering
 	
-//	initVBOTest2();
-	//vboMode = 1;
+	
+	// -----------------------------------------------------
+	
+	initVBOTest2();
+	vboMode = 0;
+	
+	
+	// -----------------------------------------------------
+	surfaceGridX = 20;
+	surfaceGridY = 20;
+	surfaceSpacingX = 30.0f;
+	surfaceSpacingY = 30.0f;	
+	
+	surfacePointAmount = surfaceGridX * surfaceGridY;
+	surfaceTriangleAmount = (surfaceGridX-1) * (surfaceGridY-1) * 2;
+	
+	surfacePoints  = new ofVec3f[ surfaceGridX*surfaceGridY ];
+	surfaceNormals = new ofVec3f[ surfaceGridX*surfaceGridY ];
+	surfaceColors  = new ofFloatColor[ surfaceGridX*surfaceGridY ];	
+	surfaceIndices = new ofIndexType[ surfaceTriangleAmount * 3 ];
+	
+	int tmpIndex = 0;
+	for( int i = 0; i < surfaceGridY; i++){
+		for( int j = 0; j < surfaceGridX; j++){
+			float tmpX = (i * surfaceSpacingX) - ( surfaceSpacingX * (surfaceGridX / 2));
+			float tmpZ = (j * surfaceSpacingY) - ( surfaceSpacingY * (surfaceGridY / 2));
+			surfacePoints[tmpIndex].set( tmpX, 0.0f, tmpZ );
+			surfaceNormals[tmpIndex].set( 0.0, 1.0f, 0.0f );
+			surfaceColors[tmpIndex].set( 127.0f, 127.0f, 127.0f );
+			tmpIndex++;
+		}
+	}
+	
+	tmpIndex = 0;
+	for( int i = 0; i < surfaceGridY-1; i++){
+		tmpIndex = i * surfaceGridX;
+		for( int j = 0; j < surfaceGridX-1; j++){
+			
+			int leftOffset		  = j + (i*surfaceGridY);
+			int rightOffset		  = leftOffset + 1;			
+			
+			int bottomLeftIndex   = leftOffset;
+			int bottomRightIndex  = rightOffset;
+			int topRightIndex	  = rightOffset + surfaceGridX;
+			int topLeftIndex	  = leftOffset  + surfaceGridX;
+
+			// triangle 1			
+			surfaceIndices[(tmpIndex*3) + 0] = topRightIndex;
+			surfaceIndices[(tmpIndex*3) + 1] = bottomRightIndex;
+			surfaceIndices[(tmpIndex*3) + 2] = bottomLeftIndex;			
+			tmpIndex++;
+			
+			// triangle 2
+			surfaceIndices[(tmpIndex*3) + 0] = topLeftIndex;
+			surfaceIndices[(tmpIndex*3) + 1] = topRightIndex;					
+			surfaceIndices[(tmpIndex*3) + 2] = bottomLeftIndex;
+			tmpIndex++;
+		}
+	}	
+	
+	cout << "tmpIndex " << tmpIndex << "  tmpIndex*3 " << (tmpIndex*3) << " surfaceTriangleAmount: " << surfaceTriangleAmount << "    " << (surfaceTriangleAmount*3) << endl;
+
+	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
+	surfaceVbo.setColorData(surfaceColors,   surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );
+	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
+	surfaceVbo.setNormalData(surfaceNormals, surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
+
+	surfaceVbo.setIndexData(surfaceIndices,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );		
+	// -----------------------------------------------------	
+	
 	
 	//string extensions = (char*)glGetString(GL_EXTENSIONS);
 	//ofLog(OF_LOG_VERBOSE,extensions);
@@ -264,6 +335,7 @@ void testApp::draw()
 	testShader.end();
 */
 	
+	
 /*	
 	shaderBlur.beginRender();
 		drawSceneSimple();
@@ -282,19 +354,88 @@ void testApp::draw()
 	
 	//drawSceneSimple();
 	//drawSceneVBO();
-	drawSceneModel();	
+	//drawSceneModel();	
 	//drawSceneVBOTest2();
 
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
+	drawSceneLightingTest();
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
+
+	
+	string tmpStr = "fps: "+ofToString(ofGetFrameRate(), 2);
+  	ofSetColor(0, 0, 0); 		ofDrawBitmapString(tmpStr, 11, 16,0);
+    ofSetColor(255, 255, 255); 	ofDrawBitmapString(tmpStr, 10, 15,0);	
 }
 
 
+//--------------------------------------------------------------
+void testApp::drawSceneLightingTest()
+{
+	ofEnableLighting();
 
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
+	_ofEnable( GL_DEPTH_TEST );
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
+	ofPushMatrix();
+
+		checkGlError( glGetError(), __FILE__, __LINE__ );		
+
+		pointLight.enable();	
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
+		ofTranslate( ofGetWidth()/2.0f, ofGetHeight()/2.0f, 0);
+		ofRotate(-mouseX, 0, 1, 0);
+		ofRotate(-mouseY, 1, 0, 0);
+	
+		surfaceVbo.bind();
+	
+		surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount );
+	
+		surfaceVbo.draw(GL_POINTS, 0, surfacePointAmount );
+	
+		surfaceVbo.unbind();	
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );	
+	
+		model.drawFaces();
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );			
+	
+		ofBox( 150.0f, 0.0f, 0.0f, 120.0f );
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );				
+	
+		pointLight.draw();		
+
+		checkGlError( glGetError(), __FILE__, __LINE__ );			
+	
+    ofPopMatrix();
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );			
+	
+	_ofDisable( GL_DEPTH_TEST );	
+
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
+	ofDisableLighting();	
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+}
 
 //--------------------------------------------------------------
 void testApp::drawSceneVBO()
 {
 	// Update
+	
+	ofFloatColor mainCol = ofColor::fromHsb( fmodf(ofGetElapsedTimef() * 50.0f, 255.0f), 255.0f, 255.0f);
+
 	ofVec3f vec;
 	float   r = 0.3;
 	//total = 0;
@@ -315,6 +456,10 @@ void testApp::drawSceneVBO()
 				if(d > 0.0) {
 					pos[index + k] = pos[index + k-1] + (vec * restLength) /d;
 				}	
+				
+				float tmpFrac = k / ((float)LENGTH-1);
+				col[index + k].set( mainCol.r * tmpFrac, mainCol.g * tmpFrac, mainCol.b * tmpFrac );				
+				
 			}
 		}
 	}
@@ -337,8 +482,7 @@ void testApp::drawSceneVBO()
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
 		vbo.updateVertexData(pos, total);
-	
-	//	vbo.updateColorData(col, total);		
+		vbo.updateColorData(col, total);		
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 		
@@ -375,6 +519,8 @@ void testApp::drawSceneModel()
 {
 	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
+	_ofEnable( GL_DEPTH_TEST );
+	
 	animationTime += ofGetLastFrameTime();
 	if( animationTime >= 1.0 ){
 		animationTime = 0.0;
@@ -386,17 +532,21 @@ void testApp::drawSceneModel()
 	
 	ofPushMatrix();
 	
-	ofTranslate(model.getPosition().x, model.getPosition().y, 0);
-	ofRotate(-mouseX, 0, 1, 0);
-	ofTranslate(-model.getPosition().x, -model.getPosition().y, 0);
+		ofTranslate( ofGetWidth()/2.0f, ofGetHeight() * 0.75f, 0);
+		ofRotate(-mouseX, 0, 1, 0);
 	
-	model.drawFaces();
-	//model.drawWireframe();
+		model.drawFaces();
+
+		ofTranslate(200.0f, 0.0f, 0.0f);	
+
+		model.drawWireframe();
 	
-	checkGlError( glGetError(), __FILE__, __LINE__ );		
+		checkGlError( glGetError(), __FILE__, __LINE__ );		
     ofPopMatrix();
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );		
+	
+	_ofDisable( GL_DEPTH_TEST );	
 }
 
 
@@ -1158,12 +1308,9 @@ void testApp::touchDown(ofTouchEventArgs &touch){
 
 
 //--------------------------------------------------------------
-void testApp::touchMoved(ofTouchEventArgs &touch)
-{
-	if( touch.id == 0 )
-	{
-		for (int i = 0; i < nCurveVertexes; i++)
-		{
+void testApp::touchMoved(ofTouchEventArgs &touch){
+	if( touch.id == 0 ){
+		for (int i = 0; i < nCurveVertexes; i++){
 			if (curveVertices[i].bBeingDragged == true){
 				curveVertices[i].x = touch.x/appIphoneScale;
 				curveVertices[i].y = touch.y/appIphoneScale;
@@ -1171,6 +1318,7 @@ void testApp::touchMoved(ofTouchEventArgs &touch)
 		}
 	}
 }
+
 
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs &touch){
@@ -1183,5 +1331,7 @@ void testApp::touchUp(ofTouchEventArgs &touch){
 
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs &touch){
-
+	
 }
+
+

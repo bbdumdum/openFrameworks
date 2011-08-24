@@ -38,6 +38,7 @@
 		BD9E129713F4507C0001B4F1 /* OpenGLESString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128113F4507C0001B4F1 /* OpenGLESString.cpp */; };
 		BD9E129813F4507C0001B4F1 /* OpenGLESUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128213F4507C0001B4F1 /* OpenGLESUtil.cpp */; };
 		BD9E129913F4507C0001B4F1 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128413F4507C0001B4F1 /* ofGLES2Renderer.cpp */; };
+		CB10693B1403BFE9005789C1 /* testAppVBOTest2.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB10693A1403BFE9005789C1 /* testAppVBOTest2.mm */; };
 		CB836CCB13DC376C003E8700 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */; };
 		CBB7773C13F556220014274B /* alphaTest.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772713F556220014274B /* alphaTest.frag */; };
 		CBB7773D13F556220014274B /* clipPlane.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772813F556220014274B /* clipPlane.frag */; };
@@ -165,6 +166,7 @@
 		BD9E128213F4507C0001B4F1 /* OpenGLESUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESUtil.cpp; sourceTree = "<group>"; };
 		BD9E128413F4507C0001B4F1 /* ofGLES2Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofGLES2Renderer.cpp; sourceTree = "<group>"; };
 		BD9E128513F4507C0001B4F1 /* ofGLES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofGLES2Renderer.h; sourceTree = "<group>"; };
+		CB10693A1403BFE9005789C1 /* testAppVBOTest2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testAppVBOTest2.mm; sourceTree = "<group>"; };
 		CB3F08C013E96EEC0093CE64 /* AMathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMathHelpers.h; sourceTree = "<group>"; };
 		CB836CC713DC376C003E8700 /* ofx3DBaseLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofx3DBaseLoader.h; path = ../../../addons/ofxAssimpModelLoader/src/ofx3DBaseLoader.h; sourceTree = "<group>"; };
 		CB836CC813DC376C003E8700 /* ofxAssimpMeshHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpMeshHelper.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.h; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
+				CB10693A1403BFE9005789C1 /* testAppVBOTest2.mm */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -714,6 +717,7 @@
 				CBB7774F13F556220014274B /* texture2.frag in Sources */,
 				CBB7775013F556220014274B /* texture2.vert in Sources */,
 				CBD4CB2A13FFC1F900F0C042 /* ShaderBlurES2.cpp in Sources */,
+				CB10693B1403BFE9005789C1 /* testAppVBOTest2.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
