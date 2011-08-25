@@ -1075,6 +1075,21 @@ void ofDrawBitmapString(string textString, float x, float y, float z){
 //--------------------------------------------------
 
 
+//----------------------------------------
+void ofLightingModel( unsigned int model ){
+	renderer->setLightingModel( model );
+}
+
+//----------------------------------------
+void ofEnableDepthTest(){
+	_ofEnable( GL_DEPTH_TEST );
+}
+
+//----------------------------------------
+void ofDisableDepthTest(){
+	_ofDisable( GL_DEPTH_TEST );	
+}
+
 
 //---------------------------------------------------
 // Private GL hooks needed by the renderer
@@ -1150,11 +1165,6 @@ void _ofTexImage2D (unsigned int target, int level, int internalformat,
 //----------------------------------------
 void _ofTexEnvf(unsigned int target, unsigned int pname, unsigned int param){
 	renderer->_texEnvf( target, pname, param );
-}
-
-//----------------------------------------
-void ofLightingModel( unsigned int model ){
-	renderer->setLightingModel( model );
 }
 
 

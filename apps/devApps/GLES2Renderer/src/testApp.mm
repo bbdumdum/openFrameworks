@@ -22,7 +22,7 @@ void testApp::setup()
 	//ipad doesn't need no scale ;) 
 	appIphoneScale = 1.0;
 
-	ofBackground(220,220,220);	
+	ofBackground(140,140,140);	
 	ofSetFrameRate(60);
 	
 	ofSetCircleResolution( 50 );
@@ -65,8 +65,15 @@ void testApp::setup()
 	
 	ofSetGlobalAmbientColor( ofColor( 40.0f, 40.0f, 40.0f) );		
 	
-	pointLight.setDiffuseColor( ofColor( 0.0f, 255.0f, 0.0f) );
-	pointLight.setSpecularColor(ofColor(127, 127, 127));
+	//ofSetGlobalAmbientColor( ofColor( 255.0f, 255.0f, 255.0f) );		
+	
+	//GLfloat global_ambient[] = { 40.0f/255.0f, 40.0f/255.0f, 40.0f/255.0f, 1.0f };
+	//ofGetGLES2Context()->glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);	
+	
+	
+	pointLight.setAmbientColor( ofFloatColor( 0.0f, 0.0f, 0.0f) );
+	pointLight.setDiffuseColor( ofFloatColor( 1.0f, 1.0f, 1.0f) );
+	pointLight.setSpecularColor(ofFloatColor( 0.5f, 0.5f, 0.5f) );
 	pointLight.setPosition( 0.0f, 10.0f, 0.0f );	
 	pointLight.setPointLight();
 	
@@ -78,13 +85,14 @@ void testApp::setup()
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
-	directionalLight.setDiffuseColor( ofColor(0, 0, 255) );
-	directionalLight.setSpecularColor( ofColor(255, 255, 255) );
-	directionalLight.setDirectional();
-	directionalLight.setOrientation( ofVec3f(0, 90, 0) );	
-	
-//	material.setSpecularColor(ofColor(255, 255, 255, 255));	
-//	material.setShininess( 120 );
+//	directionalLight.setDiffuseColor( ofColor(0, 0, 255) );
+//	directionalLight.setSpecularColor( ofColor(255, 255, 255) );
+//	directionalLight.setDirectional();
+//	directionalLight.setOrientation( ofVec3f(0, 90, 0) );	
+
+	material.setDiffuseColor(ofFloatColor(30.0f / 255.0f, 161.0f / 255.0f, 244.0f / 255.0f, 1.0f));		
+	material.setSpecularColor(ofFloatColor(1.0f, 1.0f, 1.0f, 1.0f));	
+	material.setShininess( 120 );
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
@@ -206,6 +214,8 @@ void testApp::setup()
 	
 	
 	// -----------------------------------------------------
+	// Massive overkill to get a nice floor to light, it needs resolution
+	
 	surfaceGridX = 20;
 	surfaceGridY = 20;
 	surfaceSpacingX = 30.0f;
@@ -258,12 +268,6 @@ void testApp::setup()
 		}
 	}	
 	
-	cout << endl;
-	cout << "***************************************" << endl;
-	cout << "tmpIndex " << tmpIndex << "  tmpIndex*3 " << (tmpIndex*3) << " surfaceTriangleAmount: " << surfaceTriangleAmount << "    " << (surfaceTriangleAmount*3) << endl;
-	cout << "***************************************" << endl;
-	cout << endl;
-	
 	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
 	surfaceVbo.setColorData(surfaceColors,   surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );
 	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
@@ -296,17 +300,16 @@ void testApp::update()
 {
 	counter++;
 	
-	float radius = 70.f; 
-	ofVec3f center(0.0f,0.0f, 0);		
+	float radius = 110.f; 
+	ofVec3f center(0.0f,-100.0f, 0);		
+	
+	pointLight.setPosition( cos(ofGetElapsedTimef()*1.8f) * radius * 2 + center.x, 
+						    sin(ofGetElapsedTimef()*2.2f) * radius * 2 + center.y, 
+						   -cos(ofGetElapsedTimef()*2.2f) * radius * 2 + center.z ); 
 	
 	
-	pointLight.setPosition( cos(ofGetElapsedTimef()*0.8f) * radius * 2 + center.x, 
-						    sin(ofGetElapsedTimef()*1.2f) * radius * 2 + center.y, 
-						   -cos(ofGetElapsedTimef()*1.2f) * radius * 2 + center.z ); 
-	
-	
-	spotLight.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
-	spotLight.setPosition( mouseX, mouseY, 200);	
+	//spotLight.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
+	//spotLight.setPosition( mouseX, mouseY, 200);	
 	
 }
 
@@ -375,26 +378,25 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::drawSceneLightingTest()
 {
+	
 	ofLightingModel(GL_SMOOTH);	
 	
 	ofEnableLighting();
 	
-	_ofEnable( GL_DEPTH_TEST );
+	ofEnableDepthTest();
 	
 	ofPushMatrix();
-
-		pointLight.enable();	
-	pointLight.setPosition( pointLight.getPosition() );
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
 		ofTranslate( ofGetWidth()/2.0f, ofGetHeight()/2.0f, 0);
 		ofRotate(-mouseX, 0, 1, 0);
 		ofRotate(-mouseY, 1, 0, 0);
+
+		pointLight.enable();	
+		pointLight.setPosition( pointLight.getPosition() );	// Lighting position has to be set when you have the matrix you want, this forces a call to onPositionChanged
 	
-	
-		pointLight.draw();		
-	
+		material.begin();
 		surfaceVbo.bind();
 	
 		surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount * 3 );
@@ -403,14 +405,19 @@ void testApp::drawSceneLightingTest()
 	
 		surfaceVbo.unbind();	
 		
+		material.end();
+	
 		model.drawFaces();
 	
 		ofBox( 150.0f, 0.0f, 0.0f, 120.0f );
 	
+		pointLight.disable();
+	
+		pointLight.draw();		
 	
     ofPopMatrix();
 	
-	_ofDisable( GL_DEPTH_TEST );	
+	ofDisableDepthTest();
 	
 	ofDisableLighting();	
 	

@@ -184,6 +184,8 @@ bool 	ofbClearBg();
 // end background
 //---------------------------------------------------
 
+void ofEnableDepthTest();
+void ofDisableDepthTest();
 
 void ofLightingModel( unsigned int model );
 

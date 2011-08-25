@@ -86,10 +86,7 @@
 			renderer = [[ES2Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
 		
 		#else
-            //renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
-            
-			// Andreas: TEMP, for some reason depth is broken in ES1 now, will investigate, hack so I can switch back and forth for now
-			renderer = [[ES1Renderer alloc] initWithDepth:false andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];		
+            renderer = [[ES1Renderer alloc] initWithDepth:depth andAA:fsaaEnabled andFSAASamples:samples andRetina:retinaEnabled];
 		#endif
 		
 		if (!renderer) {

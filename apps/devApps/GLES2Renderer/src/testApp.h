@@ -103,8 +103,8 @@ public:
 	ofTrueTypeFont  franklinBook14;
 	
 	ofLight pointLight;
-	ofLight spotLight;
-	ofLight directionalLight;	
+	//ofLight spotLight;
+	//ofLight directionalLight;	
 	bool bPointLight, bSpotLight, bDirLight;
 	
 	ofMaterial material;	
