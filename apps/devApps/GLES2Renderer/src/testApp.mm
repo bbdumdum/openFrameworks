@@ -90,9 +90,10 @@ void testApp::setup()
 //	directionalLight.setDirectional();
 //	directionalLight.setOrientation( ofVec3f(0, 90, 0) );	
 
-	material.setDiffuseColor(ofFloatColor(30.0f / 255.0f, 161.0f / 255.0f, 244.0f / 255.0f, 1.0f));		
+	//material.setDiffuseColor(ofFloatColor(30.0f / 255.0f, 161.0f / 255.0f, 244.0f / 255.0f, 1.0f));		
+	material.setDiffuseColor(ofFloatColor(0.0f, 1.0f, 0.0f, 1.0f));			
 	material.setSpecularColor(ofFloatColor(1.0f, 1.0f, 1.0f, 1.0f));	
-	material.setShininess( 120 );
+	material.setShininess( 127 );
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
@@ -127,7 +128,7 @@ void testApp::setup()
     }
 
 	 ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-	animationTime = 0.0f;
+	 animationTime = 0.0f;
 	 
 	 //some model / light stuff
 	 //glShadeModel(GL_SMOOTH);
@@ -303,9 +304,9 @@ void testApp::update()
 	float radius = 110.f; 
 	ofVec3f center(0.0f,-100.0f, 0);		
 	
-	pointLight.setPosition( cos(ofGetElapsedTimef()*1.8f) * radius * 2 + center.x, 
-						    sin(ofGetElapsedTimef()*2.2f) * radius * 2 + center.y, 
-						   -cos(ofGetElapsedTimef()*2.2f) * radius * 2 + center.z ); 
+	pointLight.setPosition( cos(ofGetElapsedTimef()*0.8f) * radius * 2 + center.x, 
+						    sin(ofGetElapsedTimef()*0.6f) * radius * 2 + center.y, 
+						   -cos(ofGetElapsedTimef()*0.7f) * radius * 2 + center.z ); 
 	
 	
 	//spotLight.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
@@ -360,14 +361,10 @@ void testApp::draw()
 	//drawSceneVBO();
 	//drawSceneModel();	
 	//drawSceneVBOTest2();
-
-	checkGlError( glGetError(), __FILE__, __LINE__ );		
-	
-	drawSceneLightingTest();
+	//drawSceneLightingTest();
+	drawSceneLightingCubeGridTest();
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
-	
-
 	
 	string tmpStr = "fps: "+ofToString(ofGetFrameRate(), 2);
   	ofSetColor(0, 0, 0); 		ofDrawBitmapString(tmpStr, 11, 16,0);
@@ -380,12 +377,12 @@ void testApp::drawSceneLightingTest()
 {
 	
 	ofLightingModel(GL_SMOOTH);	
-	
-	ofEnableLighting();
-	
+		
 	ofEnableDepthTest();
 	
 	ofPushMatrix();
+	
+		ofEnableLighting();
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
@@ -397,21 +394,21 @@ void testApp::drawSceneLightingTest()
 		pointLight.setPosition( pointLight.getPosition() );	// Lighting position has to be set when you have the matrix you want, this forces a call to onPositionChanged
 	
 		material.begin();
+	
 		surfaceVbo.bind();
-	
-		surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount * 3 );
-	
-		//surfaceVbo.draw(GL_POINTS, 0, surfacePointAmount );
-	
+			surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount * 3 );
 		surfaceVbo.unbind();	
 		
 		material.end();
 	
 		model.drawFaces();
 	
-		ofBox( 150.0f, 0.0f, 0.0f, 120.0f );
+		ofSetColor(255, 0, 0);
+		ofBox( 180.0f, -61.0f, 0.0f, 120.0f );
 	
 		pointLight.disable();
+	
+		ofDisableLighting();		
 	
 		pointLight.draw();		
 	
@@ -419,9 +416,70 @@ void testApp::drawSceneLightingTest()
 	
 	ofDisableDepthTest();
 	
-	ofDisableLighting();	
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+}
+
+//--------------------------------------------------------------
+void testApp::drawSceneLightingCubeGridTest()
+{
+	int gridResX = 10;
+	int gridResY = 10;	
+	float gridSpacingX = 50.0f;
+	float gridSpacingY = 50.0f;	
+	
+	float cubeSize = 40.0f;
+	
+	ofLightingModel(GL_SMOOTH);	
+	
+	ofEnableDepthTest();
+	
+	ofPushMatrix();
+	
+		ofEnableLighting();
+		
+			checkGlError( glGetError(), __FILE__, __LINE__ );	
+			
+			ofTranslate( ofGetWidth()/2.0f, ofGetHeight()/2.0f, 0);
+			ofRotate(-mouseX, 0, 1, 0);
+			ofRotate(-mouseY, 1, 0, 0);	
+			
+	
+			pointLight.enable();	
+	
+
+			pointLight.setPosition( pointLight.getPosition() );	// trying a setting a normalized light position
+	
+			material.begin();	
+	
+			for( int i = 0; i < gridResX; i++){
+				for( int j = 0; j < gridResY; j++){
+					float tmpX = (i * gridSpacingX) - ( gridSpacingX * (gridResX / 2));
+					float tmpZ = (j * gridSpacingY) - ( gridSpacingY * (gridResY / 2));		
+					
+					ofPushMatrix();
+					
+						ofRotateX( (i + j) * 12 );
+					
+						ofBox( tmpX, 0.0f, tmpZ, cubeSize );
+					
+					ofPopMatrix();
+				}
+			}	
+			
+			material.end();
+	
+			pointLight.disable();
+		
+		ofDisableLighting();		
+		
+		pointLight.draw();		
+	
+    ofPopMatrix();
+	
+	ofDisableDepthTest();
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );		
+
 }
 
 //--------------------------------------------------------------

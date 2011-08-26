@@ -27,6 +27,8 @@ void ShaderBlurES2::setup(int fboW, int fboH){
 	
 	clearColor.set(0,0,0,255);
 	
+	ofDisableArbTex(); // Just in case ARB tex is supported in the future
+	
 	ofFbo::Settings tmpSettings = ofFbo::Settings(); 
 	tmpSettings.width  = fboW;
 	tmpSettings.height = fboH;	
@@ -50,6 +52,8 @@ void ShaderBlurES2::setup(int fboW, int fboH){
 
 	pixelSizeX = 1.0f / texDat.tex_w;
 	pixelSizeY = 1.0f / texDat.tex_h;	
+	
+	ofEnableArbTex();
 	
 	noPasses = 1;
 	blurDistance = 1.1;

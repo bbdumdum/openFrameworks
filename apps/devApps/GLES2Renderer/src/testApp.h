@@ -69,6 +69,7 @@ public:
 	void drawSceneVBOTest2();	
 	void drawSceneSimple();
 	void drawSceneLightingTest();
+	void drawSceneLightingCubeGridTest();	
 
 	//void drawSceneCustomShaderForVBOTest();
 	//void drawSceneEasycamTest();
