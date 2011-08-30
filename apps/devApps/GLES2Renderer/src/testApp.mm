@@ -97,11 +97,10 @@ void testApp::setup()
 
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
-	ofSetSmoothLighting(true);
+	//ofSetSmoothLighting(true);
 	
 	bPointLight = bSpotLight = bDirLight = true;
 	
-	//ofLightingModel(GL_SMOOTH);
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );
 	
@@ -109,27 +108,23 @@ void testApp::setup()
 	// we need GL_TEXTURE_2D for our models coords.
 	ofDisableArbTex();
  
+
 	string modelPath = "astroBoy_walk.dae";
 	//string modelPath = "teapot-530verts.dae";	
-    if(model.loadModel(modelPath,true)){
-    	model.setAnimation(0);
+	model = new ofxAssimpModelLoader();
+
+	if(model->loadModel(modelPath,true)){
+    	model->setAnimation(0);
     	//model.setPosition(ofGetWidth()/2, (float)ofGetHeight() * 0.75 , 0);
     	//model.createLightsFromAiModel();
     	//model.disableTextures();
     	//model.disableMaterials();
-		
-    	mesh = model.getMesh(0);
-    	position = model.getPosition();
-    	normScale = model.getNormalizedScale();
-    	scale = model.getScale();
-    	sceneCenter = model.getSceneCenter();
-    	material = model.getMaterialForMesh(0);
-        tex = model.getTextureForMesh(0);
     }
 
 	 ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 	 animationTime = 0.0f;
-	 
+
+ 
 	 //some model / light stuff
 	 //glShadeModel(GL_SMOOTH);
 	 //light.enable();
@@ -236,8 +231,8 @@ void testApp::setup()
 			float tmpX = (i * surfaceSpacingX) - ( surfaceSpacingX * (surfaceGridX / 2));
 			float tmpZ = (j * surfaceSpacingY) - ( surfaceSpacingY * (surfaceGridY / 2));
 			surfacePoints[tmpIndex].set( tmpX, 0.0f, tmpZ );
-			surfaceNormals[tmpIndex].set( 0.0, 1.0f, 0.0f );
-			surfaceColors[tmpIndex].set( 127.0f, 127.0f, 127.0f );
+			surfaceNormals[tmpIndex].set( 0.0, -1.0f, 0.0f );
+			surfaceColors[tmpIndex].set( 1.0f, 1.0f, 1.0f );
 			tmpIndex++;
 		}
 	}
@@ -257,14 +252,14 @@ void testApp::setup()
 
 			// triangle 1			
 			surfaceIndices[(tmpIndex*3) + 0] = topRightIndex;
-			surfaceIndices[(tmpIndex*3) + 1] = bottomRightIndex;
-			surfaceIndices[(tmpIndex*3) + 2] = bottomLeftIndex;			
+			surfaceIndices[(tmpIndex*3) + 1] = bottomLeftIndex;
+			surfaceIndices[(tmpIndex*3) + 2] = bottomRightIndex;					
 			tmpIndex++;
 			
-			// triangle 2
+			// triangle 2			
 			surfaceIndices[(tmpIndex*3) + 0] = topLeftIndex;
-			surfaceIndices[(tmpIndex*3) + 1] = topRightIndex;					
-			surfaceIndices[(tmpIndex*3) + 2] = bottomLeftIndex;
+			surfaceIndices[(tmpIndex*3) + 1] = bottomLeftIndex;					
+			surfaceIndices[(tmpIndex*3) + 2] = topRightIndex;			
 			tmpIndex++;
 		}
 	}	
@@ -361,14 +356,14 @@ void testApp::draw()
 	//drawSceneVBO();
 	//drawSceneModel();	
 	//drawSceneVBOTest2();
-	//drawSceneLightingTest();
-	drawSceneLightingCubeGridTest();
+	drawSceneLightingTest();
+	//drawSceneLightingCubeGridTest();
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
 	string tmpStr = "fps: "+ofToString(ofGetFrameRate(), 2);
-  	ofSetColor(0, 0, 0); 		ofDrawBitmapString(tmpStr, 11, 16,0);
-    ofSetColor(255, 255, 255); 	ofDrawBitmapString(tmpStr, 10, 15,0);	
+  	ofSetColor(0, 0, 0); 		ofDrawBitmapString(tmpStr, 21, 26,0);
+    ofSetColor(255, 255, 255); 	ofDrawBitmapString(tmpStr, 20, 25,0);	
 }
 
 
@@ -376,7 +371,17 @@ void testApp::draw()
 void testApp::drawSceneLightingTest()
 {
 	
-	ofLightingModel(GL_SMOOTH);	
+	// update animation 
+	animationTime += ofGetLastFrameTime();
+	if( animationTime >= 1.0 ){
+		animationTime = 0.0;
+	}
+	model->setNormalizedTime(animationTime);
+	
+	
+	_ofEnable( GL_CULL_FACE );	
+	
+	ofLightingModel(GL_SMOOTH);	// We want per pixel lighting.
 		
 	ofEnableDepthTest();
 	
@@ -401,7 +406,9 @@ void testApp::drawSceneLightingTest()
 		
 		material.end();
 	
-		model.drawFaces();
+		model->drawFaces();
+	
+		//_ofEnable(GL_CULL_FACE);
 	
 		ofSetColor(255, 0, 0);
 		ofBox( 180.0f, -61.0f, 0.0f, 120.0f );
@@ -425,9 +432,12 @@ void testApp::drawSceneLightingCubeGridTest()
 	int gridResX = 10;
 	int gridResY = 10;	
 	float gridSpacingX = 50.0f;
-	float gridSpacingY = 50.0f;	
+	float gridSpacingY = 50.0f;	 
 	
 	float cubeSize = 40.0f;
+		
+	
+	_ofEnable(GL_NORMALIZE);	
 	
 	ofLightingModel(GL_SMOOTH);	
 	
@@ -443,10 +453,8 @@ void testApp::drawSceneLightingCubeGridTest()
 			ofRotate(-mouseX, 0, 1, 0);
 			ofRotate(-mouseY, 1, 0, 0);	
 			
-	
 			pointLight.enable();	
 	
-
 			pointLight.setPosition( pointLight.getPosition() );	// trying a setting a normalized light position
 	
 			material.begin();	
@@ -574,7 +582,7 @@ void testApp::drawSceneModel()
 	
 	_ofEnable( GL_DEPTH_TEST );
 	
-	animationTime += ofGetLastFrameTime();
+/*	animationTime += ofGetLastFrameTime();
 	if( animationTime >= 1.0 ){
 		animationTime = 0.0;
 	}
@@ -596,7 +604,7 @@ void testApp::drawSceneModel()
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );		
     ofPopMatrix();
-	
+*/	
 	checkGlError( glGetError(), __FILE__, __LINE__ );		
 	
 	_ofDisable( GL_DEPTH_TEST );	

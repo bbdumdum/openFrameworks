@@ -116,7 +116,7 @@ public:
 
 	float appIphoneScale;
 	
-	ofxAssimpModelLoader model;
+	ofxAssimpModelLoader* model;
 	float animationTime;
 	
 	std::string typeStr;

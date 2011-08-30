@@ -298,6 +298,8 @@ void OpenGLES20Context::prepareToDraw()
 	openGLESState.setModelViewProjectionMatrix(mvp);
 	
 	if (openGLESState.isNormal()) {
+		
+		/*
 		// If only uniform scaling used (TODO: detect somehow)
 		Matrix3x3<GLfloat> modelViewMatrix3x3;
 		OpenGLESMath::copyMatrix4x4UpperLeftToMatrix3x3(&modelViewMatrix3x3, modelViewMatrix);
@@ -308,18 +310,25 @@ void OpenGLES20Context::prepareToDraw()
 		if (openGLESState.isRescaleNormal()) {
 			openGLESState.setRescaleNormalFactor(1.0f/sqrtf(modelViewMatrix3x3.m[0]*modelViewMatrix3x3.m[0] + modelViewMatrix3x3.m[3]*modelViewMatrix3x3.m[3] + modelViewMatrix3x3.m[6]*modelViewMatrix3x3.m[6]));
 		}
+		*/
+		 
 		
 		// else do it slow but works always
-		/*Matrix4x4<GLfloat> transposeInverseModelViewMatrix;
-		 OpenGLESMath::inverse(&transposeInverseModelViewMatrix, modelViewMatrix);
-		 OpenGLESMath::transpose(&transposeInverseModelViewMatrix);
-		 Matrix3x3<GLfloat> modelViewMatrix3x3;
-		 OpenGLESMath::copyMatrix4x4UpperLeftToMatrix3x3(&modelViewMatrix3x3, &transposeInverseModelViewMatrix);
-		 openGLESState.setTransposeAdjointModelViewMatrix(modelViewMatrix3x3);
+		
+		// Andreas: I'm getting flipped lighting with the code above, but this 'slower' code works
+		// It would be nice to detect if the view has changed inany way an cache this calculation
+		
+		Matrix4x4<GLfloat> transposeInverseModelViewMatrix;
+		OpenGLESMath::inverse(&transposeInverseModelViewMatrix, modelViewMatrix);
+		OpenGLESMath::transpose(&transposeInverseModelViewMatrix);
+		Matrix3x3<GLfloat> modelViewMatrix3x3;
+		OpenGLESMath::copyMatrix4x4UpperLeftToMatrix3x3(&modelViewMatrix3x3, &transposeInverseModelViewMatrix);
+		openGLESState.setTransposeAdjointModelViewMatrix(modelViewMatrix3x3);
 		 
-		 if (openGLESState.isRescaleNormal()) {
-		 openGLESState.setRescaleNormalFactor(1.0f/sqrtf(transposeInverseModelViewMatrix.m[0]*transposeInverseModelViewMatrix.m[0] + transposeInverseModelViewMatrix.m[4]*transposeInverseModelViewMatrix.m[4] + transposeInverseModelViewMatrix.m[8]*transposeInverseModelViewMatrix.m[8]));
-		 }*/
+		if (openGLESState.isRescaleNormal()) {
+			openGLESState.setRescaleNormalFactor(1.0f/sqrtf(transposeInverseModelViewMatrix.m[0]*transposeInverseModelViewMatrix.m[0] + transposeInverseModelViewMatrix.m[4]*transposeInverseModelViewMatrix.m[4] + transposeInverseModelViewMatrix.m[8]*transposeInverseModelViewMatrix.m[8]));
+		}
+		
 	}
 	
 	for (int i = 0; i < implementation->maxTextureImageUnits; i++) {

@@ -54,6 +54,8 @@ ofGLES2Renderer::ofGLES2Renderer(int _glVersion){
 	rectPoints.resize(4);
 	triPoints.resize(3);
 
+	gl->glHint(GL_LIGHTING_HINT, GL_FASTEST ); // Do not start with per pixel lighting as it is slower
+	
 	currentFbo = NULL;
 }
 
