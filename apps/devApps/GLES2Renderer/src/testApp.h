@@ -7,8 +7,10 @@
 #include "ofxAssimpModelLoader.h"
 
 #include "Utils/ShaderBlurES2.h"
+#include "Utils/SimpleTerrain.h"
 
 #include "Math/AMathHelpers.h"
+#include "Math/PerlinNoise.h"
 
 
 // Copy pasted some code from the net for sanity checking, temporarily need this.
@@ -70,8 +72,8 @@ public:
 	void drawSceneSimple();
 	void drawSceneLightingTest();
 	void drawSceneLightingCubeGridTest();	
+	void drawSceneCustomShaderForVBOTest();
 
-	//void drawSceneCustomShaderForVBOTest();
 	//void drawSceneEasycamTest();
 	
 	void debugDraw();
@@ -92,6 +94,7 @@ public:
 	
 #ifdef OPENGLES_VERSION_2	
 	ofShader testShader;
+	ofShader testSurfaceShader;	
 	ShaderBlurES2 shaderBlur;
 #endif	
 	ofMesh testMesh;
@@ -128,13 +131,21 @@ public:
 	float* cubeSizes*/;
 	
 	// ------------------------------------
+	
+	SimpleTerrain testTerrain;
+	ofVbo surfaceVbo;
+	
+	SimpleTerrain testDistortedTerrain;	
+	PerlinNoise terrainNoise;
+	ofVbo distortedTerrainVbo;
+	
+	
 	int surfaceGridX;
 	int surfaceGridY;
 	float surfaceSpacingX;
 	float surfaceSpacingY;	
 	int surfacePointAmount;	
 	int surfaceTriangleAmount;
-	ofVbo surfaceVbo;
 	ofVec3f* surfacePoints;
 	ofVec3f* surfaceNormals;
 	ofFloatColor* surfaceColors;

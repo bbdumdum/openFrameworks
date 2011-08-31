@@ -46,10 +46,10 @@ typedef int             GLclampx;
 /* GL types for handling large vertex buffer objects */
 
 #ifndef __ANDROID__
-	//typedef int             GLintptr;
-	//typedef int             GLsizeiptr;
-	typedef long             GLintptr;
-	typedef long             GLsizeiptr; // Andreas: This changed from Snow Leopard to Lion, we'll need to detect it
+	typedef int             GLintptr;
+	typedef int             GLsizeiptr;
+//	typedef long             GLintptr;
+//	typedef long             GLsizeiptr; // Andreas: This changed from Snow Leopard to Lion I think, or iOS 4.3 to iOS 5.0, we'll need to detect it
 #else
 	typedef long             GLintptr;
 	typedef long             GLsizeiptr;

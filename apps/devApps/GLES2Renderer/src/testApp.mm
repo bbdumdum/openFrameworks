@@ -160,6 +160,8 @@ void testApp::setup()
 	shaderBlur.setup( 1024, 768 );
 	shaderBlur.clearColor.set( 100, 100, 100, 255);
 
+	testSurfaceShader.load("shaders/TestSurfaceShader");
+	
 #endif	
 	
 	mouseX = 400;
@@ -210,68 +212,29 @@ void testApp::setup()
 	
 	
 	// -----------------------------------------------------
-	// Massive overkill to get a nice floor to light, it needs resolution
-	
-	surfaceGridX = 20;
-	surfaceGridY = 20;
-	surfaceSpacingX = 30.0f;
-	surfaceSpacingY = 30.0f;	
-	
-	surfacePointAmount = surfaceGridX * surfaceGridY;
-	surfaceTriangleAmount = ((surfaceGridX-1) * (surfaceGridY-1)) * 2;
-	
-	surfacePoints  = new ofVec3f[ surfaceGridX*surfaceGridY ];
-	surfaceNormals = new ofVec3f[ surfaceGridX*surfaceGridY ];
-	surfaceColors  = new ofFloatColor[ surfaceGridX*surfaceGridY ];	
-	surfaceIndices = new ofIndexType[ surfaceTriangleAmount * 3 ];
-	
-	int tmpIndex = 0;
-	for( int i = 0; i < surfaceGridY; i++){
-		for( int j = 0; j < surfaceGridX; j++){
-			float tmpX = (i * surfaceSpacingX) - ( surfaceSpacingX * (surfaceGridX / 2));
-			float tmpZ = (j * surfaceSpacingY) - ( surfaceSpacingY * (surfaceGridY / 2));
-			surfacePoints[tmpIndex].set( tmpX, 0.0f, tmpZ );
-			surfaceNormals[tmpIndex].set( 0.0, -1.0f, 0.0f );
-			surfaceColors[tmpIndex].set( 1.0f, 1.0f, 1.0f );
-			tmpIndex++;
-		}
-	}
-	
-	tmpIndex = 0;
-	for( int i = 0; i < surfaceGridY-1; i++){
-		//tmpIndex = i * surfaceGridX;
-		for( int j = 0; j < surfaceGridX-1; j++){
-			
-			int leftOffset		  = j + (i*surfaceGridX);
-			int rightOffset		  = leftOffset + 1;			
-			
-			int bottomLeftIndex   = leftOffset;
-			int bottomRightIndex  = rightOffset;
-			int topRightIndex	  = rightOffset + surfaceGridX;
-			int topLeftIndex	  = leftOffset  + surfaceGridX;
+	// Massive overkill to get a nice floor to light, it needs resolution (when not using per pixel lighting)
 
-			// triangle 1			
-			surfaceIndices[(tmpIndex*3) + 0] = topRightIndex;
-			surfaceIndices[(tmpIndex*3) + 1] = bottomLeftIndex;
-			surfaceIndices[(tmpIndex*3) + 2] = bottomRightIndex;					
-			tmpIndex++;
-			
-			// triangle 2			
-			surfaceIndices[(tmpIndex*3) + 0] = topLeftIndex;
-			surfaceIndices[(tmpIndex*3) + 1] = bottomLeftIndex;					
-			surfaceIndices[(tmpIndex*3) + 2] = topRightIndex;			
-			tmpIndex++;
-		}
-	}	
 	
-	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
-	surfaceVbo.setColorData(surfaceColors,   surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );
-	surfaceVbo.setVertexData(surfacePoints,  surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
-	surfaceVbo.setNormalData(surfaceNormals, surfaceGridX*surfaceGridY, GL_DYNAMIC_DRAW );	
-
-	surfaceVbo.setIndexData(surfaceIndices,  surfaceTriangleAmount*3, GL_DYNAMIC_DRAW );		
+	testTerrain.setup( 20, 20, 600.0f, 600.0f );
+	
+	testTerrain.computeVertexNormals(); // testing testing
+	
+	surfaceVbo.setVertexData( testTerrain.surfacePoints,  testTerrain.pointAmount, GL_DYNAMIC_DRAW );	
+	surfaceVbo.setColorData(  testTerrain.surfaceColors,  testTerrain.pointAmount, GL_DYNAMIC_DRAW );
+	surfaceVbo.setNormalData( testTerrain.surfaceNormals, testTerrain.pointAmount, GL_DYNAMIC_DRAW );	
+	
+	surfaceVbo.setIndexData(  testTerrain.surfaceIndices,  testTerrain.triangleAmount*3, GL_DYNAMIC_DRAW );	
 	// -----------------------------------------------------	
 	
+	testDistortedTerrain.setup( 30, 30, 600.0f, 600.0f );	
+	
+	distortedTerrainVbo.setVertexData( testDistortedTerrain.surfacePoints,  testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );	
+	distortedTerrainVbo.setColorData(  testDistortedTerrain.surfaceColors,  testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );
+	distortedTerrainVbo.setNormalData( testDistortedTerrain.surfaceNormals, testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );	
+	
+	distortedTerrainVbo.setIndexData(  testDistortedTerrain.surfaceIndices,  testDistortedTerrain.triangleAmount*3, GL_DYNAMIC_DRAW );	
+	
+	terrainNoise.Set( 0.5,  0.1f, 180.0f, 3, 12345 );
 	
 	//string extensions = (char*)glGetString(GL_EXTENSIONS);
 	//ofLog(OF_LOG_VERBOSE,extensions);
@@ -296,8 +259,9 @@ void testApp::update()
 {
 	counter++;
 	
-	float radius = 110.f; 
-	ofVec3f center(0.0f,-100.0f, 0);		
+	float radius = 80.0f; 
+	//ofVec3f center(0.0f,-110.0f, 0);	
+	ofVec3f center(0.0f,-200.0f, 0);		
 	
 	pointLight.setPosition( cos(ofGetElapsedTimef()*0.8f) * radius * 2 + center.x, 
 						    sin(ofGetElapsedTimef()*0.6f) * radius * 2 + center.y, 
@@ -356,8 +320,9 @@ void testApp::draw()
 	//drawSceneVBO();
 	//drawSceneModel();	
 	//drawSceneVBOTest2();
-	drawSceneLightingTest();
+	//drawSceneLightingTest();
 	//drawSceneLightingCubeGridTest();
+	drawSceneCustomShaderForVBOTest();
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 	
@@ -366,6 +331,76 @@ void testApp::draw()
     ofSetColor(255, 255, 255); 	ofDrawBitmapString(tmpStr, 20, 25,0);	
 }
 
+//--------------------------------------------------------------
+void testApp::drawSceneCustomShaderForVBOTest()
+{
+
+	//terrainNoise
+	for( int i = 0; i < testDistortedTerrain.pointAmount; i++ ){
+		float tmpX = testDistortedTerrain.surfacePoints[i].x + (ofGetElapsedTimef() * 20.4f );
+		float tmpY = testDistortedTerrain.surfacePoints[i].z + (ofGetElapsedTimef() * 20.0f );
+		
+		tmpX *= 0.1f;
+		tmpY *= 0.1f;
+		
+		testDistortedTerrain.surfacePoints[i].y = terrainNoise.GetHeight( tmpX, tmpY );
+	}
+	testDistortedTerrain.computeVertexNormals();
+	
+	distortedTerrainVbo.updateVertexData( testDistortedTerrain.surfacePoints,  testDistortedTerrain.pointAmount );	
+	distortedTerrainVbo.updateNormalData( testDistortedTerrain.surfaceNormals, testDistortedTerrain.pointAmount );	
+	
+	
+	
+	/*
+	 noiseX = (tmpPoint.x / globalVariables->noiseSizeDivisor) + noiseOffsetY;
+	 noiseY = (tmpPoint.y / globalVariables->noiseSizeDivisor) + noiseOffsetY;
+	 tmpNoise = ofNoise( noiseX, noiseY, globalVariables->noiseZ );
+	 */
+	
+	_ofEnable( GL_CULL_FACE );	
+	ofLightingModel(GL_SMOOTH);	// We want per pixel lighting.	
+	ofEnableDepthTest();
+	
+	ofPushMatrix();
+		
+		ofEnableLighting();
+	
+		checkGlError( glGetError(), __FILE__, __LINE__ );	
+		
+		ofTranslate( ofGetWidth()/2.0f, ofGetHeight()/2.0f, 0);
+		ofRotate(-mouseX, 0, 1, 0);
+		ofRotate(-mouseY, 1, 0, 0);	
+	
+		pointLight.enable();	
+		pointLight.setPosition( pointLight.getPosition() );	// Lighting position has to be set when you have the matrix you want, this forces a call to onPositionChanged
+	
+		material.begin();	
+		testSurfaceShader.begin();
+	
+		testSurfaceShader.setUniform1f("u_time", ofGetElapsedTimef() );
+	
+		distortedTerrainVbo.bind();
+			distortedTerrainVbo.drawElements( GL_TRIANGLES, testDistortedTerrain.triangleAmount * 3 );
+		distortedTerrainVbo.unbind();	
+	
+		testSurfaceShader.end();	
+		material.end();
+	
+		pointLight.disable();
+
+		ofDisableLighting();		
+
+		pointLight.draw();			
+	
+    ofPopMatrix();
+	
+	ofDisableDepthTest();	
+	
+	_ofDisable( GL_CULL_FACE );	
+	
+	checkGlError( glGetError(), __FILE__, __LINE__ );		
+}
 
 //--------------------------------------------------------------
 void testApp::drawSceneLightingTest()
@@ -401,7 +436,8 @@ void testApp::drawSceneLightingTest()
 		material.begin();
 	
 		surfaceVbo.bind();
-			surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount * 3 );
+			surfaceVbo.drawElements(GL_TRIANGLES, testTerrain.triangleAmount * 3 );
+			//surfaceVbo.drawElements(GL_TRIANGLES, surfaceTriangleAmount * 3 );	
 		surfaceVbo.unbind();	
 		
 		material.end();
