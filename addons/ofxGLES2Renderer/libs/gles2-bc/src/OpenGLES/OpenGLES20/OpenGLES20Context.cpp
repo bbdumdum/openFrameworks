@@ -316,7 +316,7 @@ void OpenGLES20Context::prepareToDraw()
 		// else do it slow but works always
 		
 		// Andreas: I'm getting flipped lighting with the code above, but this 'slower' code works
-		// It would be nice to detect if the view has changed inany way an cache this calculation
+		// It would be nice to detect if the view has changed in any way an cache this calculation
 		
 		Matrix4x4<GLfloat> transposeInverseModelViewMatrix;
 		OpenGLESMath::inverse(&transposeInverseModelViewMatrix, modelViewMatrix);
@@ -339,7 +339,7 @@ void OpenGLES20Context::prepareToDraw()
 	}
 	
 	if( shaderProgramId != 0 )
-	{
+	{	
 		// if we have a override shader, see if they want a modelview matrix and a projection matrix
 		
 		GLint loc = glGetUniformLocation(shaderProgramId,"u_modelViewMatrix");
@@ -353,11 +353,13 @@ void OpenGLES20Context::prepareToDraw()
 			glUniformMatrix4fv( loc, 1, GL_FALSE, projectionMatrix->m );
 		}
 		
+		// The projection and modelview matrix combined 
 		loc = glGetUniformLocation(shaderProgramId,"u_modelViewProjectionMatrix");
 		if( loc > -1 ) {
 			glUniformMatrix4fv( loc, 1, GL_FALSE, mvp.m );
 		}		
 		
+		// Positions, you probably want this
 		if ( openGLESState.attributes[AttributeId::POSITION]->enabled ){
 			GLint attributeLocation = glGetAttribLocation(shaderProgramId,"a_position");
 			if( attributeLocation > -1 ){
@@ -365,6 +367,7 @@ void OpenGLES20Context::prepareToDraw()
 			}
 		}
 		
+		// Vertex Color
 		if ( openGLESState.attributes[AttributeId::COLOR]->enabled ){
 			GLint attributeLocation = glGetAttribLocation(shaderProgramId,"a_color");
 			if( attributeLocation > -1 ){
@@ -372,6 +375,7 @@ void OpenGLES20Context::prepareToDraw()
 			}
 		}
 		
+		// Normal
 		if ( openGLESState.attributes[AttributeId::NORMAL]->enabled ){
 			GLint attributeLocation = glGetAttribLocation(shaderProgramId,"a_normal");
 			if( attributeLocation > -1 ){
@@ -379,7 +383,7 @@ void OpenGLES20Context::prepareToDraw()
 			}			
 		}
 		
-		
+		// Texture Coordinates
 		if ( openGLESState.attributes[AttributeId::TEXCOORD0]->enabled ){
 			GLint attributeLocation = glGetAttribLocation(shaderProgramId,"a_texCoord0");
 			if( attributeLocation > -1 ){
@@ -401,6 +405,13 @@ void OpenGLES20Context::prepareToDraw()
 			}			
 		}
 		
+		
+		/*
+		 TEXTURE0_SAMPLER,
+		 TEXTURE1_SAMPLER,
+		 TEXTURE2_SAMPLER,
+		 */
+		
 	}
 	else
 	{
@@ -410,7 +421,7 @@ void OpenGLES20Context::prepareToDraw()
 
 void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
 {
-	if (shaderProgramId == 0 || sendDefaultsToCustomShaders) {
+	if ( /*shaderProgramId == 0 ||*/ sendDefaultsToCustomShaders) {
 		prepareToDraw();
 	}
 
@@ -425,7 +436,7 @@ void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
 
 void OpenGLES20Context::glDrawElements (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices)
 {
-	if (shaderProgramId == 0 || sendDefaultsToCustomShaders) {
+	if (/*shaderProgramId == 0 || */ sendDefaultsToCustomShaders) {
 		prepareToDraw();
 	}
 	::glDrawElements(mode, count, type, indices);
@@ -1882,8 +1893,14 @@ void OpenGLES20Context::glUniformMatrix4fv (GLint location, GLsizei count, GLboo
 
 void OpenGLES20Context::glUseProgram (GLuint program)
 {
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+	
 	::glUseProgram(program);
+	
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+	
 	shaderProgramId = program;
+	
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 

@@ -222,6 +222,8 @@ void testApp::setup()
 	surfaceVbo.setVertexData( testTerrain.surfacePoints,  testTerrain.pointAmount, GL_DYNAMIC_DRAW );	
 	surfaceVbo.setColorData(  testTerrain.surfaceColors,  testTerrain.pointAmount, GL_DYNAMIC_DRAW );
 	surfaceVbo.setNormalData( testTerrain.surfaceNormals, testTerrain.pointAmount, GL_DYNAMIC_DRAW );	
+
+	surfaceVbo.setTexCoordData( testTerrain.surfaceTexCoords, testTerrain.pointAmount, GL_DYNAMIC_DRAW );	
 	
 	surfaceVbo.setIndexData(  testTerrain.surfaceIndices,  testTerrain.triangleAmount*3, GL_DYNAMIC_DRAW );	
 	// -----------------------------------------------------	
@@ -231,6 +233,8 @@ void testApp::setup()
 	distortedTerrainVbo.setVertexData( testDistortedTerrain.surfacePoints,  testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );	
 	distortedTerrainVbo.setColorData(  testDistortedTerrain.surfaceColors,  testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );
 	distortedTerrainVbo.setNormalData( testDistortedTerrain.surfaceNormals, testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );	
+
+	distortedTerrainVbo.setTexCoordData( testDistortedTerrain.surfaceTexCoords, testDistortedTerrain.pointAmount, GL_DYNAMIC_DRAW );		
 	
 	distortedTerrainVbo.setIndexData(  testDistortedTerrain.surfaceIndices,  testDistortedTerrain.triangleAmount*3, GL_DYNAMIC_DRAW );	
 	
@@ -252,6 +256,16 @@ void testApp::setup()
 
 //	{ GLenum tmpError = glGetError(); if( tmpError != GL_NO_ERROR ) { cout << "GL Error: " << tmpError << " in " << __FILE__ << " at line: " << __LINE__ << endl;} }
 
+/*
+ gestureRecognizer = [[AiOSGestureRecognizer alloc] init];
+ [gestureRecognizer addGestureRecognizers: ofxiPhoneGetGLView()];
+ 
+ ofAddListener( gestureRecognizer->newTapEvent, this, &TimeVideo::receivedTap );	
+ ofAddListener( gestureRecognizer->newPinchEvent, this, &TimeVideo::receivedPinch );		
+ ofAddListener( gestureRecognizer->newSwipeEvent, this, &TimeVideo::receivedSwipe );			
+ ofAddListener( gestureRecognizer->newPanEvent, this, &TimeVideo::receivedPan );
+ 
+ */
 
 
 //--------------------------------------------------------------
@@ -377,14 +391,17 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	
 		material.begin();	
 		testSurfaceShader.begin();
-	
 		testSurfaceShader.setUniform1f("u_time", ofGetElapsedTimef() );
 	
+		
 		distortedTerrainVbo.bind();
 			distortedTerrainVbo.drawElements( GL_TRIANGLES, testDistortedTerrain.triangleAmount * 3 );
 		distortedTerrainVbo.unbind();	
-	
+		
+		ofBox( 120.0f );
+		 
 		testSurfaceShader.end();	
+	
 		material.end();
 	
 		pointLight.disable();

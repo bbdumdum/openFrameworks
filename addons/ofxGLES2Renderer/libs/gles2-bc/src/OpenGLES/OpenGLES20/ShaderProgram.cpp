@@ -114,6 +114,8 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 	glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &activeUniformsMaxLength);
 	glGetProgramiv(program, GL_ATTACHED_SHADERS, &attachedShaders);
 	
+/*	
+ Andreas: temporarily commenting out
 	LOG_DEBUG_MESSAGE(OpenGLESString("Active attributes: ") + activeAttributes);
 	LOG_DEBUG_MESSAGE(OpenGLESString("Active attributes max length: ") + activeAttributesMaxLength);
 	LOG_DEBUG_MESSAGE(OpenGLESString("Active uniforms: ") + activeUniforms);
@@ -121,6 +123,7 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 	LOG_DEBUG_MESSAGE(OpenGLESString("Attached shaders: ") + attachedShaders);
 	
 	LOG_DEBUG_MESSAGE("Attributes");
+*/ 
 	for (int i = 0; i < activeAttributes; i++) {
 		char* attributeName = (char *)malloc(sizeof(char) * activeAttributesMaxLength);
 		GLint size;
@@ -150,6 +153,8 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 		attributes.push_back(new AttributeSimple(id, attributeLocation));
 		
 #ifdef OPENGLES_DEBUG
+/*	
+ Andreas: temporarily commenting out			
 		std::string typeString;
 		
 		switch (type) {
@@ -181,10 +186,11 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 		}
 		
 		LOG_DEBUG_MESSAGE(OpenGLESString(attributeName) + ": type " + typeString + " location: " + attributeLocation);
+*/ 
 #endif
 	}
 	
-	LOG_DEBUG_MESSAGE("Uniforms");
+//	LOG_DEBUG_MESSAGE("Uniforms");
 	for (int i = 0; i < activeUniforms; i++) {
 		
 		char* uniformName = (char *)malloc(sizeof(char) * activeUniformsMaxLength);
@@ -428,6 +434,9 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 		uniforms.push_back(new UniformSimple(id, uniformLocation));
 		
 #ifdef OPENGLES_DEBUG		
+/*	
+ Andreas: temporarily commenting out
+		
 		std::string typeString;
 		
 		switch (uniformType) {
@@ -489,6 +498,7 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 		}
 		
 		LOG_DEBUG_MESSAGE(OpenGLESString(uniformName) + ": type " + typeString + " location: " + uniformLocation);
+*/ 
 #endif
 	}
 	

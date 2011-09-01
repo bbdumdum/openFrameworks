@@ -80,6 +80,12 @@ void Attribute::upload(ShaderProgram *program)
 void Attribute::setVertexAttribPointer( GLint _otherLocation ){
 	
 	glEnableVertexAttribArray(_otherLocation);
+	
+	if( bufferId > 0) { // could we have a buffer ID that is 0? This could introduce a bug, maybe change bufferID to a signed int and then convert
+	
+		glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+	}	
+	
 	glVertexAttribPointer(_otherLocation, size, type, normalized, stride, pointer);
 }			
 
