@@ -76,6 +76,10 @@ public:
 
 	//void drawSceneEasycamTest();
 	
+	void ofGenerateSphereMesh( ofMesh& _mesh, float _radius, int _numRings = 16, int _numSegments = 16 );
+	void ofGenerateTorusMesh( ofMesh& _mesh, float _radius, float _sectionRadius, int _numSegSection = 16, int _numSegCircle = 16 );	
+	void ofGenerateConeMesh( ofMesh& _mesh, float _radius, float _height, int _numSegBase = 16, int _numSegHeight = 16 );		
+	
 	void debugDraw();
 	
 	void drawIcosahedron( float _scale );
@@ -103,6 +107,8 @@ public:
 	ofImage testImage2;	
 	
 	ofImage testImageAlpha;		
+	
+	ofImage debugTextureImage;			
 		
 	ofTrueTypeFont  franklinBook14;
 	
@@ -110,6 +116,10 @@ public:
 	//ofLight spotLight;
 	//ofLight directionalLight;	
 	bool bPointLight, bSpotLight, bDirLight;
+	
+	ofMesh sphereMesh;
+	ofMesh torusMesh;	
+	ofMesh coneMesh;	
 	
 	ofMaterial material;	
 	

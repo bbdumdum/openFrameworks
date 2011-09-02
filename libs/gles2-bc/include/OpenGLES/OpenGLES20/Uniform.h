@@ -30,6 +30,8 @@
 #include "ShaderFile.h"
 #include "../OpenGLESMath.h"
 
+using namespace std;
+
 namespace OpenGLES {
 	namespace OpenGLES2 {
 		
@@ -56,6 +58,8 @@ namespace OpenGLES {
 			virtual std::vector<ShaderFile *> getAdditionalRequiredShaderFiles() = 0;
 			void setFather(UniformBase *father);
 			
+			virtual void uploadToOtherLocation( GLint _location ) {}
+			
 		protected:
 			GLint location;
 			bool uploaded;
@@ -73,6 +77,9 @@ namespace OpenGLES {
 			void setValue(T val);
 			virtual const T getValue();
 			void upload(ShaderProgram *program);
+			
+			void uploadToOtherLocation( GLint _location );
+			
 			virtual std::vector<ShaderFile *> getAdditionalRequiredShaderFiles();
 		protected:	
 			T value;
@@ -103,6 +110,12 @@ namespace OpenGLES {
 					program->setUniform3fv(location, 1, (GLfloat*) &value.v);
 					uploaded = true;
 				}
+			}
+			
+			
+			void uploadToOtherLocation( GLint _otherLocation )
+			{
+				glUniform3fv( _otherLocation, 1, (GLfloat*) &value.v);
 			}
 			
 			virtual std::vector<ShaderFile *> getAdditionalRequiredShaderFiles()
@@ -149,6 +162,11 @@ namespace OpenGLES {
 					uploaded = true;
 				}
 			}
+			
+			void uploadToOtherLocation( GLint _otherLocation )
+			{
+				glUniform4fv( _otherLocation, 1, (GLfloat*) &value.v);
+			}			
 			
 			virtual std::vector<ShaderFile *> getAdditionalRequiredShaderFiles()
 			{

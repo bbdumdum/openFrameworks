@@ -359,6 +359,9 @@ void OpenGLES20Context::prepareToDraw()
 			glUniformMatrix4fv( loc, 1, GL_FALSE, mvp.m );
 		}		
 		
+		// Todo, a normal matrix
+		
+		
 		// Positions, you probably want this
 		if ( openGLESState.attributes[AttributeId::POSITION]->enabled ){
 			GLint attributeLocation = glGetAttribLocation(shaderProgramId,"a_position");
@@ -391,6 +394,9 @@ void OpenGLES20Context::prepareToDraw()
 			}			
 		}		
 		
+		
+		// Andreas: none of the OF functions (ofMesh ofVbo) support multiple texture coordinates at this point, leave this up to the advanced crowd
+		/*
 		if ( openGLESState.attributes[AttributeId::TEXCOORD1]->enabled ){
 			GLint attributeLocation = glGetAttribLocation(shaderProgramId,"a_texCoord1");
 			if( attributeLocation > -1 ){
@@ -404,13 +410,18 @@ void OpenGLES20Context::prepareToDraw()
 				openGLESState.attributes[AttributeId::TEXCOORD2]->setVertexAttribPointer( attributeLocation );
 			}			
 		}
+		*/
 		
+		// Texture samplers (support multiple samplers here or leave that up to the custom shaders?)
+
+		{
+			// Andreas: gles2-bc uniforms do not have a "enabled" flag, todo: add? (glGetUniformLocation is supposed to be fast)
+			GLint uniformLocation = glGetUniformLocation(shaderProgramId,"u_texture0Sampler");
+			if( uniformLocation > -1 ){				
+				openGLESState.uniforms[UniformId::TEXTURE0_SAMPLER]->uploadToOtherLocation( uniformLocation );
+			}	
+		}
 		
-		/*
-		 TEXTURE0_SAMPLER,
-		 TEXTURE1_SAMPLER,
-		 TEXTURE2_SAMPLER,
-		 */
 		
 	}
 	else

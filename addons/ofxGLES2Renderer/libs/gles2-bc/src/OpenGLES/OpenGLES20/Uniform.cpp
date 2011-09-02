@@ -67,7 +67,9 @@ void UniformBase::setFather(UniformBase *f)
 
 namespace OpenGLES {
 	namespace OpenGLES2 {
+
 		
+		// --------------------------------------------------------------------
 		template <>
 		void Uniform<bool>::setValue( bool val )
 		{
@@ -88,6 +90,14 @@ namespace OpenGLES {
 		}
 		
 		template <>
+		void Uniform<bool>::uploadToOtherLocation( GLint _otherLocation )
+		{
+			glUniform1i(_otherLocation, value ? 1 : 0);
+		} 
+		
+		
+		// --------------------------------------------------------------------
+		template <>
 		void Uniform<GLint>::upload( ShaderProgram *program )
 		{
 			if (!uploaded) {
@@ -96,6 +106,21 @@ namespace OpenGLES {
 			}
 		}
 		
+		template <>
+		void Uniform<GLint>::uploadToOtherLocation( GLint _otherLocation )
+		{			
+			glUniform1i(_otherLocation, value);
+		} 		
+		
+		/*
+		 template <>
+		 void Uniform<bool>::uploadToOtherLocation( GLint _otherLocation )
+		 {
+		 glUniform1i(_otherLocation, value ? 1 : 0);
+		 } 
+		 */
+		
+		// --------------------------------------------------------------------	
 		template <>
 		void Uniform<GLfloat>::upload( ShaderProgram *program )
 		{
@@ -106,6 +131,15 @@ namespace OpenGLES {
 		}
 		
 		template <>
+		void Uniform<GLfloat>::uploadToOtherLocation( GLint _otherLocation )
+		{
+			glUniform1f( _otherLocation, value );
+		} 
+		
+		
+		
+		// --------------------------------------------------------------------		
+		template <>
 		void Uniform<Matrix3x3<GLfloat> >::upload( ShaderProgram *program )
 		{
 			if (!uploaded) {
@@ -113,7 +147,15 @@ namespace OpenGLES {
 				uploaded = true;
 			}
 		}
+
+		template <>
+		void Uniform< Matrix3x3<GLfloat> >::uploadToOtherLocation( GLint _otherLocation )
+		{			
+			glUniformMatrix3fv(_otherLocation, 1, GL_FALSE, (GLfloat*) &value.m[0]);
+		} 		
 		
+		
+		// --------------------------------------------------------------------		
 		template <>
 		void Uniform<Matrix4x4<GLfloat> >::upload( ShaderProgram *program )
 		{
@@ -122,6 +164,14 @@ namespace OpenGLES {
 				uploaded = true;
 			}
 		}
+		
+		template <>
+		void Uniform< Matrix4x4<GLfloat> >::uploadToOtherLocation( GLint _otherLocation )
+		{			
+			glUniformMatrix4fv(_otherLocation, 1, GL_FALSE, (GLfloat*) &value.m[0]);
+		} 			
+		
+		// --------------------------------------------------------------------		
 		
 		template <>
 		std::string UniformState<bool>::getDefine()
