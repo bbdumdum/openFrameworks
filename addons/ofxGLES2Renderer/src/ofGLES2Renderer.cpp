@@ -56,6 +56,8 @@ ofGLES2Renderer::ofGLES2Renderer(int _glVersion){
 
 	gl->glHint(GL_LIGHTING_HINT, GL_FASTEST ); // Do not start with per pixel lighting as it is slower
 	
+	gl->glFrontFace( GL_CCW ); // Andreas: this is the default, trying explicitly setting this as I am seeing some off behaviour randomly
+	
 	currentFbo = NULL;
 }
 

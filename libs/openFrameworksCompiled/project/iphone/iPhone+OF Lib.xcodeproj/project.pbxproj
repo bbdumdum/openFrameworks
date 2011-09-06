@@ -95,6 +95,8 @@
 		BD9E124D13F44E750001B4F1 /* OpenGLESMath.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E123913F44E750001B4F1 /* OpenGLESMath.h */; };
 		BD9E124E13F44E750001B4F1 /* OpenGLESString.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E123A13F44E750001B4F1 /* OpenGLESString.h */; };
 		BD9E124F13F44E750001B4F1 /* OpenGLESUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E123B13F44E750001B4F1 /* OpenGLESUtil.h */; };
+		CB57E59E1414E2E80075D2C5 /* of3dPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB57E59C1414E2E80075D2C5 /* of3dPrimitives.cpp */; };
+		CB57E59F1414E2E80075D2C5 /* of3dPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = CB57E59D1414E2E80075D2C5 /* of3dPrimitives.h */; };
 		E47DBCDF12E2777F0019AE15 /* SoundEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E47DBCDB12E2777F0019AE15 /* SoundEngine.h */; };
 		E47DBCE012E2777F0019AE15 /* SoundEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47DBCDC12E2777F0019AE15 /* SoundEngine.cpp */; };
 		E47DBCE112E2777F0019AE15 /* ofxOpenALSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E47DBCDD12E2777F0019AE15 /* ofxOpenALSoundPlayer.h */; };
@@ -308,6 +310,8 @@
 		BD9E123913F44E750001B4F1 /* OpenGLESMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESMath.h; sourceTree = "<group>"; };
 		BD9E123A13F44E750001B4F1 /* OpenGLESString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESString.h; sourceTree = "<group>"; };
 		BD9E123B13F44E750001B4F1 /* OpenGLESUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESUtil.h; sourceTree = "<group>"; };
+		CB57E59C1414E2E80075D2C5 /* of3dPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = of3dPrimitives.cpp; sourceTree = "<group>"; };
+		CB57E59D1414E2E80075D2C5 /* of3dPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = of3dPrimitives.h; sourceTree = "<group>"; };
 		E41D3E9013B38BE900A75A5D /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D3E9113B38BE900A75A5D /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D3E9213B38BE900A75A5D /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -769,6 +773,8 @@
 		E485F67A1360A8FF00E939D3 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				CB57E59C1414E2E80075D2C5 /* of3dPrimitives.cpp */,
+				CB57E59D1414E2E80075D2C5 /* of3dPrimitives.h */,
 				E485F67B1360A8FF00E939D3 /* of3dUtils.cpp */,
 				E485F67C1360A8FF00E939D3 /* of3dUtils.h */,
 				E485F67D1360A8FF00E939D3 /* ofCamera.cpp */,
@@ -1083,6 +1089,7 @@
 				BD9E124D13F44E750001B4F1 /* OpenGLESMath.h in Headers */,
 				BD9E124E13F44E750001B4F1 /* OpenGLESString.h in Headers */,
 				BD9E124F13F44E750001B4F1 /* OpenGLESUtil.h in Headers */,
+				CB57E59F1414E2E80075D2C5 /* of3dPrimitives.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1222,6 +1229,7 @@
 				BD9E120B13F44ABB0001B4F1 /* OpenGLESString.cpp in Sources */,
 				BD9E120C13F44ABB0001B4F1 /* OpenGLESUtil.cpp in Sources */,
 				BD9E122113F44ABB0001B4F1 /* ofGLES2Renderer.cpp in Sources */,
+				CB57E59E1414E2E80075D2C5 /* of3dPrimitives.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

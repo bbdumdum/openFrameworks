@@ -270,6 +270,7 @@ void ofNextContour(bool bClose = false);  // for multi contour shapes!
 
 
 //3d
+/*
 void ofSphere(float x, float y, float z, float radius);
 void ofSphere(float x, float y, float radius);
 void ofSphere(const ofPoint& position, float radius);
@@ -279,7 +280,7 @@ void ofBox(float x, float y, float z, float size);
 void ofBox(float x, float y, float size);
 void ofBox(const ofPoint& position, float size);
 void ofBox(float size);
-
+*/
 
 // bitmapped type
 void ofSetDrawBitmapMode(ofDrawBitmapMode mode);
