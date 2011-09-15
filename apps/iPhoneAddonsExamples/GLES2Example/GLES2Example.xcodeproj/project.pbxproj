@@ -38,8 +38,6 @@
 		BD9E129713F4507C0001B4F1 /* OpenGLESString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128113F4507C0001B4F1 /* OpenGLESString.cpp */; };
 		BD9E129813F4507C0001B4F1 /* OpenGLESUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128213F4507C0001B4F1 /* OpenGLESUtil.cpp */; };
 		BD9E129913F4507C0001B4F1 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E128413F4507C0001B4F1 /* ofGLES2Renderer.cpp */; };
-		CB10693B1403BFE9005789C1 /* testAppVBOTest2.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB10693A1403BFE9005789C1 /* testAppVBOTest2.mm */; };
-		CB10A8081416556000A526B4 /* ofxCubeMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB10A8061416556000A526B4 /* ofxCubeMap.cpp */; };
 		CB836CCB13DC376C003E8700 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB836CC913DC376C003E8700 /* ofxAssimpModelLoader.cpp */; };
 		CBB7773C13F556220014274B /* alphaTest.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772713F556220014274B /* alphaTest.frag */; };
 		CBB7773D13F556220014274B /* clipPlane.frag in Sources */ = {isa = PBXBuildFile; fileRef = CBB7772813F556220014274B /* clipPlane.frag */; };
@@ -82,8 +80,6 @@
 		CBB7776213F556340014274B /* texture1.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBB7773913F556220014274B /* texture1.vert */; };
 		CBB7776313F556340014274B /* texture2.frag in Resources */ = {isa = PBXBuildFile; fileRef = CBB7773A13F556220014274B /* texture2.frag */; };
 		CBB7776413F556340014274B /* texture2.vert in Resources */ = {isa = PBXBuildFile; fileRef = CBB7773B13F556220014274B /* texture2.vert */; };
-		CBC24117140E7BF600E55B74 /* SimpleTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBC24115140E7BF600E55B74 /* SimpleTerrain.cpp */; };
-		CBC2411A140EA5CC00E55B74 /* PerlinNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBC24118140EA5CC00E55B74 /* PerlinNoise.cpp */; };
 		CBD4CB2A13FFC1F900F0C042 /* ShaderBlurES2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBD4CB2813FFC1F900F0C042 /* ShaderBlurES2.cpp */; };
 		E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E41D3ED613B38FB500A75A5D /* Project.xcconfig */; };
 		E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */; };
@@ -116,7 +112,7 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* GLES2Renderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GLES2Renderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* GLES2Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GLES2Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* iPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhone_Prefix.pch; sourceTree = "<group>"; };
@@ -169,9 +165,6 @@
 		BD9E128213F4507C0001B4F1 /* OpenGLESUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESUtil.cpp; sourceTree = "<group>"; };
 		BD9E128413F4507C0001B4F1 /* ofGLES2Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofGLES2Renderer.cpp; sourceTree = "<group>"; };
 		BD9E128513F4507C0001B4F1 /* ofGLES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofGLES2Renderer.h; sourceTree = "<group>"; };
-		CB10693A1403BFE9005789C1 /* testAppVBOTest2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = testAppVBOTest2.mm; sourceTree = "<group>"; };
-		CB10A8061416556000A526B4 /* ofxCubeMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxCubeMap.cpp; path = ofxCubeMap/ofxCubeMap.cpp; sourceTree = "<group>"; };
-		CB10A8071416556000A526B4 /* ofxCubeMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxCubeMap.h; path = ofxCubeMap/ofxCubeMap.h; sourceTree = "<group>"; };
 		CB3F08C013E96EEC0093CE64 /* AMathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMathHelpers.h; sourceTree = "<group>"; };
 		CB836CC713DC376C003E8700 /* ofx3DBaseLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofx3DBaseLoader.h; path = ../../../addons/ofxAssimpModelLoader/src/ofx3DBaseLoader.h; sourceTree = "<group>"; };
 		CB836CC813DC376C003E8700 /* ofxAssimpMeshHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxAssimpMeshHelper.h; path = ../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.h; sourceTree = "<group>"; };
@@ -198,10 +191,6 @@
 		CBB7773913F556220014274B /* texture1.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture1.vert; sourceTree = "<group>"; };
 		CBB7773A13F556220014274B /* texture2.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.frag; sourceTree = "<group>"; };
 		CBB7773B13F556220014274B /* texture2.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture2.vert; sourceTree = "<group>"; };
-		CBC24115140E7BF600E55B74 /* SimpleTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleTerrain.cpp; sourceTree = "<group>"; };
-		CBC24116140E7BF600E55B74 /* SimpleTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTerrain.h; sourceTree = "<group>"; };
-		CBC24118140EA5CC00E55B74 /* PerlinNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerlinNoise.cpp; sourceTree = "<group>"; };
-		CBC24119140EA5CC00E55B74 /* PerlinNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerlinNoise.h; sourceTree = "<group>"; };
 		CBD4CB2813FFC1F900F0C042 /* ShaderBlurES2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderBlurES2.cpp; sourceTree = "<group>"; };
 		CBD4CB2913FFC1F900F0C042 /* ShaderBlurES2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderBlurES2.h; sourceTree = "<group>"; };
 		E41D3ED613B38FB500A75A5D /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
@@ -245,7 +234,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* GLES2Renderer.app */,
+				1D6058910D05DD3D006BFB54 /* GLES2Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -471,8 +460,6 @@
 		CB3F08BF13E96EEC0093CE64 /* Math */ = {
 			isa = PBXGroup;
 			children = (
-				CBC24118140EA5CC00E55B74 /* PerlinNoise.cpp */,
-				CBC24119140EA5CC00E55B74 /* PerlinNoise.h */,
 				CB3F08C013E96EEC0093CE64 /* AMathHelpers.h */,
 			);
 			path = Math;
@@ -509,9 +496,6 @@
 		CB955CA113FB125B002929B5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				CBE883A21416779300093124 /* ofxCubeMap */,
-				CBC24115140E7BF600E55B74 /* SimpleTerrain.cpp */,
-				CBC24116140E7BF600E55B74 /* SimpleTerrain.h */,
 				CBD4CB2813FFC1F900F0C042 /* ShaderBlurES2.cpp */,
 				CBD4CB2913FFC1F900F0C042 /* ShaderBlurES2.h */,
 			);
@@ -547,15 +531,6 @@
 			path = ../../shaders;
 			sourceTree = "<group>";
 		};
-		CBE883A21416779300093124 /* ofxCubeMap */ = {
-			isa = PBXGroup;
-			children = (
-				CB10A8061416556000A526B4 /* ofxCubeMap.cpp */,
-				CB10A8071416556000A526B4 /* ofxCubeMap.h */,
-			);
-			name = ofxCubeMap;
-			sourceTree = "<group>";
-		};
 		E41D40FE13B3A0D800A75A5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -572,7 +547,6 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
-				CB10693A1403BFE9005789C1 /* testAppVBOTest2.mm */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -580,9 +554,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* GLES2Renderer */ = {
+		1D6058900D05DD3D006BFB54 /* GLES2Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GLES2Renderer" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GLES2Example" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -594,9 +568,9 @@
 			dependencies = (
 				E41D410413B3A11300A75A5D /* PBXTargetDependency */,
 			);
-			name = GLES2Renderer;
+			name = GLES2Example;
 			productName = iPad;
-			productReference = 1D6058910D05DD3D006BFB54 /* GLES2Renderer.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* GLES2Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -604,7 +578,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GLES2Renderer" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GLES2Example" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -624,7 +598,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* GLES2Renderer */,
+				1D6058900D05DD3D006BFB54 /* GLES2Example */,
 			);
 		};
 /* End PBXProject section */
@@ -740,10 +714,6 @@
 				CBB7774F13F556220014274B /* texture2.frag in Sources */,
 				CBB7775013F556220014274B /* texture2.vert in Sources */,
 				CBD4CB2A13FFC1F900F0C042 /* ShaderBlurES2.cpp in Sources */,
-				CB10693B1403BFE9005789C1 /* testAppVBOTest2.mm in Sources */,
-				CBC24117140E7BF600E55B74 /* SimpleTerrain.cpp in Sources */,
-				CBC2411A140EA5CC00E55B74 /* PerlinNoise.cpp in Sources */,
-				CB10A8081416556000A526B4 /* ofxCubeMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,7 +755,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -803,6 +773,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -817,7 +788,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -833,6 +804,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7f armv7k armv6 i386";
@@ -843,7 +815,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GLES2Renderer" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GLES2Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -852,7 +824,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GLES2Renderer" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GLES2Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
