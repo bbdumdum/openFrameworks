@@ -9,6 +9,8 @@
 #include "Utils/ShaderBlurES2.h"
 #include "Utils/SimpleTerrain.h"
 
+#include "Utils/ofxCubeMap/ofxCubeMap.h"
+
 #include "Math/AMathHelpers.h"
 #include "Math/PerlinNoise.h"
 
@@ -76,9 +78,15 @@ public:
 
 	//void drawSceneEasycamTest();
 	
+	/*
 	void ofGenerateSphereMesh( ofMesh& _mesh, float _radius, int _numRings = 16, int _numSegments = 16 );
 	void ofGenerateTorusMesh( ofMesh& _mesh, float _radius, float _sectionRadius, int _numSegSection = 16, int _numSegCircle = 16 );	
 	void ofGenerateConeMesh( ofMesh& _mesh, float _radius, float _height, int _numSegBase = 16, int _numSegHeight = 16 );		
+	void ofGenerateCylinderMesh( ofMesh& _mesh, float _radius, float _height, int _numSegBase = 16, int _numSegHeight = 16, bool capped = true );
+	void ofGenerateCapsuleMesh( ofMesh& _mesh, float _radius, float _height, int _numRings = 8, int _numSegments = 16, int _numSegHeight = 1 );
+	*/
+	 
+	void generateDebugNormalsMesh( ofMesh& _srcMesh, ofMesh& _dstMesh, float _debugNormalScale = 10.0f );
 	
 	void debugDraw();
 	
@@ -96,9 +104,13 @@ public:
 	
 	ofFbo screenFBO;	
 	
+	ofxCubeMap testCubemap;
+	
 #ifdef OPENGLES_VERSION_2	
 	ofShader testShader;
-	ofShader testSurfaceShader;	
+	//ofShader testSurfaceShader;	
+	ofShader glassSurfaceShader;		
+	ofShader cubeMapShader;			
 	ShaderBlurES2 shaderBlur;
 #endif	
 	ofMesh testMesh;
@@ -118,8 +130,19 @@ public:
 	bool bPointLight, bSpotLight, bDirLight;
 	
 	ofMesh sphereMesh;
+	ofMesh sphereDebugNormalsMesh;
+	
 	ofMesh torusMesh;	
+	ofMesh torusDebugNormalsMesh;		
+
 	ofMesh coneMesh;	
+	ofMesh coneDebugNormalsMesh;		
+	
+	ofMesh cylinderMesh;	
+	ofMesh cylinderDebugNormalsMesh;	
+	
+	ofMesh capsuleMesh;	
+	ofMesh capsuleDebugNormalsMesh;		
 	
 	ofMaterial material;	
 	

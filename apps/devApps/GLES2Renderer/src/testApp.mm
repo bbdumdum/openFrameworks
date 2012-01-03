@@ -162,7 +162,7 @@ void testApp::setup()
 	shaderBlur.setup( 1024, 768 );
 	shaderBlur.clearColor.set( 100, 100, 100, 255);
 
-	testSurfaceShader.load("shaders/TestSurfaceShader");
+	//testSurfaceShader.load("shaders/TestSurfaceShader");
 	
 #endif	
 	
@@ -251,12 +251,46 @@ void testApp::setup()
 	//string glslVersion = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
 	//ofLog(OF_LOG_VERBOSE,glslVersion);
 	
-
+	float debugNormalScale = 20.0f;
 	
 	ofGenerateSphereMesh( sphereMesh, 100.0f, 16, 16 );
-	ofGenerateTorusMesh( torusMesh, 600.0f, 20.0f, 16, 16 );	
-	ofGenerateConeMesh( coneMesh, 100.0f, 300.0f, 16, 16 );		
+	generateDebugNormalsMesh( sphereMesh, sphereDebugNormalsMesh, debugNormalScale );
 
+	
+	ofGenerateTorusMesh( torusMesh, 100.0f, 20.0f, 16, 26 );	
+	generateDebugNormalsMesh( torusMesh, torusDebugNormalsMesh, debugNormalScale );	
+	
+	
+	ofGenerateConeMesh( coneMesh, 100.0f, 300.0f, 16, 16 );		
+	generateDebugNormalsMesh( coneMesh, coneDebugNormalsMesh, debugNormalScale );	
+
+	ofGenerateCylinderMesh( cylinderMesh, 40.0f, 100.0f, 16,  16, true );
+	generateDebugNormalsMesh( cylinderMesh, cylinderDebugNormalsMesh, debugNormalScale );		
+	
+	ofGenerateCapsuleMesh( capsuleMesh, 40.0f, 100.0f, 8, 16, 1 );
+	generateDebugNormalsMesh( capsuleMesh, capsuleDebugNormalsMesh, debugNormalScale );	
+	
+	//string pos_x, string pos_y, string pos_z, string neg_x,string neg_y,string neg_z
+	
+
+	testCubemap.loadImages("cubemaps/summer_scene/cubescene_rt.jpg", 
+						   "cubemaps/summer_scene/cubescene_up.jpg", 
+						   "cubemaps/summer_scene/cubescene_fr.jpg", 
+						   "cubemaps/summer_scene/cubescene_lf.jpg",
+						   "cubemaps/summer_scene/cubescene_dn.jpg",
+						   "cubemaps/summer_scene/cubescene_bk.jpg" );
+	
+	/*testCubemap.loadImages("cubemaps/cubemap_debug/debug_positive_x.png", 
+						   "cubemaps/cubemap_debug/debug_positive_y.png", 
+						   "cubemaps/cubemap_debug/debug_positive_z.png", 
+						   "cubemaps/cubemap_debug/debug_negative_x.png",
+						   "cubemaps/cubemap_debug/debug_negative_y.png",
+						   "cubemaps/cubemap_debug/debug_negative_z.png" );	*/
+	
+	glassSurfaceShader.load("shaders/Glass");
+	//glassSurfaceShader.load("shaders/Reflection");	
+	
+	cubeMapShader.load("shaders/Cubemap");
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );	
 }
@@ -283,7 +317,7 @@ void testApp::update()
 	
 	float radius = 80.0f; 
 	//ofVec3f center(0.0f,-110.0f, 0);	
-	ofVec3f center(0.0f,-200.0f, 0);		
+	ofVec3f center(0.0f,100.0f, 0);		
 	
 	pointLight.setPosition( cos(ofGetElapsedTimef()*0.8f) * radius * 2 + center.x, 
 						    sin(ofGetElapsedTimef()*0.6f) * radius * 2 + center.y, 
@@ -356,7 +390,8 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::drawSceneCustomShaderForVBOTest()
 {
-
+	
+	/*
 	//terrainNoise
 	for( int i = 0; i < testDistortedTerrain.pointAmount; i++ ){
 		float tmpX = testDistortedTerrain.surfacePoints[i].x + (ofGetElapsedTimef() * 20.4f );
@@ -371,7 +406,7 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	
 	distortedTerrainVbo.updateVertexData( testDistortedTerrain.surfacePoints,  testDistortedTerrain.pointAmount );	
 	distortedTerrainVbo.updateNormalData( testDistortedTerrain.surfaceNormals, testDistortedTerrain.pointAmount );	
-	
+	*/
 	
 	
 	/*
@@ -380,19 +415,42 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	 tmpNoise = ofNoise( noiseX, noiseY, globalVariables->noiseZ );
 	 */
 	
-	//_ofEnable( GL_CULL_FACE );	
+//	_ofEnable( GL_CULL_FACE );	
 	ofLightingModel(GL_SMOOTH);	// We want per pixel lighting.	
 	ofEnableDepthTest();
 	
 	ofPushMatrix();
+	
+	
+		// we need to set our own transform, setupScreen does it's on setup
+		ofLoadIdentityMatrix();
+
 		
-		ofEnableLighting();
+//		ofEnableLighting();
+	
+	
+		// draw the skybox/cubemap
+		/*testCubemap.bind();
+		cubeMapShader.begin();
+		cubeMapShader.setUniform1i("u_cubeSampler", 0 ); // the texture unit it is in
+		ofBox( 800.0f );
+		cubeMapShader.end();
+		testCubemap.unbind();*/
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 		
-		ofTranslate( ofGetWidth()/2.0f, ofGetHeight()/2.0f, 0);
+		//ofVec3f cameraPos( ofGetWidth()/2.0f, ofGetHeight()/2.0f, -200 );
+		ofVec3f cameraPos( 0.0f, 0.0f, -700 );	
+	
+		ofMatrix4x4 lookAtMatrix; 
+		lookAtMatrix.makeLookAtViewMatrix( cameraPos, ofVec3f(0, 0, 0), ofVec3f(0, 1, 0) );
+		ofMultMatrix( lookAtMatrix.getPtr() );	
+	
+		//ofTranslate( cameraPos.x, cameraPos.y, cameraPos.z );
 		ofRotate(-mouseX, 0, 1, 0);
 		ofRotate(-mouseY, 1, 0, 0);	
+	
+	
 	
 		pointLight.enable();	
 		pointLight.setPosition( pointLight.getPosition() );	// Lighting position has to be set when you have the matrix you want, this forces a call to onPositionChanged
@@ -404,28 +462,67 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	//	testSurfaceShader.begin();
 	//	testSurfaceShader.setUniform1f("u_time", ofGetElapsedTimef() );
 
-		//torusMesh.drawFaces();	
-		coneMesh.drawFaces();
+		//sphereMesh.drawFaces();	
+		//cylinderMesh.drawFaces();		
+		//torusMesh.drawFaces();		
+		//coneMesh.drawFaces();
+		//capsuleMesh.drawFaces();
 	
-		/*
-		distortedTerrainVbo.bind();
-			distortedTerrainVbo.drawElements( GL_TRIANGLES, testDistortedTerrain.triangleAmount * 3 );
-		distortedTerrainVbo.unbind();	
+		testCubemap.bind();
+		//testCubemap.bindMulti(1);	
+	
+		glassSurfaceShader.begin();
+		glassSurfaceShader.setUniform3f("u_eyePos", cameraPos.x, cameraPos.y, cameraPos.z );	
+		glassSurfaceShader.setUniform1i("u_cubeSampler", 0 ); // the texture unit it is in
+	
+		//debugTextureImage.draw(0.0f, 0.0f, 512.0f, 512.0f);
+	
+		
+			/*ofPushMatrix();
+				//ofScale( -1.0, -1.0, -1.0 );
+				ofBox( 400.0f );
+			ofPopMatrix();*/
+	
+	
+			ofCylinder( ofPoint( -300.0f, 0.0f, 0.0f ), 40.0f, 100.0f );
+		
+			ofCone( ofPoint( -150.0f, 0.0f, 0.0f ), 40.0f, 100.0f );	
+		
+			ofSphere( ofPoint( 0.0f, 0.0f, 0.0f ), 130.0f );		
+
+			ofTorus( ofPoint( 150.0f, 0.0f, 0.0f ), 70.0f, 20.0f );		
+		
+			ofCapsule( ofPoint( 300.0f, 0.0f, 0.0f ), 40.0f, 100.0f );
+			 
+	
+			//model->drawFaces();
+			 
+			/*surfaceVbo.bind();
+				surfaceVbo.drawElements(GL_TRIANGLES, testTerrain.triangleAmount * 3 );
+			surfaceVbo.unbind();*/
+	 
+		glassSurfaceShader.end();	
+		testCubemap.unbind();
+	
+		
+		//distortedTerrainVbo.bind();
+		//	distortedTerrainVbo.drawElements( GL_TRIANGLES, testDistortedTerrain.triangleAmount * 3 );
+		//distortedTerrainVbo.unbind();	
 		
 		//ofBox( 120.0f );
 		 
 		 
-		ofPushMatrix();
+		//ofPushMatrix();
 
-			ofTranslate( 100.0f, -80.0f, 0.0f );
-			sphereMesh.drawFaces();
+		//	ofTranslate( 100.0f, -80.0f, 0.0f );
+		//	sphereMesh.drawFaces();
 
-			ofTranslate( -100.0f,  0.0f, 0.0f );	
-			torusMesh.drawFaces();
+		//	ofTranslate( -100.0f,  0.0f, 0.0f );	
+		//	torusMesh.drawFaces();
 	
-		ofPopMatrix();
+		//ofPopMatrix();
+
 		
-		*/
 		 
 	//	testSurfaceShader.end();	
 
@@ -437,6 +534,12 @@ void testApp::drawSceneCustomShaderForVBOTest()
 
 		ofDisableLighting();		
 
+		//coneDebugNormalsMesh.draw();
+		//torusDebugNormalsMesh.draw();	
+		//sphereDebugNormalsMesh.draw();		
+		//cylinderDebugNormalsMesh.draw();			
+		//capsuleDebugNormalsMesh.draw();
+	
 		pointLight.draw();			
 	
     ofPopMatrix();
@@ -694,257 +797,17 @@ void testApp::drawSceneModel()
 
 
 //--------------------------------------------------------------
-void testApp::ofGenerateSphereMesh( ofMesh& _mesh, float _radius, int _numRings, int _numSegments ){
-
-	_mesh.clear();	
+void testApp::generateDebugNormalsMesh( ofMesh& _srcMesh, ofMesh& _dstMesh, float _debugNormalScale ){
 	
-	bool doTexCoordinates = true; // get this from a global flag later
-	
-	float uTile = 1.0f; // Texcoord tiling, do we want to support that?
-	float vTile = 1.0f;		
-	
-	float fDeltaRingAngle = (PI / _numRings);
-	float fDeltaSegAngle = (TWO_PI / _numSegments);
-	
-	int offset = 0;	
-	
-	// Generate the group of rings for the sphere
-	for(unsigned int ring = 0; ring <= _numRings; ring++ ) {
-		float r0 = _radius * sinf (ring * fDeltaRingAngle);
-		float y0 = _radius * cosf (ring * fDeltaRingAngle);
-		
-		// Generate the group of segments for the current ring
-		for(unsigned int seg = 0; seg <= _numSegments; seg++) {
-			float x0 = r0 * sinf(seg * fDeltaSegAngle);
-			float z0 = r0 * cosf(seg * fDeltaSegAngle);
-			
-			// Add one vertex to the strip which makes up the sphere
-
-			ofVec3f pos(x0, y0, z0);
-			
-			_mesh.addVertex( pos );
-			
-			_mesh.addNormal( pos.getNormalized() );
-			
-			if( doTexCoordinates ){
-				//for (unsigned int tc=0;tc<numTexCoordSet;tc++)				
-				_mesh.addTexCoord( ofVec2f( (float) seg / (float)_numSegments * uTile, (float) ring / (float)_numRings * vTile ) );
-			}
-			
-			if (ring != _numRings) {
-				// each vertex (except the last) has six indices pointing to it
-				_mesh.addIndex(offset + _numSegments + 1);
-				_mesh.addIndex(offset);
-				_mesh.addIndex(offset + _numSegments);
-				_mesh.addIndex(offset + _numSegments + 1);
-				_mesh.addIndex(offset + 1);
-				_mesh.addIndex(offset);
-				offset ++;
-			}
-		}; // end for seg
-	} // end for ring	
-	
-}
-
-/*
-Ogre::Real fDeltaRingAngle = (Ogre::Math::PI / numRings);
-Ogre::Real fDeltaSegAngle = (Ogre::Math::TWO_PI / numSegments);
-
-// Generate the group of rings for the sphere
-for(unsigned int ring = 0; ring <= numRings; ring++ ) {
-	Ogre::Real r0 = radius * sinf (ring * fDeltaRingAngle);
-	Ogre::Real y0 = radius * cosf (ring * fDeltaRingAngle);
-	
-	// Generate the group of segments for the current ring
-	for(unsigned int seg = 0; seg <= numSegments; seg++) {
-		Ogre::Real x0 = r0 * sinf(seg * fDeltaSegAngle);
-		Ogre::Real z0 = r0 * cosf(seg * fDeltaSegAngle);
-		
-		// Add one vertex to the strip which makes up the sphere
-		manual->position( x0, y0, z0);
-		if (enableNormals)
-			manual->normal(Ogre::Vector3(x0, y0, z0).normalisedCopy());
-			for (unsigned int tc=0;tc<numTexCoordSet;tc++)
-				manual->textureCoord((Ogre::Real) seg / (Ogre::Real) numSegments * uTile, (Ogre::Real) ring / (Ogre::Real) numRings * vTile);
-				
-				if (ring != numRings) {
-					// each vertex (except the last) has six indices pointing to it
-					manual->index(offset + numSegments + 1);
-					manual->index(offset);
-					manual->index(offset + numSegments);
-					manual->index(offset + numSegments + 1);
-					manual->index(offset + 1);
-					manual->index(offset);
-					offset ++;
-				}
-	}; // end for seg
-} // end for ring
-*/
- 
- 
-//--------------------------------------------------------------
-void testApp::ofGenerateTorusMesh( ofMesh& _mesh, float _radius, float _sectionRadius, int _numSegSection, int _numSegCircle ){
-	
-	_mesh.clear();	
-	
-	bool doTexCoordinates = true; // get this from a global flag later
-	
-	float uTile = 1.0f; // Texcoord tiling, do we want to support that?
-	float vTile = 1.0f;	
-		
-	float deltaSection = (TWO_PI / _numSegSection);
-	float deltaCircle = (TWO_PI / _numSegCircle);
-	
-	int offset = 0;
-	
-	for (int i = 0; i <= _numSegCircle; i++){
-		for (int j = 0; j<= _numSegSection; j++) {
-
-			ofVec3f c0( _radius, 0.0, 0.0);
-			ofVec3f v0( _radius + _sectionRadius * cosf(j*deltaSection), _sectionRadius * sinf(j*deltaSection),0.0);
-
-			ofQuaternion q( i*deltaCircle, ofVec3f( 0.0f, 1.0f, 0.0f) );
-
-			ofVec3f v = q * v0;
-			ofVec3f c = q * c0;
-
-			_mesh.addVertex( v );
-			_mesh.addNormal( (v-c).getNormalized() );	
-
-			if( doTexCoordinates ){
-				_mesh.addTexCoord( ofVec2f(i/(float)_numSegCircle*uTile, j/(float)_numSegSection*vTile) );
-			}
-				
-			if (i != _numSegCircle) {
-				_mesh.addIndex(offset + _numSegSection + 1);
-				_mesh.addIndex(offset);
-				_mesh.addIndex(offset + _numSegSection);
-				_mesh.addIndex(offset + _numSegSection + 1);
-				_mesh.addIndex(offset + 1);
-				_mesh.addIndex(offset);
-			}
-			offset ++;							  
-		}
-	}
-	
-}
-
-/*
-assert(numSegSection>0 && numSegCircle>0 && "Num seg must be positive");
-assert(radius>0. && sectionRadius>0. && "Radius must be positive");
-
-Ogre::Real deltaSection = (Ogre::Math::TWO_PI / numSegSection);
-Ogre::Real deltaCircle = (Ogre::Math::TWO_PI / numSegCircle);
-
-for (int i = 0; i <=numSegCircle; i++)
-for (int j = 0; j<=numSegSection; j++)
-{
-	Ogre::Vector3 c0(radius, 0.0, 0.0);
-	Ogre::Vector3 v0(radius+sectionRadius * cosf(j*deltaSection),sectionRadius * sinf(j*deltaSection),0.0);
-	Ogre::Quaternion q;
-	q.FromAngleAxis(Ogre::Radian(i*deltaCircle),Ogre::Vector3::UNIT_Y);
-	Ogre::Vector3 v = q * v0;
-	Ogre::Vector3 c = q * c0;
-	manual->position(v);
-	manual->normal((v-c).normalisedCopy());
-	manual->textureCoord(i/(Ogre::Real)numSegCircle*uTile, j/(Ogre::Real)numSegSection*vTile);
-	
-	if (i != numSegCircle)
-	{
-		manual->index(offset + numSegSection + 1);
-		manual->index(offset);
-		manual->index(offset + numSegSection);
-		manual->index(offset + numSegSection + 1);
-		manual->index(offset + 1);
-		manual->index(offset);
-	}
-	offset ++;
-}
-boundingRadius = radius + sectionRadius;
-aabb = Ogre::AxisAlignedBox(-radius-sectionRadius,-sectionRadius,-radius-sectionRadius, radius+sectionRadius, sectionRadius, radius+sectionRadius);
-*/
-
-
-//--------------------------------------------------------------
-void testApp::ofGenerateConeMesh( ofMesh& _mesh, float _radius, float _height, int _numSegBase, int _numSegHeight )
-{
-	_mesh.clear();	
-	
-	bool doTexCoordinates = true; // get this from a global flag later
-	
-	float uTile = 1.0f; // Texcoord tiling, do we want to support that?
-	float vTile = 1.0f;	
-	
-	float deltaAngle = (TWO_PI / _numSegBase);
-	float deltaHeight = _height/(float)_numSegHeight;
-	
-	ofVec3f refNormal = ofVec3f(_radius, _height, 0.f).getNormalized();
-	ofQuaternion q;
-	
-	int offset = 0;
-	
-	for (int i = 0; i <= _numSegHeight; i++)
-	{
-		float r0 = _radius * (1 - i / (float)_numSegHeight);
-		for (int j = 0; j<= _numSegBase; j++)
-		{
-			float x0 = r0 * cosf(j*deltaAngle);
-			float z0 = r0 * sinf(j*deltaAngle);
-			
-			ofVec3f pos( x0, i*deltaHeight, z0 );
-			_mesh.addVertex( pos );
-			
-			q.makeRotate( -j*deltaAngle, 0.0f, 1.0f, 0.0f );
-			
-			_mesh.addNormal(q*refNormal);
-
-			if( doTexCoordinates ){
-				_mesh.addTexCoord( ofVec2f(j/(float)_numSegBase*uTile, i/(float)_numSegHeight*vTile) );
-			}
-			
-			
-			if (i != _numSegHeight && j != _numSegBase)
-			{
-				_mesh.addIndex(offset + _numSegBase + 2);
-				_mesh.addIndex(offset);
-				_mesh.addIndex(offset + _numSegBase+1);
-				_mesh.addIndex(offset + _numSegBase + +2);
-				_mesh.addIndex(offset + 1);
-				_mesh.addIndex(offset);
-			}
-			
-			offset ++;
-		}
+	_dstMesh.setMode(OF_PRIMITIVE_LINES );			
+	ofVec3f* vertices = _srcMesh.getVerticesPointer();
+	ofVec3f* normals = _srcMesh.getNormalsPointer();	
+	for( int i = 0; i < _srcMesh.getNumVertices(); i++ ){
+		ofVec3f start = vertices[i];
+		ofVec3f end = start + ( normals[i] * _debugNormalScale );	
+		_dstMesh.addVertex( start );
+		_dstMesh.addVertex( end );			
 	}	
-	
-	//low cap
-	int centerIndex = offset;
-
-	_mesh.addVertex( ofVec3f(0,0,0) );
-	_mesh.addNormal( ofVec3f(0.0f, -1.0f, 0.0) );
-	if( doTexCoordinates ){
-		_mesh.addTexCoord( ofVec2f(0.0,vTile) );
-	}
-	offset++;
-	
-	for (int j=0; j <= _numSegBase; j++)
-	{
-		float x0 = _radius * cosf(j*deltaAngle);
-		float z0 = _radius * sinf(j*deltaAngle);
-		
-		_mesh.addVertex( ofVec3f(x0, 0.0f, z0) );
-		_mesh.addNormal( ofVec3f(0.0f, -1.0f, 0.0) );
-		_mesh.addTexCoord( ofVec2f(j/(float)_numSegBase*uTile,0.0) );
-		if (j!=_numSegBase)
-		{
-			_mesh.addIndex(centerIndex);
-			_mesh.addIndex(offset);
-			_mesh.addIndex(offset+1);
-		}
-		offset++;
-	}
-	
-	
 }
 
 //--------------------------------------------------------------
@@ -1728,6 +1591,16 @@ void testApp::touchUp(ofTouchEventArgs &touch){
 
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs &touch){
+	
+	ofSetSphereResolution( ofRandom(2,40), ofRandom(2,40) );
+	
+	ofSetTorusResolution( ofRandom(2,40), ofRandom(2,40) );
+	
+	ofSetConeResolution( ofRandom(2,40), ofRandom(2,40) );
+	
+	ofSetCylinderResolution( ofRandom(2,40), ofRandom(2,40) );
+	
+	ofSetCapsuleResolution( ofRandom(2,40), ofRandom(2,40), ofRandom(2,40) );
 	
 }
 

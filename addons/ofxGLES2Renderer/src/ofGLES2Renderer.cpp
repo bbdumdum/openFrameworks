@@ -14,15 +14,6 @@
 
 using namespace OpenGLES;
 
-/*
-static bool		bBitmapTexturePrepared = false;
-ofTexture		glesBitmappedFontTexture;
-
-static vector <GLfloat> coords;
-static vector <GLfloat> verts;
-
-static int vC = 0;
-*/
  
 //----------------------------------------------------------
 ofGLES2Renderer::ofGLES2Renderer(int _glVersion){
@@ -55,6 +46,8 @@ ofGLES2Renderer::ofGLES2Renderer(int _glVersion){
 	triPoints.resize(3);
 
 	gl->glHint(GL_LIGHTING_HINT, GL_FASTEST ); // Do not start with per pixel lighting as it is slower
+	
+	gl->glFrontFace( GL_CCW ); // Andreas: this is the default, trying explicitly setting this as I am seeing some odd behaviour randomly
 	
 	currentFbo = NULL;
 }
@@ -728,6 +721,35 @@ void ofGLES2Renderer::rotateZ(float degrees){
 void ofGLES2Renderer::rotate(float degrees){
 	 gl->glRotatef(degrees, 0, 0, 1);
 }
+
+//----------------------------------------------------------
+void ofGLES2Renderer::loadIdentityMatrix (void){
+	gl->glLoadIdentity();
+}
+
+//----------------------------------------------------------
+void ofGLES2Renderer::loadMatrix (const ofMatrix4x4 *m){
+	loadMatrix( m->getPtr() );	
+}
+
+//----------------------------------------------------------
+void ofGLES2Renderer::loadMatrix (const float *m){
+	gl->glLoadMatrixf(m);
+}
+
+//----------------------------------------------------------
+void ofGLES2Renderer::multMatrix (const ofMatrix4x4 *m){
+	multMatrix( m->getPtr() );		
+}
+
+//----------------------------------------------------------
+void ofGLES2Renderer::multMatrix (const float *m){
+	gl->glMultMatrixf(m);
+}
+
+
+
+
 
 //----------------------------------------------------------
 void ofGLES2Renderer::setColor(const ofColor & color){

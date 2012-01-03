@@ -360,6 +360,10 @@ void OpenGLES20Context::prepareToDraw()
 		}		
 		
 		// Todo, a normal matrix
+		loc = glGetUniformLocation(shaderProgramId,"u_normalMatrix");
+		if( loc > -1 ) {
+			openGLESState.uniforms[UniformId::TRANPOSE_ADJOINT_MODEL_VIEW_MATRIX]->uploadToOtherLocation( loc );
+		}			
 		
 		
 		// Positions, you probably want this

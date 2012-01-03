@@ -4,6 +4,7 @@
 #include "ofVectorMath.h"
 #include "of3dUtils.h"
 #include "ofGraphics.h"
+#include "of3dPrimitives.h"
 
 
 // a generic 3d object in space with transformation (position, rotation, scale)

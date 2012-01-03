@@ -893,6 +893,7 @@ void ofEndShape(bool bClose){
 //--------------------------------------------------
 // 3d primitives
 
+/*
 //----------------------------------------
 void ofSphere(float x, float y, float z, float radius) {
 	ofSphere(ofPoint(x, y, z), radius);
@@ -1050,7 +1051,7 @@ void ofBox(float size) {
 
 	ofPopMatrix();
 }
-
+*/
 // end 3d primitives
 //--------------------------------------------------
 

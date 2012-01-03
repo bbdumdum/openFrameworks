@@ -80,4 +80,5 @@
 #include "ofEasyCam.h"
 #include "ofMesh.h"
 #include "ofNode.h"
+#include "of3dPrimitives.h"
 
