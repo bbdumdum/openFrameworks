@@ -40,16 +40,18 @@ void ofxCubeMap::loadImages( string pos_x, string pos_y, string pos_z, string ne
 }
 
 //--------------------------------------------------------------
-void ofxCubeMap::loadFromOfImages( ofImage pos_x, ofImage pos_y, ofImage pos_z, ofImage neg_x,ofImage neg_y,ofImage neg_z)
+void ofxCubeMap::loadFromOfImages( ofImage pos_x, ofImage pos_y, ofImage pos_z, ofImage neg_x, ofImage neg_y,ofImage neg_z)
 {	
-
+	
+	//_ofEnable( GL_TEXTURE_CUBE_MAP_SEAMLESS );
+	
 	//create a texture object
 	glGenTextures(1, &textureObject);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureObject);
 	
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	
+		
 #ifndef TARGET_OPENGLES	
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE); // GL_TEXTURE_WRAP_R is not in the ES2 header, hmm..
 #endif
@@ -65,31 +67,41 @@ void ofxCubeMap::loadFromOfImages( ofImage pos_x, ofImage pos_y, ofImage pos_z, 
 	cout << "ofxCubeMap::loadFromOfImages, img_size: " << img_size << "  bpp: " << pos_x.bpp << endl;
 	
 	data_px = new unsigned char [img_size * img_size * 3];
-	data_nx = new unsigned char [img_size * img_size * 3];
-	
 	data_py = new unsigned char [img_size * img_size * 3];
-	data_ny = new unsigned char [img_size * img_size * 3];
-	
 	data_pz = new unsigned char [img_size * img_size * 3];
+	
+	data_nx = new unsigned char [img_size * img_size * 3];
+	data_ny = new unsigned char [img_size * img_size * 3];
 	data_nz = new unsigned char [img_size * img_size * 3];
 	
 	data_px = pos_x.getPixels();
-	data_nx = neg_y.getPixels();
-	
 	data_py = pos_y.getPixels();
-	data_ny = neg_y.getPixels();
+	data_pz = pos_z.getPixels();	
 	
-	data_pz = pos_z.getPixels();
+	data_nx = neg_x.getPixels();
+	data_ny = neg_y.getPixels();	
 	data_nz = neg_z.getPixels();
-		
+
+	
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_px); // positive x
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nx); // negative x
-	
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_py); // positive y
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_ny); // negative y
-
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_pz); // positive z	
-	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nz); // negative z
 	
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nx); // negative x
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_ny); // negative y
+	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, img_size, img_size, 0, GL_RGB, GL_UNSIGNED_BYTE, data_nz); // negative z
 
+	
+	/*
+	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, 0,0, img_size, img_size, GL_RGB, GL_UNSIGNED_BYTE, data_px); // positive x
+	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, 0,0, img_size, img_size, GL_RGB, GL_UNSIGNED_BYTE, data_nx); // negative x
+	
+	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, 0,0, img_size, img_size, GL_RGB, GL_UNSIGNED_BYTE, data_py); // positive y
+	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, 0,0, img_size, img_size, GL_RGB, GL_UNSIGNED_BYTE, data_ny); // negative y
+	
+	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, 0,0, img_size, img_size, GL_RGB, GL_UNSIGNED_BYTE, data_pz); // positive z	
+	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, 0,0, img_size, img_size, GL_RGB, GL_UNSIGNED_BYTE, data_nz); // negative z
+	
+	_ofDisable( GL_TEXTURE_2D );*/
+	
 }

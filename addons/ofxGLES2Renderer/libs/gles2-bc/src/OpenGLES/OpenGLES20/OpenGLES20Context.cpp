@@ -297,6 +297,8 @@ void OpenGLES20Context::prepareToDraw()
 	OpenGLESMath::multiply(&mvp, modelViewMatrix, projectionMatrix);
 	openGLESState.setModelViewProjectionMatrix(mvp);
 	
+	Matrix4x4<GLfloat> inverseModelViewMatrix;	
+	
 	if (openGLESState.isNormal()) {
 		
 		/*
@@ -319,7 +321,11 @@ void OpenGLES20Context::prepareToDraw()
 		// It would be nice to detect if the view has changed in any way an cache this calculation
 		
 		Matrix4x4<GLfloat> transposeInverseModelViewMatrix;
+		
 		OpenGLESMath::inverse(&transposeInverseModelViewMatrix, modelViewMatrix);
+		
+		inverseModelViewMatrix = transposeInverseModelViewMatrix;
+		
 		OpenGLESMath::transpose(&transposeInverseModelViewMatrix);
 		Matrix3x3<GLfloat> modelViewMatrix3x3;
 		OpenGLESMath::copyMatrix4x4UpperLeftToMatrix3x3(&modelViewMatrix3x3, &transposeInverseModelViewMatrix);
@@ -359,10 +365,16 @@ void OpenGLES20Context::prepareToDraw()
 			glUniformMatrix4fv( loc, 1, GL_FALSE, mvp.m );
 		}		
 		
-		// Todo, a normal matrix
+		// Normal matrix
 		loc = glGetUniformLocation(shaderProgramId,"u_normalMatrix");
 		if( loc > -1 ) {
 			openGLESState.uniforms[UniformId::TRANPOSE_ADJOINT_MODEL_VIEW_MATRIX]->uploadToOtherLocation( loc );
+		}			
+
+		// Inverse Modelview matrix
+		loc = glGetUniformLocation(shaderProgramId,"u_modelViewMatrixInverse");
+		if( loc > -1 ) {
+			glUniformMatrix4fv( loc, 1, GL_FALSE, inverseModelViewMatrix.m );
 		}			
 		
 		

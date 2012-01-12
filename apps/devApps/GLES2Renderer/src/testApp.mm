@@ -287,8 +287,8 @@ void testApp::setup()
 						   "cubemaps/cubemap_debug/debug_negative_y.png",
 						   "cubemaps/cubemap_debug/debug_negative_z.png" );	*/
 	
-	glassSurfaceShader.load("shaders/Glass");
-	//glassSurfaceShader.load("shaders/Reflection");	
+	//glassSurfaceShader.load("shaders/Glass");
+	glassSurfaceShader.load("shaders/Reflection");	
 	
 	cubeMapShader.load("shaders/Cubemap");
 	
@@ -315,9 +315,9 @@ void testApp::update()
 {
 	counter++;
 	
-	float radius = 80.0f; 
+	float radius = 20.0f; 
 	//ofVec3f center(0.0f,-110.0f, 0);	
-	ofVec3f center(0.0f,100.0f, 0);		
+	ofVec3f center(0.0f,20.0f, 0);		
 	
 	pointLight.setPosition( cos(ofGetElapsedTimef()*0.8f) * radius * 2 + center.x, 
 						    sin(ofGetElapsedTimef()*0.6f) * radius * 2 + center.y, 
@@ -332,6 +332,9 @@ void testApp::update()
 //--------------------------------------------------------------
 void testApp::draw()
 {
+	//ofGetGLRenderer()->setupScreenPerspective(0, 0, OF_ORIENTATION_UNKNOWN, true, 60, 0.0f, 1024.0f);
+	ofGetCurrentRenderer()->setupScreenPerspective(0, 0, OF_ORIENTATION_UNKNOWN, true, 60, 0.0f, 1024.0f);
+	
 	ofScale(appIphoneScale, appIphoneScale, 1.0);
 
 
@@ -417,7 +420,6 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	
 //	_ofEnable( GL_CULL_FACE );	
 	ofLightingModel(GL_SMOOTH);	// We want per pixel lighting.	
-	ofEnableDepthTest();
 	
 	ofPushMatrix();
 	
@@ -439,18 +441,43 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	
 		checkGlError( glGetError(), __FILE__, __LINE__ );	
 		
-		//ofVec3f cameraPos( ofGetWidth()/2.0f, ofGetHeight()/2.0f, -200 );
-		ofVec3f cameraPos( 0.0f, 0.0f, -700 );	
+		ofMatrix4x4 tmpModelView;
+		tmpModelView.glRotate( -mouseX, 0, 1, 0 );
+		tmpModelView.glRotate( -mouseY, 1, 0, 0 );
+		ofLoadMatrix( &tmpModelView );
+
+		ofEnableDepthTest();		
 	
+		ofPushMatrix();
+			ofTranslate( ofVec3f( 0.0f, 0.0f, 100.0f) );
+			ofBox( 40.0f );
+		ofPopMatrix();
+	
+		//ofRotate(-mouseX, 0, 1, 0);
+		//ofRotate(-mouseY, 1, 0, 0);	
+/*	
+		testCubemap.bind();	
+	
+		cubeMapShader.begin();
+		cubeMapShader.setUniform1i("u_cubeSampler", 0 ); // the texture unit it is in	
+		ofBox( 250.0f );
+		cubeMapShader.end();
+*/	
+
+	
+		ofVec3f cameraPos( 0.0f, 0.0f, -200 );	
+		//ofVec3f cameraPos( cos(ofGetElapsedTimef()*1.8f) * 200.0f, sin(ofGetElapsedTimef()*1.8f) * 200.0f, -200 );		
+		
 		ofMatrix4x4 lookAtMatrix; 
 		lookAtMatrix.makeLookAtViewMatrix( cameraPos, ofVec3f(0, 0, 0), ofVec3f(0, 1, 0) );
-		ofMultMatrix( lookAtMatrix.getPtr() );	
+		//ofMultMatrix( lookAtMatrix.getPtr() );	
+		tmpModelView.postMult( lookAtMatrix );
+		ofLoadMatrix( &tmpModelView );	
 	
-		//ofTranslate( cameraPos.x, cameraPos.y, cameraPos.z );
-		ofRotate(-mouseX, 0, 1, 0);
-		ofRotate(-mouseY, 1, 0, 0);	
+		//cout << tmpModelView.getTranslation() << endl;
 	
-	
+		ofVec3f tmpWorldPos = ofVec3f(0.0f, 0.0f, 0.0f) * tmpModelView;
+		cout << tmpWorldPos << endl;
 	
 		pointLight.enable();	
 		pointLight.setPosition( pointLight.getPosition() );	// Lighting position has to be set when you have the matrix you want, this forces a call to onPositionChanged
@@ -484,15 +511,15 @@ void testApp::drawSceneCustomShaderForVBOTest()
 			ofPopMatrix();*/
 	
 	
-			ofCylinder( ofPoint( -300.0f, 0.0f, 0.0f ), 40.0f, 100.0f );
+			ofCylinder( ofPoint( -60.0f, 0.0f, 0.0f ), 10.0f, 20.0f );
 		
-			ofCone( ofPoint( -150.0f, 0.0f, 0.0f ), 40.0f, 100.0f );	
+			ofCone( 	ofPoint( -30.0f, 0.0f, 0.0f ), 10.0f, 20.0f );	
 		
-			ofSphere( ofPoint( 0.0f, 0.0f, 0.0f ), 130.0f );		
+			ofSphere( 	ofPoint(   0.0f, 0.0f, 0.0f ), 20.0f );		
 
-			ofTorus( ofPoint( 150.0f, 0.0f, 0.0f ), 70.0f, 20.0f );		
+			ofTorus( 	ofPoint(  30.0f, 0.0f, 0.0f ), 8.0f, 4.0f );		
 		
-			ofCapsule( ofPoint( 300.0f, 0.0f, 0.0f ), 40.0f, 100.0f );
+			ofCapsule( 	ofPoint(  60.0f, 0.0f, 0.0f ), 10.0f, 20.0f );
 			 
 	
 			//model->drawFaces();
@@ -542,10 +569,10 @@ void testApp::drawSceneCustomShaderForVBOTest()
 	
 		pointLight.draw();			
 	
+		ofDisableDepthTest();
+	
     ofPopMatrix();
-	
-	ofDisableDepthTest();	
-	
+		
 	_ofDisable( GL_CULL_FACE );	
 	
 	checkGlError( glGetError(), __FILE__, __LINE__ );		
