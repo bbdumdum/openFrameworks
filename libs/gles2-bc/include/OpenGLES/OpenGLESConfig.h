@@ -26,7 +26,7 @@ class OpenGLESConfig
 {
 public:
 	static const bool USE_ONLY_UBER_SHADER;
-	static const bool DEBUG;
+	static const bool SHADER_DEBUG;
 };
 	
 }

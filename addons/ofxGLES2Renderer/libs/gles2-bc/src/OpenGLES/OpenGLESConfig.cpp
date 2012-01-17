@@ -22,9 +22,9 @@ using namespace OpenGLES;
 
 const bool OpenGLESConfig::USE_ONLY_UBER_SHADER = false;
 #ifdef OPENGLES_DEBUG
-const bool OpenGLESConfig::DEBUG = true;
+const bool OpenGLESConfig::SHADER_DEBUG = true;
 #else
-const bool OpenGLESConfig::DEBUG = false;
+const bool OpenGLESConfig::SHADER_DEBUG = false;
 #endif
 
 // TODO: read from file

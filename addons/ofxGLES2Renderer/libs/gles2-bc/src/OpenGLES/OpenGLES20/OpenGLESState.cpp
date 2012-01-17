@@ -960,7 +960,7 @@ void OpenGLESState::setCurrentProgram()
 		
 		// Andreas: momentarily taking this out
 		/*
-		if (OpenGLESConfig::DEBUG) {
+		if (OpenGLESConfig::SHADER_DEBUG) {
 			LOG_MESSAGE("Using shader files:");
 			for (size_t i = 0; i < vertexShaderSources.size(); i++)
 			{

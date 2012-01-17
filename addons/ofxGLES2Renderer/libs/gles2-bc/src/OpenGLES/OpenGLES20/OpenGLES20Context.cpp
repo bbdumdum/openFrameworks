@@ -714,7 +714,7 @@ void OpenGLES20Context::glLightf (GLenum l, GLenum pname, GLfloat param)
 	{
 		case GL_SPOT_EXPONENT:
 			openGLESState.setLightSpotExponent(lightIndex, param);
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::SHADER_DEBUG) {
 				if (param > 128) {
 					LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Spot exponent cannot be over 128");
 				}
@@ -722,7 +722,7 @@ void OpenGLES20Context::glLightf (GLenum l, GLenum pname, GLfloat param)
 			break;
 		case GL_SPOT_CUTOFF:
 			openGLESState.setLightSpotCutoffAngleCos(lightIndex, cosf(param*_PI/180.0f));
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::SHADER_DEBUG) {
 				if (param > 90 && param != 180) {
 					LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Spot cutoff cannot be over 90 and different from 180.");
 				}
@@ -764,7 +764,7 @@ void OpenGLES20Context::glLightfv (GLenum l, GLenum pname, const GLfloat *params
 			OpenGLESMath::multiply(&vec, modelViewMatrix, &vec);
 			openGLESState.setLightPosition(lightIndex, vec);
 			
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::SHADER_DEBUG) {
 				if (vec[3] == 0.0f && !OpenGLESMath::isUnitVector(&vec)) {
 					LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Directional light's position is not unit vector.");
 				}
@@ -835,7 +835,7 @@ void OpenGLES20Context::glMaterialf (GLenum face, GLenum pname, GLfloat param)
 	{
 		case GL_SHININESS:
 			openGLESState.setMaterialShininess(param);
-			if (OpenGLESConfig::DEBUG) {
+			if (OpenGLESConfig::SHADER_DEBUG) {
 				if (param > 128) {
 					LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Shininess cannot be over 128");
 				}

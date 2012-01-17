@@ -48,10 +48,10 @@ typedef int             GLclampx;
 #ifndef __ANDROID__
 	
 	#ifndef __gl_es20_h_
-		typedef int             GLintptr;
-		typedef int             GLsizeiptr;	
-		//typedef long             GLintptr;
-		//typedef long             GLsizeiptr; // Andreas: This changed from Snow Leopard to Lion I think, or iOS 4.3 to iOS 5.0, we'll need to detect it
+		//typedef int             GLintptr;
+		//typedef int             GLsizeiptr;	
+		typedef long             GLintptr;
+		typedef long             GLsizeiptr; // Andreas: This changed from Snow Leopard to Lion I think, or iOS 4.3 to iOS 5.0, we'll need to detect it
 	#endif
 
 #else
