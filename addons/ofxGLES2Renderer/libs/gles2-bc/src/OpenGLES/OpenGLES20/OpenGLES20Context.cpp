@@ -438,13 +438,13 @@ void OpenGLES20Context::prepareToDraw()
 			}	
 		}
 		
-		
 	}
 	else
 	{
 		openGLESState.setCurrentProgram();
 	}
 }
+
 
 void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
 {
@@ -463,12 +463,15 @@ void OpenGLES20Context::glDrawArrays(GLenum mode, GLint first, GLsizei count)
 
 void OpenGLES20Context::glDrawElements (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices)
 {
+	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+	
 	if (/*shaderProgramId == 0 || */ sendDefaultsToCustomShaders) {
 		prepareToDraw();
 	}
 	::glDrawElements(mode, count, type, indices);
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
+
 
 void OpenGLES20Context::glEnable (GLenum cap)
 {
@@ -1190,6 +1193,13 @@ void OpenGLES20Context::glGetFloatv(GLenum pname, GLfloat *params)
 				params[i] = matrixStack.getModelViewMatrix()->m[i];
 			}
 			break;
+			
+		case GL_PROJECTION_MATRIX:
+			for (int i = 0; i < 16; i++) {
+				params[i] = matrixStack.getProjectionMatrix()->m[i];
+			}
+			break;
+			
 		default:
 			::glGetFloatv(pname, params);
 			break;
@@ -1197,6 +1207,7 @@ void OpenGLES20Context::glGetFloatv(GLenum pname, GLfloat *params)
 	
 	CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
+
 
 void OpenGLES20Context::glGetLightfv (GLenum light, GLenum pname, GLfloat *params)
 {

@@ -18,6 +18,8 @@
 #define OpenGLESConfig_H__
 
 #include <string>
+
+// Turn this off when not hacking on the ES 2.0 addon
 #define OPENGLES_DEBUG 1
 
 namespace OpenGLES {
