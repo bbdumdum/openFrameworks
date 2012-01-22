@@ -124,6 +124,7 @@ public:
 	void _enable( unsigned int capability );
 	void _disable( unsigned int capability );
 	void _alphaFunc( unsigned int func, float ref );
+	void _blendFunc( unsigned int sfactor, unsigned int dfactor);
 	void _matrixMode( unsigned int mode );	
 	void _lightModelfv(unsigned int pname, const float *params );
 	void _lightf(unsigned int light, unsigned int pname, float param);

@@ -379,6 +379,7 @@ public:
 	virtual void _disable( unsigned int capability )=0;
 
 	virtual void _alphaFunc( unsigned int	func, float ref )=0;
+	virtual void _blendFunc( unsigned int sfactor, unsigned int dfactor)=0;
 	
 	virtual void _matrixMode( unsigned int mode )=0;
 	

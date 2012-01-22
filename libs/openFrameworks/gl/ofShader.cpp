@@ -297,7 +297,6 @@ void ofShader::unload() {
 //--------------------------------------------------------------
 void ofShader::begin() {
 	if (bLoaded == true){
-    
 		#ifdef OPENGLES_VERSION_2
 			ofGetGLES2Context()->glUseProgram(program);
 		#else

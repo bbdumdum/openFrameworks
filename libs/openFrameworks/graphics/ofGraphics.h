@@ -199,6 +199,8 @@ void _ofDisable( unsigned int capability );
 
 void _ofAlphaFunc( unsigned int func, float ref );
 
+void _ofBlendFunc( unsigned int sfactor, unsigned int dfactor);
+
 void _ofMatrixMode( unsigned int mode );
 
 void _ofLightModelfv(unsigned int propertyname, const float *params );

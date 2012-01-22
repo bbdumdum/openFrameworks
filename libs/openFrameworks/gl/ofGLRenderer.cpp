@@ -1119,6 +1119,12 @@ void ofGLRenderer::_alphaFunc( unsigned int func, float ref ){
 }
 
 //----------------------------------------------------------
+void ofGLRenderer::_blendFunc( unsigned int sfactor, unsigned int dfactor)
+{
+	glBlendFunc( sfactor, dfactor );
+}
+
+//----------------------------------------------------------
 void ofGLRenderer::_matrixMode( unsigned int mode ){
 	glMatrixMode( mode );
 }

@@ -140,6 +140,7 @@ public:
 	void _enable( unsigned int capability );
 	void _disable( unsigned int capability );
 	void _alphaFunc( unsigned int func, float ref );	
+	void _blendFunc( unsigned int sfactor, unsigned int dfactor);
 	void _matrixMode( unsigned int mode );		
 	void _lightModelfv(unsigned int pname, const float *params );
 	void _lightf(unsigned int light, unsigned int pname, float param);
@@ -150,7 +151,7 @@ public:
 	void _activeTexture( unsigned int texture );
 	void _bindTexture(unsigned int target, unsigned int texture);
 	void _texImage2D (unsigned int target, int level, int internalformat, int width, int height, int border, unsigned int format, unsigned int type, const void *pixels );
-	void _texEnvf(unsigned int target, unsigned int pname, unsigned int param);			
+	void _texEnvf(unsigned int target, unsigned int pname, unsigned int param);		
 	
 	OpenGLES::OpenGLESContext * getGLES2Context();
 private:

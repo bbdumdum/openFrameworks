@@ -1126,6 +1126,12 @@ void _ofAlphaFunc( unsigned int	func, float ref ){
 }
 
 //----------------------------------------
+void _ofBlendFunc( unsigned int sfactor, unsigned int dfactor)
+{
+	renderer->_blendFunc( sfactor, dfactor );
+}
+
+//----------------------------------------
 void _ofMatrixMode( unsigned int mode ){
 	renderer->_matrixMode( mode );
 }

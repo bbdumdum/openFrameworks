@@ -1396,6 +1396,13 @@ void ofGLES2Renderer::_texEnvf(unsigned int target, unsigned int pname, unsigned
 	gl->glTexEnvf( target, pname, param );
 }
 
+//----------------------------------------------------------
+void ofGLES2Renderer::_blendFunc( unsigned int sfactor, unsigned int dfactor)
+{
+	gl->glBlendFunc( sfactor, dfactor );
+}
+
+
 OpenGLES::OpenGLESContext * ofGLES2Renderer::getGLES2Context(){
 	return gl;
 }
