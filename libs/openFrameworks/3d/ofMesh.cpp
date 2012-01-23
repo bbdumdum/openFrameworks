@@ -302,7 +302,7 @@ ofFloatColor* ofMesh::getColorsPointer(){
 //--------------------------------------------------------------
 ofVec3f* ofMesh::getNormalsPointer(){
 #ifdef TARGET_OSX
-		return &normals[0];
+	return &normals[0];
 #else
 	return normals.data();
 #endif
@@ -311,7 +311,7 @@ ofVec3f* ofMesh::getNormalsPointer(){
 //--------------------------------------------------------------
 ofVec2f* ofMesh::getTexCoordsPointer(){
 #ifdef TARGET_OSX
-		return &texCoords[0];
+	return &texCoords[0];
 #else
 	return texCoords.data();
 #endif

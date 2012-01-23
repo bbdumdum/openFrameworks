@@ -1347,7 +1347,6 @@ void ofGLES2Renderer::_alphaFunc( unsigned int func, float ref ){
 void ofGLES2Renderer::_lightModelfv(unsigned int pname, const float *params ){
 	
 	//cout << "ofGLES2Renderer::_lightModelfv " << params[0] << ", " << params[1] << ", " << params[2] << ", " << params[3] << endl;
-	
 	gl->glLightModelfv( pname, params );
 }
 
@@ -1402,7 +1401,7 @@ void ofGLES2Renderer::_blendFunc( unsigned int sfactor, unsigned int dfactor)
 	gl->glBlendFunc( sfactor, dfactor );
 }
 
-
+//----------------------------------------------------------
 OpenGLES::OpenGLESContext * ofGLES2Renderer::getGLES2Context(){
 	return gl;
 }

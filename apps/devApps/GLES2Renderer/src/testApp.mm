@@ -378,7 +378,7 @@ void testApp::draw()
 	//drawSceneSimple();
 	//drawSceneVBO();
 	//drawSceneModel();	
-	//drawSceneVBOTest2();
+	drawSceneVBOTest2();
 	//drawSceneLightingTest();
 	//drawSceneLightingCubeGridTest();
 	drawSceneCustomShaderForVBOTest();
