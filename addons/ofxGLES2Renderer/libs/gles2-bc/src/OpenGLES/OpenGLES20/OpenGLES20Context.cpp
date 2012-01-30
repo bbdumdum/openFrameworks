@@ -894,7 +894,8 @@ void OpenGLES20Context::glMatrixMode (GLenum mode)
 
 void OpenGLES20Context::glMultMatrixf (const GLfloat *m)
 {
-	matrixStack.multiply(m);
+	//matrixStack.multiply(m);
+	matrixStack.multiplyAlt(m);	
 }
 
 void OpenGLES20Context::glMultMatrixx (const GLfixed *m)

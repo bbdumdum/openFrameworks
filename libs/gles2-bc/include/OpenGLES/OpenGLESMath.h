@@ -511,6 +511,44 @@ namespace OpenGLES {
 			
 			memcpy(result, &tmp, sizeof(Matrix4x4<T>));
 		}
+
+		// Test
+		template <typename T>
+		static void multiply(Matrix4x4<T> *result, const T* const srcA, const Matrix4x4<T> * const srcB )
+		{
+			Matrix4x4<T> tmp;
+			
+			for (int i = 0; i < 4; i++)
+			{
+				int a = 4*i;
+				int b = a + 1;
+				int c = a + 2;
+				int d = a + 3;
+				
+				tmp.m[a] =	srcA[a] * srcB->m[0] +
+							srcA[b] * srcB->m[4] +
+							srcA[c] * srcB->m[8] +
+							srcA[d] * srcB->m[12];
+				
+				tmp.m[b] =	srcA[a] * srcB->m[1] + 
+							srcA[b] * srcB->m[5] +
+							srcA[c] * srcB->m[9] +
+							srcA[d] * srcB->m[13];
+				
+				tmp.m[c] =	srcA[a] * srcB->m[2] + 
+							srcA[b] * srcB->m[6] +
+							srcA[c] * srcB->m[10] +
+							srcA[d] * srcB->m[14];
+				
+				tmp.m[d] =	srcA[a] * srcB->m[3] + 
+							srcA[b] * srcB->m[7] +
+							srcA[c] * srcB->m[11] +
+							srcA[d] * srcB->m[15];
+			}
+			
+			memcpy(result, &tmp, sizeof(Matrix4x4<T>));
+		}	
+		
 		
 		template <typename T>
 		static void multiply(Matrix3x3<T> *result, const Matrix3x3<T> * const srcA, const Matrix3x3<T> * const srcB)

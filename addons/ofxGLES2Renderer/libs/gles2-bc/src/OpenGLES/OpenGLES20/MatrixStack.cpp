@@ -126,6 +126,12 @@ void MatrixStack::multiply(const GLfloat *m)
 	OpenGLESMath::multiply(currentStack->back(), currentStack->back(), m);
 }
 
+void MatrixStack::multiplyAlt(const GLfloat *m)
+{
+	OpenGLESMath::multiply(currentStack->back(), m, currentStack->back() );
+}
+		
+
 void MatrixStack::pushMatrix()
 {
 	currentStack->push_back(new Matrix4x4<GLfloat>(currentStack->back()));

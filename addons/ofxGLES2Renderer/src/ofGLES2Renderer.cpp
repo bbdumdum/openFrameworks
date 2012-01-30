@@ -122,10 +122,10 @@ void ofGLES2Renderer::draw(ofMesh & vertexData, ofPolyRenderMode renderType)
 	
 	
 #ifndef TARGET_OPENGLES
-		 gl->glPushAttrib(GL_POLYGON_BIT);
-		 gl->glPolygonMode(GL_FRONT_AND_BACK, ofGetGLPolyMode(renderType));
+		gl->glPushAttrib(GL_POLYGON_BIT);
+		gl->glPolygonMode(GL_FRONT_AND_BACK, ofGetGLPolyMode(renderType));
 		draw(vertexData);
-		 gl->glPopAttrib(); //TODO: GLES doesnt support polygon mode, add renderType to  gl->gl renderer?
+		gl->glPopAttrib(); //TODO: GLES doesnt support polygon mode, add renderType to  gl->gl renderer?
 #else
 		if(vertexData.getNumVertices()){
 			 gl->glEnableClientState(GL_VERTEX_ARRAY);

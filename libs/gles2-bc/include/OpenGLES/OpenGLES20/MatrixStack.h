@@ -45,7 +45,10 @@ namespace OpenGLES {
 			void scale(GLfloat x, GLfloat y, GLfloat z);
 			void frustum(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar);
 			void ortho( GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar );
+			
 			void multiply(const GLfloat *m);
+
+			void multiplyAlt(const GLfloat *m);			
 			
 			Matrix4x4<GLfloat>* getModelViewMatrix();
 			Matrix4x4<GLfloat>* getProjectionMatrix();
