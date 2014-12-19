@@ -181,6 +181,8 @@ bool ofxiPhoneCGImageToPixels(CGImageRef & ref, unsigned char * pixels);
 // based on code from http://www.bit-101.com/blog/?p=1861
 void ofxiPhoneScreenGrab(id delegate);
 
+// PAUL ADDED THIS METHOD:
+UIImage * ofxiPhoneScreenGrabUIImage();
 
 // utility fuctions for converting strings and NSStrings back and forth
 string ofxNSStringToString(NSString * s);

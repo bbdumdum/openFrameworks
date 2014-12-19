@@ -1,10 +1,15 @@
 /*
  *  ofxiPhoneImagePicker.h
- *  iPhone UIImagePicker Example 
+ *  iPhone UIImagePicker Example
  *
  *  Created by Zach Gage on 3/1/09.
  *  Copyright 2009 stfj. All rights reserved.
  *
+ 
+ // PAUL NOTE - AMENDED VERSION OF OF 0.71 CLASS
+ // SEE CHANGES BELOW
+ // Mostly re: using popup on ipad
+ 
  */
 
 #import <UIKit/UIKit.h>
@@ -21,32 +26,38 @@
 class canLoadPixels
 {
 public:
-	virtual void loadPixels() = 0;
+    virtual void loadPixels() = 0;
 };
 
+//----------------------------------------------------------- overlay.
 @interface OverlayView : UIView
-{
-	UIImagePickerController * _del;
-}
-- (id)initWithFrame:(CGRect)frame andDelegate:(UIImagePickerController *)del;
-- (void) takePhoto:(id) sender;
+@property (nonatomic, retain) id delegate;
+- (void)initUI;
+- (void)takePhoto:(id)sender;
 @end
 
-@interface ofxiPhoneImagePickerDelegate : NSObject <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+//-----------------------------------------------------------
+@interface ofxiPhoneImagePickerDelegate : NSObject <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
 {
-
-	UIImagePickerController*			_imagePicker;
-	OverlayView *						overlay;
-	UIImage*							_image;
-	bool								cameraIsAvailable;
-	bool								photoLibraryIsAvailable;
-	bool								savedPhotosIsAvailable;
-	int									maxDimension;
-	
-	canLoadPixels *						cppPixelLoader;
+    
+    UIImagePickerController*			_imagePicker;
+    // PAUL NOTE - added popover
+    UIPopoverController *               _popoverController;
+    OverlayView *						overlay;
+    UIImage*							_image;
+    bool								cameraIsAvailable;
+    bool								photoLibraryIsAvailable;
+    bool								savedPhotosIsAvailable;
+    int									maxDimension;
+    
+    canLoadPixels *						cppPixelLoader;
 }
 
 - (id) initWithPicker:(canLoadPixels *) _picker;
+
+// PAUL NOTE - added these 2:
+- (void)rotateImagePickerView;
+- (void)unrotateImagePickerView;
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo;
 
@@ -63,17 +74,19 @@ public:
 
 - (UIImageOrientation) getImageOrientation;
 
-- (bool) openLibrary;
-- (bool) openCamera:(int)camera;
+- (BOOL) openLibrary;
+- (BOOL) openCamera:(int)camera;
 #ifdef __IPHONE_3_1
-- (bool) showCameraOverlay;
+- (BOOL) showCameraOverlay;
+- (BOOL) showCameraOverlayWithCustomView:(UIView *)overlayView;
 - (void) hideCameraOverlay;
 #endif
-- (bool) openSavedPhotos;
+- (BOOL) openSavedPhotos;
+- (void) close;
 
-- (bool) isCameraAvailable;
-- (bool) isPhotoLibraryAvailable;
-- (bool) isSavedPhotosAvailable;
+- (BOOL) isCameraAvailable;
+- (BOOL) isPhotoLibraryAvailable;
+- (BOOL) isSavedPhotosAvailable;
 //- (bool) wasNewImagePicked;
 
 - (void) saveImageToPhotoAlbum;
@@ -88,51 +101,56 @@ public:
 
 class ofxiPhoneImagePicker : public canLoadPixels
 {
-	
+    
 public:
-	
-	ofxiPhoneImagePicker();
-	~ofxiPhoneImagePicker();
-	
-	bool openCamera(int camera=0); // 0 for rear, 1 for front
-	bool openLibrary();
-	
+    
+    ofxiPhoneImagePicker();
+    ~ofxiPhoneImagePicker();
+    
+    bool openCamera(int camera=0); // 0 for rear, 1 for front
+    bool openLibrary();
+    
 #ifdef __IPHONE_3_1
-	bool showCameraOverlay();
-	void hideCameraOverlay();
+    bool showCameraOverlay();
+    bool showCameraOverlayWithCustomView(UIView * view);
+    void hideCameraOverlay();
 #endif
-	bool openSavedPhotos();
-	
-	bool cameraIsAvailable; //variables to see if specific functions are available for a specific device.
-	bool photoLibraryIsAvailable;
-	bool savedPhotosIsAvailable;
-	
-	void setMaxDimension(int _maxDimension); //images that you take with the camera will be too big to properly get into an ofImage (im not sure why). It's good to set a maximum dimension for the images under 1000
-	int getOrientation();
-	
-	void saveImage(); //this doesn't quite work right now and i'm not sure why.
-	
+    bool openSavedPhotos();
+    void close();
+    
+    bool cameraIsAvailable; //variables to see if specific functions are available for a specific device.
+    bool photoLibraryIsAvailable;
+    bool savedPhotosIsAvailable;
+    
+    void setMaxDimension(int _maxDimension); //images that you take with the camera will be too big to properly get into an ofImage (im not sure why). It's good to set a maximum dimension for the images under 1000
+    int getOrientation();
+    
+    void saveImage(); //this doesn't quite work right now and i'm not sure why.
+    
+    // PAUL NOTE - added :
+    UIImage * getUIImage();
+    
 #ifdef __IPHONE_3_1
-	void takePicture();
+    void takePicture();
 #endif
-	
-	void loadPixels(); //never call this. this is called by the obj-c class.
-	bool imageUpdated; //when a new image is loaded in, this is set to true
-	
-	int width;
-	int height;
-	int type;
-	int glType;
-	int texType;
-	int bpp;
-	
-	bool pixelsAllocated;
-	
-	int maxDimension;
-	
-	unsigned char * pixels;
-	
+    
+    void loadPixels(); //never call this. this is called by the obj-c class.
+    bool imageUpdated; //when a new image is loaded in, this is set to true
+    
+    int width;
+    int height;
+    int type;
+    int glType;
+    int texType;
+    int bpp;
+    
+    bool pixelsAllocated;
+    
+    int maxDimension;
+    
+    unsigned char * pixels;
+    
 protected:
-	
-	ofxiPhoneImagePickerDelegate *	imagePicker;
+    
+    ofxiPhoneImagePickerDelegate *	imagePicker;
 };
