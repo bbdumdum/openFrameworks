@@ -49,7 +49,6 @@ public:
 
 	GLuint getFbo();	// returns GLuint of Fbo for advanced actions
 	
-	
 	static bool	checkGLSupport();
 	static int maxColorAttachments();	// return max color attachments
 	static int maxDrawBuffers();		// return max simultaneous draw buffers

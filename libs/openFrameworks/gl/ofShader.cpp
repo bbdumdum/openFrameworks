@@ -339,6 +339,7 @@ void ofShader::setUniformTexture(const char* name, ofTexture& tex, int textureLo
 		ofGetGLES2Context()->glDisable(texData.textureTarget);
 		setUniform1i(name, textureLocation);
 		ofGetGLES2Context()->glActiveTexture(GL_TEXTURE0);
+        
 #endif
 	}
 }

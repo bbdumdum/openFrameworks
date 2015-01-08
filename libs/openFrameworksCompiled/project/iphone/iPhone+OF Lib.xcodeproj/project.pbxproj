@@ -24,7 +24,6 @@
 		BB24DED110DA7A3F00E9C588 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BB24E0C410DA9F4200E9C588 /* ofxiPhoneKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03B10DA7C6100E9C588 /* ofxiPhoneKeyboard.h */; };
 		BB24E0C510DA9F4300E9C588 /* ofxiPhoneAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03410DA7C6100E9C588 /* ofxiPhoneAppDelegate.h */; };
-		BB24E0C610DA9F4400E9C588 /* ofxiPhoneImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03910DA7C6100E9C588 /* ofxiPhoneImagePicker.h */; };
 		BB24E0C810DA9F4500E9C588 /* ofxiPhoneMapKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB24E03E10DA7C6100E9C588 /* ofxiPhoneMapKit.mm */; };
 		BB24E0C910DA9F4600E9C588 /* ofxiPhoneCoreLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03610DA7C6100E9C588 /* ofxiPhoneCoreLocation.h */; };
 		BB24E0CA10DA9F4600E9C588 /* ofxiPhoneAlertsListener.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03210DA7C6100E9C588 /* ofxiPhoneAlertsListener.h */; };
@@ -35,7 +34,6 @@
 		BB24E0CF10DA9F4C00E9C588 /* ofxiPhoneMapKitDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03F10DA7C6100E9C588 /* ofxiPhoneMapKitDelegate.h */; };
 		BB24E0D010DA9F4C00E9C588 /* ofxiPhoneAlerts.h in Headers */ = {isa = PBXBuildFile; fileRef = BB24E03010DA7C6100E9C588 /* ofxiPhoneAlerts.h */; };
 		BB24E0D110DA9F4D00E9C588 /* ofAppiPhoneWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB24E02E10DA7C6100E9C588 /* ofAppiPhoneWindow.mm */; };
-		BB24E0D210DA9F4D00E9C588 /* ofxiPhoneImagePicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB24E03A10DA7C6100E9C588 /* ofxiPhoneImagePicker.mm */; };
 		BB24E0D410DA9F4F00E9C588 /* ofxiPhoneKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB24E03C10DA7C6100E9C588 /* ofxiPhoneKeyboard.mm */; };
 		BB24E0D510DA9F4F00E9C588 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB24E02A10DA7C6100E9C588 /* EAGLView.mm */; };
 		BB24E0D610DA9F5000E9C588 /* ofxiPhoneCoreLocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB24E03710DA7C6100E9C588 /* ofxiPhoneCoreLocation.mm */; };
@@ -74,7 +72,6 @@
 		BD9E120B13F44ABB0001B4F1 /* OpenGLESString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E11DF13F44ABB0001B4F1 /* OpenGLESString.cpp */; };
 		BD9E120C13F44ABB0001B4F1 /* OpenGLESUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E11E013F44ABB0001B4F1 /* OpenGLESUtil.cpp */; };
 		BD9E122113F44ABB0001B4F1 /* ofGLES2Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD9E11F813F44ABB0001B4F1 /* ofGLES2Renderer.cpp */; };
-		BD9E122213F44ABB0001B4F1 /* ofGLES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E11F913F44ABB0001B4F1 /* ofGLES2Renderer.h */; };
 		BD9E123C13F44E750001B4F1 /* OpenGLES11Context.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E122713F44E750001B4F1 /* OpenGLES11Context.h */; };
 		BD9E123D13F44E750001B4F1 /* OpenGLES11Implementation.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E122813F44E750001B4F1 /* OpenGLES11Implementation.h */; };
 		BD9E123E13F44E750001B4F1 /* Attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E122A13F44E750001B4F1 /* Attribute.h */; };
@@ -97,6 +94,7 @@
 		BD9E124F13F44E750001B4F1 /* OpenGLESUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9E123B13F44E750001B4F1 /* OpenGLESUtil.h */; };
 		CB57E59E1414E2E80075D2C5 /* of3dPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB57E59C1414E2E80075D2C5 /* of3dPrimitives.cpp */; };
 		CB57E59F1414E2E80075D2C5 /* of3dPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = CB57E59D1414E2E80075D2C5 /* of3dPrimitives.h */; };
+		DA0BC7FC1581420C0053FD1D /* ofGLES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0BC7FB1581420C0053FD1D /* ofGLES2Renderer.h */; };
 		E47DBCDF12E2777F0019AE15 /* SoundEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E47DBCDB12E2777F0019AE15 /* SoundEngine.h */; };
 		E47DBCE012E2777F0019AE15 /* SoundEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47DBCDC12E2777F0019AE15 /* SoundEngine.cpp */; };
 		E47DBCE112E2777F0019AE15 /* ofxOpenALSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E47DBCDD12E2777F0019AE15 /* ofxOpenALSoundPlayer.h */; };
@@ -254,8 +252,6 @@
 		BB24E03610DA7C6100E9C588 /* ofxiPhoneCoreLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxiPhoneCoreLocation.h; sourceTree = "<group>"; };
 		BB24E03710DA7C6100E9C588 /* ofxiPhoneCoreLocation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxiPhoneCoreLocation.mm; sourceTree = "<group>"; };
 		BB24E03810DA7C6100E9C588 /* ofxiPhoneExtras.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxiPhoneExtras.mm; sourceTree = "<group>"; };
-		BB24E03910DA7C6100E9C588 /* ofxiPhoneImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxiPhoneImagePicker.h; sourceTree = "<group>"; };
-		BB24E03A10DA7C6100E9C588 /* ofxiPhoneImagePicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxiPhoneImagePicker.mm; sourceTree = "<group>"; };
 		BB24E03B10DA7C6100E9C588 /* ofxiPhoneKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxiPhoneKeyboard.h; sourceTree = "<group>"; };
 		BB24E03C10DA7C6100E9C588 /* ofxiPhoneKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxiPhoneKeyboard.mm; sourceTree = "<group>"; };
 		BB24E03D10DA7C6100E9C588 /* ofxiPhoneMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxiPhoneMapKit.h; sourceTree = "<group>"; };
@@ -289,7 +285,6 @@
 		BD9E11DF13F44ABB0001B4F1 /* OpenGLESString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESString.cpp; sourceTree = "<group>"; };
 		BD9E11E013F44ABB0001B4F1 /* OpenGLESUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLESUtil.cpp; sourceTree = "<group>"; };
 		BD9E11F813F44ABB0001B4F1 /* ofGLES2Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofGLES2Renderer.cpp; sourceTree = "<group>"; };
-		BD9E11F913F44ABB0001B4F1 /* ofGLES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofGLES2Renderer.h; sourceTree = "<group>"; };
 		BD9E122713F44E750001B4F1 /* OpenGLES11Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES11Context.h; sourceTree = "<group>"; };
 		BD9E122813F44E750001B4F1 /* OpenGLES11Implementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLES11Implementation.h; sourceTree = "<group>"; };
 		BD9E122A13F44E750001B4F1 /* Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attribute.h; sourceTree = "<group>"; };
@@ -312,6 +307,7 @@
 		BD9E123B13F44E750001B4F1 /* OpenGLESUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLESUtil.h; sourceTree = "<group>"; };
 		CB57E59C1414E2E80075D2C5 /* of3dPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = of3dPrimitives.cpp; sourceTree = "<group>"; };
 		CB57E59D1414E2E80075D2C5 /* of3dPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = of3dPrimitives.h; sourceTree = "<group>"; };
+		DA0BC7FB1581420C0053FD1D /* ofGLES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofGLES2Renderer.h; sourceTree = "<group>"; };
 		E41D3E9013B38BE900A75A5D /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D3E9113B38BE900A75A5D /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D3E9213B38BE900A75A5D /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -604,8 +600,6 @@
 				BB24E03610DA7C6100E9C588 /* ofxiPhoneCoreLocation.h */,
 				BB24E03710DA7C6100E9C588 /* ofxiPhoneCoreLocation.mm */,
 				BB24E03810DA7C6100E9C588 /* ofxiPhoneExtras.mm */,
-				BB24E03910DA7C6100E9C588 /* ofxiPhoneImagePicker.h */,
-				BB24E03A10DA7C6100E9C588 /* ofxiPhoneImagePicker.mm */,
 				BB24E03B10DA7C6100E9C588 /* ofxiPhoneKeyboard.h */,
 				BB24E03C10DA7C6100E9C588 /* ofxiPhoneKeyboard.mm */,
 				BB24E03D10DA7C6100E9C588 /* ofxiPhoneMapKit.h */,
@@ -705,7 +699,7 @@
 			isa = PBXGroup;
 			children = (
 				BD9E11F813F44ABB0001B4F1 /* ofGLES2Renderer.cpp */,
-				BD9E11F913F44ABB0001B4F1 /* ofGLES2Renderer.h */,
+				DA0BC7FB1581420C0053FD1D /* ofGLES2Renderer.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -987,7 +981,6 @@
 			files = (
 				BB24E0C410DA9F4200E9C588 /* ofxiPhoneKeyboard.h in Headers */,
 				BB24E0C510DA9F4300E9C588 /* ofxiPhoneAppDelegate.h in Headers */,
-				BB24E0C610DA9F4400E9C588 /* ofxiPhoneImagePicker.h in Headers */,
 				BB24E0C910DA9F4600E9C588 /* ofxiPhoneCoreLocation.h in Headers */,
 				BB24E0CA10DA9F4600E9C588 /* ofxiPhoneAlertsListener.h in Headers */,
 				BB24E0CB10DA9F4700E9C588 /* ofxiPhoneMapKit.h in Headers */,
@@ -1068,7 +1061,6 @@
 				E485F8B413632A7300E939D3 /* AVFoundationVideoGrabber.h in Headers */,
 				E485F8C713632B6600E939D3 /* AVFoundationVideoPlayer.h in Headers */,
 				5315964A13D88B370044EAFE /* ofxiPhoneSoundStream.h in Headers */,
-				BD9E122213F44ABB0001B4F1 /* ofGLES2Renderer.h in Headers */,
 				BD9E123C13F44E750001B4F1 /* OpenGLES11Context.h in Headers */,
 				BD9E123D13F44E750001B4F1 /* OpenGLES11Implementation.h in Headers */,
 				BD9E123E13F44E750001B4F1 /* Attribute.h in Headers */,
@@ -1090,6 +1082,7 @@
 				BD9E124E13F44E750001B4F1 /* OpenGLESString.h in Headers */,
 				BD9E124F13F44E750001B4F1 /* OpenGLESUtil.h in Headers */,
 				CB57E59F1414E2E80075D2C5 /* of3dPrimitives.h in Headers */,
+				DA0BC7FC1581420C0053FD1D /* ofGLES2Renderer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,7 +1141,6 @@
 				BB24E0CC10DA9F4800E9C588 /* ofxiPhoneExtras.mm in Sources */,
 				BB24E0CD10DA9F4800E9C588 /* ofxAccelerometer.cpp in Sources */,
 				BB24E0D110DA9F4D00E9C588 /* ofAppiPhoneWindow.mm in Sources */,
-				BB24E0D210DA9F4D00E9C588 /* ofxiPhoneImagePicker.mm in Sources */,
 				BB24E0D410DA9F4F00E9C588 /* ofxiPhoneKeyboard.mm in Sources */,
 				BB24E0D510DA9F4F00E9C588 /* EAGLView.mm in Sources */,
 				BB24E0D610DA9F5000E9C588 /* ofxiPhoneCoreLocation.mm in Sources */,
@@ -1250,6 +1242,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/kiss/lib/linux\"",
@@ -1259,6 +1252,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "ofxiPhone_${PLATFORM_NAME}_Debug";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1274,6 +1268,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/kiss/lib/linux\"",
@@ -1283,6 +1278,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "ofxiPhone_${PLATFORM_NAME}_Release";
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1292,7 +1288,9 @@
 			baseConfigurationReference = E41D3E9113B38BE900A75A5D /* Debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv6 armv7 armv7f armv7k i386";
 			};
 			name = Debug;
@@ -1302,7 +1300,9 @@
 			baseConfigurationReference = E41D3E9213B38BE900A75A5D /* Release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv6 armv7 armv7f armv7k i386";
 			};
 			name = Release;

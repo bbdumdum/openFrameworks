@@ -6,7 +6,7 @@
  Any .cpp files that include this needs to be renamed to .mm (to support Objective C++)
 
  
- /***********************************************************************
+ ***********************************************************************
  
  Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
  *** The Mega Super Awesome Visuals Company ***
@@ -35,6 +35,9 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
+ 
+ // PAUL - CODE ADDED SEE BELOW (SEARCH FOR PAUL)
+ 
  * ***********************************************************************/ 
 
 #pragma once

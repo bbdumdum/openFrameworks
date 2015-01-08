@@ -6,6 +6,7 @@ void testApp::setup()
 {
 	
 	ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_PORTRAIT);		
+
 	
 	ofSetLogLevel( OF_LOG_VERBOSE );
 		

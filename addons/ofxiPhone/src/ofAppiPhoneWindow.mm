@@ -226,7 +226,7 @@ void ofAppiPhoneWindow::setOrientation(ofOrientation orientation) {
 			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortraitUpsideDown];
 			break;
 		case OF_ORIENTATION_90_RIGHT:
-			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft];
+			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight];
 			break;
 		case OF_ORIENTATION_90_LEFT:
 			[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight];			break;

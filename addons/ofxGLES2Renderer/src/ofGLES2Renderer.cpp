@@ -507,7 +507,7 @@ void ofGLES2Renderer::setupScreenPerspective(float width, float height, ofOrient
 	lookAtMatrix.makeLookAtViewMatrix( ofVec3f(eyeX, eyeY, dist), ofVec3f(eyeX, eyeY, 0), ofVec3f(0, 1, 0) );
 	gl->glMultMatrixf( lookAtMatrix.getPtr() );
 	
-	//note - theo checked this on iPhone and Desktop for both vFlip = false and true
+    //note - theo checked this on iPhone and Desktop for both vFlip = false and true
 	if(ofDoesHWOrientation()){
 		if(vFlip){
 			 gl->glScalef(1, -1, 1);
@@ -528,7 +528,7 @@ void ofGLES2Renderer::setupScreenPerspective(float width, float height, ofOrient
 				break;
 
 			case OF_ORIENTATION_90_RIGHT:
-				 gl->glRotatef(-90, 0, 0, 1);
+                gl->glRotatef(-90, 0, 0, 1);
 				if(vFlip){
 					 gl->glScalef(-1, 1, 1);
 				}else{
@@ -564,7 +564,6 @@ void ofGLES2Renderer::setupScreenPerspective(float width, float height, ofOrient
 void ofGLES2Renderer::setupScreenOrtho(float width, float height, ofOrientation orientation, bool vFlip, float nearDist, float farDist) {
 	if(width == 0) width = ofGetWidth();
 	if(height == 0) height = ofGetHeight();
-	
 	float viewW = ofGetViewportWidth();
 	float viewH = ofGetViewportHeight();
 	
@@ -657,7 +656,7 @@ void ofGLES2Renderer::setupGraphicDefaults(){
 
 //----------------------------------------------------------
 void ofGLES2Renderer::setupScreen(){
-	setupScreenPerspective();	// assume defaults
+    	setupScreenPerspective();	// assume defaults
 }
 
 //----------------------------------------------------------

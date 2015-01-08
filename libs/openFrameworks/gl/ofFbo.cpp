@@ -552,7 +552,14 @@ void ofFbo::begin() {
 	}
 #endif
 	ofViewport(0, 0, getWidth(), getHeight(), false);
-	ofSetupScreenPerspective(getWidth(), getHeight(), ofGetOrientation(), false);
+    
+    
+    // testing xxx paul - orientation hack
+    
+    // the following has been changed to get it work with landscape:
+    
+	//ofSetupScreenPerspective(getWidth(), getHeight(), ofGetOrientation(), false);
+	ofSetupScreenPerspective(getWidth(), getHeight(), OF_ORIENTATION_DEFAULT, false);
 }
 
 //void ofViewport(float x = 0, float y = 0, float width = 0, float height = 0, bool invertY = true);
